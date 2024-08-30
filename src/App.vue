@@ -1,5 +1,4 @@
 <template>
-  <div id="app">
     <header>
       <NavBar />
     </header>
@@ -11,7 +10,6 @@
     <footer>
       <p>Footer test</p>
     </footer>
-  </div>
 </template>
 
 <script>
@@ -31,11 +29,7 @@ html, body {
   margin: 0;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
+
 
 main.main-content {
   flex: 1;
