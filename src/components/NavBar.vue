@@ -103,8 +103,8 @@ export default {
   background: none;
   align-items: center;
   cursor: pointer;
-  padding: 0;
   outline: none;
+  padding: 0 10px;
 }
 
 .theme-toggler:focus {

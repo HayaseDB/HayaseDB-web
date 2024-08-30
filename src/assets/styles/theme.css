@@ -89,6 +89,8 @@
     --gradient-primary-secondary-radial: radial-gradient(var(--primary-500), var(--secondary-500));
     --gradient-primary-accent-radial: radial-gradient(var(--primary-500), var(--accent-500));
     --gradient-secondary-accent-radial: radial-gradient(var(--secondary-500), var(--accent-500));
+    --gradient-footer: linear-gradient(135deg, var(--primary-300) 0%, var(--secondary-300) 100%);
+
 
     /* Border Radius */
     --border-radius-sm: 2px;
@@ -318,6 +320,10 @@ input:focus, textarea:focus {
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
 
+
+footer{
+    padding: 0;
+}
 
 @keyframes gradientAnimation {
     0% {

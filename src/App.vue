@@ -8,17 +8,19 @@
     </main>
 
     <footer>
-      <p>Footer test</p>
+      <FooterSection/>
     </footer>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue';
+import FooterSection from './components/FooterSection.vue';
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    FooterSection
   }
 }
 </script>
