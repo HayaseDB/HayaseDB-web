@@ -38,9 +38,5 @@ main.main-content {
 }
 
 
-footer {
-  background: var(--background);
-  text-align: center;
-  padding: 10px;
-}
+
 </style>

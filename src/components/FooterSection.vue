@@ -28,6 +28,8 @@
     <div class="footer-bottom">
       <p class="footer-text">© 2024 HayaseDB. All rights reserved.</p>
     </div>
+    <img src="../assets/sleepy_nagatoro.png" alt="" class="footer-image">
+
   </footer>
 </template>
 
@@ -44,7 +46,10 @@ export default {
   padding: 40px 20px 0;
   text-align: center;
   box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
+
 
 .footer-top {
   display: flex;
@@ -131,8 +136,17 @@ export default {
   border-top: 1px solid var(--background-300);
   padding-top: 15px;
   padding-bottom: 15px;
+  position: relative;
 }
 
+.footer-image {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+  width: 100px;
+  height: auto;
+  margin-left: 15px;
+}
 @media (max-width: 768px) {
   .footer-content {
     flex-direction: column;
