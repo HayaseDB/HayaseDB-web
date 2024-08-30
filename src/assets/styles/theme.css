@@ -6,6 +6,7 @@
     --text-lg: 1.25em;
     --text-xl: 1.5em;
     --text-2xl: 2em;
+    --text-3xl: 3em;
 }
 
 :root {
@@ -181,7 +182,7 @@ html {
     color: var(--text);
     background-color: var(--background);
     font-family: Alexandria, sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.5;
     margin: 0;
     padding: 0;
@@ -206,7 +207,6 @@ p {
     margin: 0 0 1em 0;
     color: var(--text-700);
     font-size: var(--text-base);
-
 }
 
 a {
@@ -230,6 +230,8 @@ button {
     font-weight: 500;
     transition: background-color 0.3s, color 0.3s;
     color: rgb(241, 243, 248);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 /* Button Variants */
@@ -315,3 +317,24 @@ input:focus, textarea:focus {
 .shadow-md { box-shadow: var(--shadow-md); }
 .shadow-lg { box-shadow: var(--shadow-lg); }
 .shadow-xl { box-shadow: var(--shadow-xl); }
+
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 19% 0%;
+    }
+    50% {
+        background-position: 82% 100%;
+    }
+    100% {
+        background-position: 19% 0%;
+    }
+}
+
+.gradient-animation {
+    background: linear-gradient(325deg, #435ed6, #b396e9);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 7s ease infinite;
+}
