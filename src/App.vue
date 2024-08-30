@@ -1,24 +1,44 @@
+<!-- App.vue -->
 <template>
+  <div id="app">
+    <header>
+    </header>
 
+    <main class="main-content">
+      <router-view/>
+    </main>
+
+    <footer>
+      <p>Footer test</p>
+    </footer>
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  components: {
-    
-  }
+  name: 'App'
 }
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
+
+footer {
+  background: var(--background);
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  padding: 10px;
 }
 </style>

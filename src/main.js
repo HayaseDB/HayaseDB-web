@@ -1,4 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import { setTheme } from "@/utils/theme";
+import router from "@/router";
+import './assets/styles/theme.css';
 
-createApp(App).mount('#app')
+
+setTheme('dark')
+
+const app = createApp(App)
+
+app.use(router)
+
+app.mount('#app')
