@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: HayaseDB-WEB
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VUE_APP_API_URL=${VUE_APP_API_URL}
+    ports:
+      - "80:80"
+    restart: always
+    pull_policy: build
