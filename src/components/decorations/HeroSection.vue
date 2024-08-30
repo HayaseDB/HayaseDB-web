@@ -5,7 +5,7 @@
         <div class="hero-text-left">
 
           <h1>Welcome to <span class="gradient-animation">HayaseDB</span></h1>
-        <p>HayaseDB is an open-source anime database designed for fans and developers alike. It offers comprehensive information on anime titles, characters, episode summaries, and more, all in one easy-to-navigate platform.</p>
+          <p>HayaseDB is an <b>open-source anime database</b> designed for fans and developers alike. It offers comprehensive information on anime titles, characters, episode summaries, and more, all in one easy-to-navigate platform.</p>
         </div>
 
         <div class="hero-buttons">
@@ -31,8 +31,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 40px 0;
+  padding: 140px 40px 0;
   background-color: var(--background-50);
+
 }
 
 .container {
@@ -56,6 +57,7 @@ export default {
 .hero-left p {
   font-size: var(--text-base);
   color: var(--text-600);
+  font-weight: 350;
   margin-bottom: 50px;
 }
 
@@ -75,8 +77,8 @@ export default {
 }
 
 .mascot-image {
-  max-width: 30%;
-  min-width: 300px;
+  max-width: 300px;
+  min-width: 200px;
   height: auto;
   display: block;
 }

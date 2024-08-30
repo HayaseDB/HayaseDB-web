@@ -1,5 +1,5 @@
 <template>
-    <HeroSection />
+  <HeroSection />
 </template>
 
 <script>

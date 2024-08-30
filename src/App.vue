@@ -1,7 +1,7 @@
-<!-- App.vue -->
 <template>
   <div id="app">
     <header>
+      <NavBar />
     </header>
 
     <main class="main-content">
@@ -15,8 +15,13 @@
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue';
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    NavBar
+  }
 }
 </script>
 
@@ -32,9 +37,10 @@ html, body {
   min-height: 100vh;
 }
 
-.main-content {
+main.main-content {
   flex: 1;
 }
+
 
 footer {
   background: var(--background);
