@@ -19,7 +19,10 @@
         </div>
       </div>
       <div class="hero-right">
-        <img src="../../assets/mascot.png" alt="Mascot" class="mascot-image">
+        <div class="hero-image-wrapper">
+          <img src="../../assets/mascot.png" alt="Mascot" class="mascot-image">
+
+        </div>
       </div>
     </div>
   </section>
@@ -102,6 +105,17 @@ export default {
 
 
 @media (max-width: 720px) {
+
+  .hero-image-wrapper{
+    overflow: hidden;
+    height: 430px;
+    width: 100%;
+
+  }
+
+  .hero{
+    padding: 100px 15px;
+  }
   .container {
     flex-direction: column;
     align-items: center;
@@ -122,8 +136,9 @@ export default {
   }
 
   .mascot-image {
-    max-width: 30%;
+    max-width: 250px;
     min-width: 170px;
+    width: auto;
   }
 }
 
