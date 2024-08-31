@@ -1,5 +1,4 @@
 <template>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
   <nav class="navbar">
     <div class="navbar-container">
       <div class="navbar-left">
@@ -8,7 +7,7 @@
       </div>
 
       <a class="navbar-toggler" @click="toggleMenu">
-        <span class="material-symbols-outlined">menu</span>
+        <fontAwesomeIcon :icon="['fa', 'bars']" />
       </a>
 
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
@@ -28,7 +27,7 @@
 
         </ul>
         <a class="theme-toggler" @click="toggleTheme">
-          <span class="material-symbols-outlined">brightness_6</span>
+          <fontAwesomeIcon :icon="['fa', 'sun']" />
         </a>
 
       </div>

@@ -1,5 +1,4 @@
 <template>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-content">
@@ -18,9 +17,10 @@
         <div class="footer-section footer-social">
           <h2 class="footer-heading">Follow Us</h2>
           <div class="social-icons">
-            <a href="#" class="social-icon"><i class="fa fa-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="social-icon"><i class="fa fa-instagram"></i></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
           </div>
         </div>
       </div>
