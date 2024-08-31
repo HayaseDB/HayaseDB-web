@@ -4,12 +4,17 @@
       <div class="hero-left">
         <div class="hero-text-left">
 
-          <h1>Welcome to <span class="gradient-animation">HayaseDB</span></h1>
+          <h1>
+            <div class="slide-in-right welcome-text"><span>Welcome to</span></div>
+            <div class="slide-in-left">
+              <span class="gradient-animation brand-name-text">HayaseDB</span>
+            </div>
+          </h1>
           <p>HayaseDB is an <b>open-source anime database</b> designed for fans and developers alike. It offers comprehensive information on anime titles, characters, episode summaries, and more, all in one easy-to-navigate platform.</p>
         </div>
 
         <div class="hero-buttons">
-          <button class="btn-primary">Get Started</button>
+          <button class="btn-primary hover-rotate">Get Started</button>
           <button class="btn-accent">Learn More</button>
         </div>
       </div>
@@ -56,7 +61,7 @@ export default {
 
 .hero-left p {
   font-size: var(--text-base);
-  color: var(--text-600);
+  color: var(--text-800);
   font-weight: 350;
   margin-bottom: 50px;
 }
@@ -66,10 +71,22 @@ export default {
   gap: 15px;
 }
 
+.welcome-text {
+  font-weight: 250;
+}
+
+
+.brand-name-text {
+  font-weight: 500;
+}
+
+
+
 .hero-right {
   flex: 1;
   display: flex;
   justify-content: center;
+  z-index: 999;
 }
 
 .hero-text-left{
@@ -82,8 +99,6 @@ export default {
   height: auto;
   display: block;
 }
-
-
 
 
 @media (max-width: 720px) {
