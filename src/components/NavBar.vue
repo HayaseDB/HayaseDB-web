@@ -12,20 +12,24 @@
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link to="/" class="nav-link">Home</router-link>
+            <router-link to="/" class="nav-link" @click="closeMenu">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">About</router-link>
+            <router-link to="/about" class="nav-link" @click="closeMenu">About</router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/services" class="nav-link">Services</router-link>
+            <router-link to="/services" class="nav-link" @click="closeMenu">Services</router-link>
             <ul class="dropdown-menu">
-              <li class="dropdown-list"><router-link to="/service1" class="dropdown-item">Service 1</router-link></li>
-              <li class="dropdown-list"><router-link to="/service2" class="dropdown-item">Service 2</router-link></li>
+              <li class="dropdown-list">
+                <router-link to="/service1" class="dropdown-item" @click="closeMenu">Service 1</router-link>
+              </li>
+              <li class="dropdown-list">
+                <router-link to="/service2" class="dropdown-item" @click="closeMenu">Service 2</router-link>
+              </li>
             </ul>
           </li>
           <li class="nav-item">
-            <router-link to="/contact" class="nav-link">Contact</router-link>
+            <router-link to="/contact" class="nav-link" @click="closeMenu">Contact</router-link>
           </li>
         </ul>
         <a class="theme-toggler" @click="toggleTheme">
@@ -38,6 +42,7 @@
 
 <script>
 import { toggleTheme } from "@/utils/theme";
+
 export default {
   data() {
     return {
@@ -50,11 +55,14 @@ export default {
     },
     toggleTheme() {
       toggleTheme();
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
     }
-
-  },
+  }
 };
 </script>
+
 
 <style scoped>
 .navbar {
@@ -93,6 +101,7 @@ export default {
   cursor: pointer;
   align-items: center;
 }
+
 
 .theme-toggler {
   color: var(--text);
