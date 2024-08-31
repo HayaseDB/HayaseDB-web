@@ -32,7 +32,8 @@
                 class="nav-link dropdown-toggle"
                 :class="{ 'active-route': isActiveRoute(item.to, item.children) }"
                 @click="toggleDropdown(index)">
-              {{ item.label }}
+              {{ item.label }}<fontAwesomeIcon class="dropdown-symbol" :icon="['fa', 'caret-down']" />
+
             </a>
             <ul
                 v-if="item.children"
@@ -197,6 +198,10 @@ export default {
 
 a{
   cursor: pointer;
+}
+
+.dropdown-symbol{
+  margin-left: 10px;
 }
 
 .nav-link.active-route {
