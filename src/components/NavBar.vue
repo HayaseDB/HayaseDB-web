@@ -20,8 +20,8 @@
           <li class="nav-item dropdown">
             <router-link to="/services" class="nav-link">Services</router-link>
             <ul class="dropdown-menu">
-              <li><router-link to="/service1" class="dropdown-item">Service 1</router-link></li>
-              <li><router-link to="/service2" class="dropdown-item">Service 2</router-link></li>
+              <li class="dropdown-list"><router-link to="/service1" class="dropdown-item">Service 1</router-link></li>
+              <li class="dropdown-list"><router-link to="/service2" class="dropdown-item">Service 2</router-link></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -97,7 +97,6 @@ export default {
 .theme-toggler {
   color: var(--text);
   display: flex;
-  height: 24px;
   align-items: center;
   cursor: pointer;
   padding: 0 10px;
@@ -131,6 +130,8 @@ export default {
   padding: 10px;
   border-radius: var(--border-radius-md);
   transition: background-color 0.3s, color 0.3s;
+  height: auto;
+  display: block;
 }
 
 .nav-link:hover {
@@ -141,6 +142,8 @@ export default {
 .dropdown-menu {
   display: none;
   position: absolute;
+  flex-direction: column;
+
   top: 100%;
   left: 0;
   background: var(--background);
@@ -151,6 +154,8 @@ export default {
   white-space: nowrap;
   border-radius: var(--border-radius-md);
   z-index: 1000;
+  min-width: 150px;
+
 }
 
 .dropdown-menu .dropdown-item {
@@ -166,15 +171,20 @@ export default {
 }
 
 .nav-item:hover .dropdown-menu {
-  width: auto;
-  min-width: 150px;
-  display: block;
+  display: flex;
+
+}
+
+.dropdown{
+  display: flex;
+  flex-direction: column;
+  height: min-content;
 }
 
 @media (max-width: 768px) {
   .theme-toggler {
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin: 20px auto 15px;
+
   }
 
   .navbar-toggler {
@@ -195,20 +205,47 @@ export default {
 
   .navbar-collapse.show {
     display: flex;
-    align-items: center;
     padding-bottom: 10px;
     padding-top: 10px;
     border-bottom: 1px solid var(--background-100);
+  }
+  .dropdown {
+    width: 100%;
+    display: block;
+    text-align: center;
   }
 
   .navbar-collapse.show ul {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .nav-item {
-    margin: 10px 0;
+    margin: 5px 0;
+    position: relative;
+    width: 100%;
+    text-align: center;
   }
+
+
+  .dropdown-menu {
+    background-color: var(--background-100);
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+    gap: 5px;
+
+  }
+
+
+
+  .dropdown-list{
+    width: 100%;
+  }
+
+
 }
+
 </style>
