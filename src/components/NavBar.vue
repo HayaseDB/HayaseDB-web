@@ -14,7 +14,11 @@
           <li
               v-for="(item, index) in menuItems"
               :key="index"
-              :class="{'nav-item': true, 'dropdown': item.children}">
+              :class="{
+                'nav-item': true,
+                'dropdown': item.children,
+                'active-route': isActiveRoute(item.to, item.children)
+              }">
             <router-link
                 v-if="!item.children"
                 :to="item.to"
@@ -26,6 +30,7 @@
             <a
                 v-else
                 class="nav-link dropdown-toggle"
+                :class="{ 'active-route': isActiveRoute(item.to, item.children) }"
                 @click="toggleDropdown(index)">
               {{ item.label }}
             </a>
@@ -36,7 +41,6 @@
                 :class="{ show: isDropdownOpen === index }">
               <li
                   v-for="(child, childIndex) in item.children"
-
                   :key="childIndex"
                   class="dropdown-list">
                 <router-link
@@ -106,11 +110,20 @@ export default {
         this.isDropdownOpen = null;
       }
     },
-    isActiveRoute(route) {
-      return this.$route.path === route;
+    isActiveRoute(route, children = []) {
+      if (this.$route.path === route) {
+        return true;
+      }
+
+      if (children && children.length > 0) {
+        return children.some(child => this.$route.path === child.to);
+      }
+
+      return false;
     }
   }
 };
+
 
 </script>
 
