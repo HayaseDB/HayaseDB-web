@@ -143,6 +143,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 15px 20px;
+
 }
 
 .navbar-brand {
@@ -155,7 +156,6 @@ export default {
 .navbar-toggler {
   outline: none;
   display: none;
-  height: 24px;
   border: none;
   background: none;
   font-size: var(--text-lg);
