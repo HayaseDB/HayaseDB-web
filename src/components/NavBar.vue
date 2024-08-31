@@ -18,13 +18,24 @@
             <router-link to="/about" class="nav-link" @click="closeMenu">About</router-link>
           </li>
           <li class="nav-item dropdown">
-            <router-link to="/services" class="nav-link" @click="closeMenu">Services</router-link>
-            <ul class="dropdown-menu">
+            <a class="nav-link dropdown-toggle" @click="toggleDropdown('servicesDropdown')">Services</a>
+            <ul :id="'servicesDropdown'" class="dropdown-menu" :class="{ show: isDropdownOpen === 'servicesDropdown' }">
               <li class="dropdown-list">
                 <router-link to="/service1" class="dropdown-item" @click="closeMenu">Service 1</router-link>
               </li>
               <li class="dropdown-list">
                 <router-link to="/service2" class="dropdown-item" @click="closeMenu">Service 2</router-link>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" @click="toggleDropdown('testDropdown')">Test</a>
+            <ul :id="'testDropdown'" class="dropdown-menu" :class="{ show: isDropdownOpen === 'testDropdown' }">
+              <li class="dropdown-list">
+                <router-link to="/service4" class="dropdown-item" @click="closeMenu">Test 1</router-link>
+              </li>
+              <li class="dropdown-list">
+                <router-link to="/service5" class="dropdown-item" @click="closeMenu">Test 2</router-link>
               </li>
             </ul>
           </li>
@@ -47,6 +58,7 @@ export default {
   data() {
     return {
       isMenuOpen: false,
+      isDropdownOpen: null
     };
   },
   methods: {
@@ -58,11 +70,18 @@ export default {
     },
     closeMenu() {
       this.isMenuOpen = false;
+      this.isDropdownOpen = null;
+    },
+    toggleDropdown(dropdownId) {
+        if (this.isDropdownOpen === dropdownId) {
+          this.isDropdownOpen = null;
+        } else {
+          this.isDropdownOpen = dropdownId;
+        }
     }
   }
 };
 </script>
-
 
 <style scoped>
 .navbar {
@@ -102,7 +121,6 @@ export default {
   align-items: center;
 }
 
-
 .theme-toggler {
   color: var(--text);
   display: flex;
@@ -132,6 +150,10 @@ export default {
   position: relative;
 }
 
+a{
+  cursor: pointer;
+}
+
 .nav-link {
   color: var(--text);
   text-decoration: none;
@@ -152,7 +174,6 @@ export default {
   display: none;
   position: absolute;
   flex-direction: column;
-
   top: 100%;
   left: 0;
   background: var(--background);
@@ -164,7 +185,10 @@ export default {
   border-radius: var(--border-radius-md);
   z-index: 1000;
   min-width: 150px;
+}
 
+.dropdown-menu.show {
+  display: flex;
 }
 
 .dropdown-menu .dropdown-item {
@@ -181,10 +205,9 @@ export default {
 
 .nav-item:hover .dropdown-menu {
   display: flex;
-
 }
 
-.dropdown{
+.dropdown {
   display: flex;
   flex-direction: column;
   height: min-content;
@@ -193,7 +216,6 @@ export default {
 @media (max-width: 768px) {
   .theme-toggler {
     margin: 20px auto 15px;
-
   }
 
   .navbar-toggler {
@@ -237,23 +259,16 @@ export default {
     text-align: center;
   }
 
-
   .dropdown-menu {
     background-color: var(--background-100);
     position: relative;
     width: 100%;
     box-shadow: none;
     gap: 5px;
-
   }
 
-
-
-  .dropdown-list{
+  .dropdown-list {
     width: 100%;
   }
-
-
 }
-
 </style>
