@@ -11,36 +11,43 @@
 
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link" @click="closeMenu">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/about" class="nav-link" @click="closeMenu">About</router-link>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" @click="toggleDropdown('servicesDropdown')">Services</a>
-            <ul :id="'servicesDropdown'" class="dropdown-menu" :class="{ show: isDropdownOpen === 'servicesDropdown' }">
-              <li class="dropdown-list">
-                <router-link to="/service1" class="dropdown-item" @click="closeMenu">Service 1</router-link>
-              </li>
-              <li class="dropdown-list">
-                <router-link to="/service2" class="dropdown-item" @click="closeMenu">Service 2</router-link>
+          <li
+              v-for="(item, index) in menuItems"
+              :key="index"
+              :class="{'nav-item': true, 'dropdown': item.children}">
+            <router-link
+                v-if="!item.children"
+                :to="item.to"
+                class="nav-link"
+                :class="{ 'active-route': isActiveRoute(item.to) }"
+                @click="closeMenu">
+              {{ item.label }}
+            </router-link>
+            <a
+                v-else
+                class="nav-link dropdown-toggle"
+                @click="toggleDropdown(index)">
+              {{ item.label }}
+            </a>
+            <ul
+                v-if="item.children"
+                :id="'dropdown-' + index"
+                class="dropdown-menu"
+                :class="{ show: isDropdownOpen === index }">
+              <li
+                  v-for="(child, childIndex) in item.children"
+
+                  :key="childIndex"
+                  class="dropdown-list">
+                <router-link
+                    :to="child.to"
+                    class="dropdown-item"
+                    :class="{ 'active-route': isActiveRoute(child.to) }"
+                    @click="closeMenu">
+                  {{ child.label }}
+                </router-link>
               </li>
             </ul>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" @click="toggleDropdown('testDropdown')">Test</a>
-            <ul :id="'testDropdown'" class="dropdown-menu" :class="{ show: isDropdownOpen === 'testDropdown' }">
-              <li class="dropdown-list">
-                <router-link to="/service4" class="dropdown-item" @click="closeMenu">Test 1</router-link>
-              </li>
-              <li class="dropdown-list">
-                <router-link to="/service5" class="dropdown-item" @click="closeMenu">Test 2</router-link>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <router-link to="/contact" class="nav-link" @click="closeMenu">Contact</router-link>
           </li>
         </ul>
         <a class="theme-toggler" @click="toggleTheme">
@@ -51,14 +58,34 @@
   </nav>
 </template>
 
+
 <script>
-import { toggleTheme } from "@/utils/theme";
+import {toggleTheme} from "@/utils/theme";
 
 export default {
   data() {
     return {
       isMenuOpen: false,
-      isDropdownOpen: null
+      isDropdownOpen: null,
+      menuItems: [
+        { label: 'Home', to: '/' },
+        { label: 'About', to: '/about' },
+        {
+          label: 'Services',
+          children: [
+            { label: 'Service 1', to: '/service1' },
+            { label: 'Service 2', to: '/service2' }
+          ]
+        },
+        {
+          label: 'Test',
+          children: [
+            { label: 'Test 1', to: '/service4' },
+            { label: 'Test 2', to: '/service5' }
+          ]
+        },
+        { label: 'Contact', to: '/contact' }
+      ]
     };
   },
   methods: {
@@ -72,16 +99,21 @@ export default {
       this.isMenuOpen = false;
       this.isDropdownOpen = null;
     },
-    toggleDropdown(dropdownId) {
-        if (this.isDropdownOpen === dropdownId) {
-          this.isDropdownOpen = null;
-        } else {
-          this.isDropdownOpen = dropdownId;
-        }
+    toggleDropdown(index) {
+      if (this.isMenuOpen) {
+        this.isDropdownOpen = this.isDropdownOpen === index ? null : index;
+      } else {
+        this.isDropdownOpen = null;
+      }
+    },
+    isActiveRoute(route) {
+      return this.$route.path === route;
     }
   }
 };
+
 </script>
+
 
 <style scoped>
 .navbar {
@@ -153,6 +185,12 @@ export default {
 a{
   cursor: pointer;
 }
+
+.nav-link.active-route {
+  background-color: var(--primary-100);
+  color: var(--primary);
+}
+
 
 .nav-link {
   color: var(--text);
@@ -269,6 +307,11 @@ a{
 
   .dropdown-list {
     width: 100%;
+  }
+
+  .nav-link{
+    border-radius: 0;
+
   }
 }
 </style>
