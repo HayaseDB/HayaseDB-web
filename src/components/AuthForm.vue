@@ -46,7 +46,7 @@
       </div>
 
     </form>
-    <img class="form-image" src="../assets/nagatoro_inspect.png" alt="nagatoro inspect">
+    <img class="form-image" src="../assets/nagatoro_inspect.png" alt="">
   </div>
 </template>
 
@@ -69,6 +69,11 @@ watch(
     () => route.path,
     (newPath) => {
       isLogin.value = newPath === '/login';
+      form.value = {
+        confirmPassword: '',
+            password: '',
+          email: ''
+      }
     }
 );
 
@@ -149,7 +154,8 @@ input {
   width: 80px;
   position: absolute;
   bottom: 0;
-  left: -15px;
+  left: -10px;
+
 }
 
 input:focus {

@@ -239,6 +239,7 @@ export default {
   margin: 0;
   white-space: nowrap;
   border-radius: var(--border-radius-md);
+  border: 1px solid var(--background-100);
   z-index: 1000;
   min-width: 150px;
 }
