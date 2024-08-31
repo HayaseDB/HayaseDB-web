@@ -7,11 +7,19 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
     },
     {
         path: '/login',
         name: 'Login',
         component: Login,
+        meta: {
+            showNavBar: true,
+            showFooter: false
+        }
     },
 ];
 
