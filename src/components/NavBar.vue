@@ -3,7 +3,6 @@
     <div class="navbar-container">
       <div class="navbar-left">
         <router-link to="/" class="navbar-brand">HayaseDB</router-link>
-
       </div>
 
       <a class="navbar-toggler" @click="toggleMenu">
@@ -18,20 +17,21 @@
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
           </li>
-          <li class="nav-item">
+          <li class="nav-item dropdown">
             <router-link to="/services" class="nav-link">Services</router-link>
+            <ul class="dropdown-menu">
+              <li><router-link to="/service1" class="dropdown-item">Service 1</router-link></li>
+              <li><router-link to="/service2" class="dropdown-item">Service 2</router-link></li>
+            </ul>
           </li>
           <li class="nav-item">
             <router-link to="/contact" class="nav-link">Contact</router-link>
           </li>
-
         </ul>
         <a class="theme-toggler" @click="toggleTheme">
           <fontAwesomeIcon :icon="['fa', 'sun']" />
         </a>
-
       </div>
-
     </div>
   </nav>
 </template>
@@ -60,15 +60,14 @@ export default {
 .navbar {
   background: var(--background);
   box-shadow: var(--shadow-md);
-
   border-bottom: 1px solid var(--background-100);
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
 }
-.navbar-container {
 
+.navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,6 +93,7 @@ export default {
   cursor: pointer;
   align-items: center;
 }
+
 .theme-toggler {
   color: var(--text);
   display: flex;
@@ -103,13 +103,10 @@ export default {
   padding: 0 10px;
 }
 
-
-
-.navbar-left{
+.navbar-left {
   display: flex;
   align-items: center;
 }
-
 
 .navbar-collapse {
   display: flex;
@@ -124,6 +121,7 @@ export default {
 
 .nav-item {
   margin: 0 10px;
+  position: relative;
 }
 
 .nav-link {
@@ -135,17 +133,46 @@ export default {
   transition: background-color 0.3s, color 0.3s;
 }
 
-
-
 .nav-link:hover {
   background-color: var(--primary-100);
   color: var(--primary);
 }
 
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--background);
+  box-shadow: var(--shadow-md);
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  white-space: nowrap;
+  border-radius: var(--border-radius-md);
+  z-index: 1000;
+}
 
+.dropdown-menu .dropdown-item {
+  text-decoration: none;
+  color: var(--text);
+  padding: 10px 20px;
+  display: block;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: var(--primary-100);
+  color: var(--primary);
+}
+
+.nav-item:hover .dropdown-menu {
+  width: auto;
+  min-width: 150px;
+  display: block;
+}
 
 @media (max-width: 768px) {
-  .theme-toggler{
+  .theme-toggler {
     margin-top: 20px;
     margin-bottom: 15px;
   }
@@ -172,7 +199,6 @@ export default {
     padding-bottom: 10px;
     padding-top: 10px;
     border-bottom: 1px solid var(--background-100);
-
   }
 
   .navbar-collapse.show ul {
@@ -183,7 +209,6 @@ export default {
 
   .nav-item {
     margin: 10px 0;
-
   }
 }
 </style>
