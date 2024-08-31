@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './views/HomeView.vue';
-import Login from "@/views/LoginView.vue";
+import AuthView from "@/views/AuthView.vue";
 
 const routes = [
     {
@@ -15,7 +15,16 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: Login,
+        component: AuthView,
+        meta: {
+            showNavBar: true,
+            showFooter: false
+        }
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: AuthView,
         meta: {
             showNavBar: true,
             showFooter: false

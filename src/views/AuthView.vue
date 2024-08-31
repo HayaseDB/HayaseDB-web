@@ -1,0 +1,27 @@
+<template>
+  <div class="container">
+    <LoginForm class="smooth-slide-in-bottom" />
+  </div>
+</template>
+
+<style scoped>
+
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--background-50);
+  padding: 0 20px;
+}
+</style>
+
+<script>
+import LoginForm from '../components/AuthForm.vue'
+export default {
+  components: {
+    LoginForm
+  }
+}
+</script>

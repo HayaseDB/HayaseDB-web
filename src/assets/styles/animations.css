@@ -120,7 +120,7 @@
 
 @keyframes smoothSlideInLeft {
     from {
-        transform: translateX(-100%);
+        transform: translateX(-10%);
         opacity: 0;
     }
     to {
@@ -131,7 +131,29 @@
 
 @keyframes smoothSlideInRight {
     from {
-        transform: translateX(100%);
+        transform: translateX(10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes smoothSlideInTop {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes smoothSlideInBottom {
+    from {
+        transform: translateY(10%);
         opacity: 0;
     }
     to {
@@ -259,11 +281,19 @@
 }
 
 .smooth-slide-in-left {
-    animation: smoothSlideInLeft 1s ease-out;
+    animation: smoothSlideInLeft 0.4s ease-out;
 }
 
 .smooth-slide-in-right {
-    animation: smoothSlideInRight 1s ease-out;
+    animation: smoothSlideInRight 0.4s ease-out;
+}
+
+.smooth-slide-in-top {
+    animation: smoothSlideInTop 0.4s ease-out;
+}
+
+.smooth-slide-in-bottom {
+    animation: smoothSlideInBottom 0.4s ease-out;
 }
 
 .rotate-scale {
