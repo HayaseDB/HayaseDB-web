@@ -32,17 +32,21 @@
             required
         />
       </div>
-      <button
-          :class="{'btn-primary': !isLogin, 'btn-secondary': isLogin}"
-          type="submit"
-      >
-        {{ isLogin ? 'Login' : 'Register' }}
-      </button>
-      <p class="auth-toggle">
-        {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
-        <a @click="toggleAuthMode">{{ isLogin ? 'Register' : 'Login' }}</a>
-      </p>
+      <div class="form-bottom">
+        <button
+            :class="{'btn-primary': !isLogin, 'btn-secondary': isLogin}"
+            type="submit"
+        >
+          {{ isLogin ? 'Login' : 'Register' }}
+        </button>
+        <p class="auth-toggle">
+          {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+          <a @click="toggleAuthMode">{{ isLogin ? 'Register' : 'Login' }}</a>
+        </p>
+      </div>
+
     </form>
+    <img class="form-image" src="../assets/nagatoro_inspect.png" alt="nagatoro inspect">
   </div>
 </template>
 
@@ -95,7 +99,20 @@ const handleSubmit = () => {
   border: 1px solid var(--background-100);
   max-width: 400px;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+
   text-align: center;
+}
+
+form{
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-bottom{
+  margin-top: auto;
 }
 
 .auth-title {
@@ -126,6 +143,13 @@ input {
   background-color: var(--background-50);
   color: var(--text);
   transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-image{
+  width: 80px;
+  position: absolute;
+  bottom: 0;
+  left: -15px;
 }
 
 input:focus {
