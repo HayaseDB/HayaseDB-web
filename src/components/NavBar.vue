@@ -7,9 +7,9 @@
 
       </div>
 
-      <button class="navbar-toggler" @click="toggleMenu">
+      <a class="navbar-toggler" @click="toggleMenu">
         <span class="material-symbols-outlined">menu</span>
-      </button>
+      </a>
 
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
         <ul class="navbar-nav">
@@ -27,9 +27,9 @@
           </li>
 
         </ul>
-        <button class="theme-toggler" @click="toggleTheme">
+        <a class="theme-toggler" @click="toggleTheme">
           <span class="material-symbols-outlined">brightness_6</span>
-        </button>
+        </a>
 
       </div>
 
@@ -99,26 +99,11 @@ export default {
   color: var(--text);
   display: flex;
   height: 24px;
-  border: none;
-  background: none;
   align-items: center;
   cursor: pointer;
-  outline: none;
   padding: 0 10px;
 }
 
-.theme-toggler:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.theme-toggler::-moz-focus-inner {
-  border: 0;
-}
-
-.theme-toggler:focus-visible {
-  outline: none;
-}
 
 
 .navbar-left{
@@ -150,6 +135,8 @@ export default {
   border-radius: var(--border-radius-md);
   transition: background-color 0.3s, color 0.3s;
 }
+
+
 
 .nav-link:hover {
   background-color: var(--primary-100);

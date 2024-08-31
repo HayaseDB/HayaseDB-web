@@ -344,3 +344,9 @@ footer{
     -webkit-text-fill-color: transparent;
     animation: gradientAnimation 7s ease infinite;
 }
+
+
+
+.material-symbols-outlined{
+    user-select: none;
+}
