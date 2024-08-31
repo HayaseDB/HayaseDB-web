@@ -10,7 +10,14 @@
               <span class="gradient-animation brand-name-text">HayaseDB</span>
             </div>
           </h1>
-          <p>HayaseDB is an <b>open-source anime database</b> designed for fans and developers alike. It offers comprehensive information on anime titles, characters, episode summaries, and more, all in one easy-to-navigate platform.</p>
+
+          <p>HayaseDB is a free, open-source anime database providing comprehensive details through a user-friendly web platform and a powerful API for developers.</p>
+          <div class="social-icons">
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
+            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+          </div>
         </div>
 
         <div class="hero-buttons">
@@ -35,6 +42,57 @@ export default {
 </script>
 
 <style scoped>
+
+.social-icons{
+  flex-direction: row;
+  display: flex;
+  margin-top: 20px;
+  gap: 30px;
+
+}
+
+.social-icons {
+  flex-direction: row;
+  display: flex;
+  margin-top: 20px;
+  gap: 30px;
+}
+
+.social-icon {
+  font-size: var(--text-lg);
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.social-icon:nth-child(1) {
+  animation-delay: 0.2s;
+}
+.social-icon:nth-child(2) {
+  animation-delay: 0.4s;
+}
+.social-icon:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.social-icon:nth-child(4) {
+  animation-delay: 0.8s;
+}
+
+
+.social-icon{
+  font-size: var(--text-lg);
+}
+
 .hero {
   display: flex;
   align-items: center;
@@ -66,7 +124,6 @@ export default {
   font-size: var(--text-base);
   color: var(--text-800);
   font-weight: 350;
-  margin-bottom: 50px;
 }
 
 .hero-buttons {
@@ -94,6 +151,7 @@ export default {
 
 .hero-text-left{
   max-width: 450px;
+  margin-bottom: 50px;
 }
 
 .mascot-image {
@@ -105,6 +163,15 @@ export default {
 
 
 @media (max-width: 720px) {
+
+  .social-icons{
+    gap: 20px;
+
+  }
+
+  .social-icon{
+    font-size: var(--text-xl);
+  }
 
   .hero-image-wrapper{
     overflow: hidden;
