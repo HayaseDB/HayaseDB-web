@@ -17,10 +17,10 @@
         <div class="footer-section footer-social">
           <h2 class="footer-heading">Follow Us</h2>
           <div class="social-icons">
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
+            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
+            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
+            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
           </div>
         </div>
       </div>

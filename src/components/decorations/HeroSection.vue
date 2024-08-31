@@ -13,10 +13,10 @@
 
           <p>HayaseDB is a free, open-source anime database providing comprehensive details through a user-friendly web platform and a powerful API for developers.</p>
           <div class="social-icons">
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
-            <a href="#" class="social-icon"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
+            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
+            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
+            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
           </div>
         </div>
 
@@ -34,7 +34,6 @@
     </div>
   </section>
 </template>
-
 <script>
 export default {
   name: 'HeroSection'
@@ -48,21 +47,17 @@ export default {
   display: flex;
   margin-top: 20px;
   gap: 30px;
-
 }
 
-.social-icons {
-  flex-direction: row;
-  display: flex;
-  margin-top: 20px;
-  gap: 30px;
-}
+
 
 .social-icon {
   font-size: var(--text-lg);
   opacity: 0;
   animation: fadeIn 0.5s forwards;
+  transition: color 0.3s ease;
 }
+
 
 @keyframes fadeIn {
   from {

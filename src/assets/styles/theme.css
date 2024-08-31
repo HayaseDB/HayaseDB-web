@@ -217,9 +217,23 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color: var(--primary-600);
+.social-icon.instagram:hover {
+    color: #E1306C;
 }
+
+.social-icon.discord:hover {
+    color: #5865F2;
+}
+
+.social-icon.twitter:hover {
+    color: #1DA1F2;
+}
+
+.social-icon.github:hover {
+    color: #6cc644;
+}
+
+
 
 /* Buttons */
 button {
