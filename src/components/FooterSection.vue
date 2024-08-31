@@ -160,5 +160,8 @@ export default {
   .social-icons {
     gap: 15px;
   }
+  .footer-image{
+    display: none;
+  }
 }
 </style>

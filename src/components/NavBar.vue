@@ -5,9 +5,9 @@
         <router-link to="/" class="navbar-brand">HayaseDB</router-link>
       </div>
 
-      <a class="navbar-toggler" @click="toggleMenu">
+      <button class="navbar-toggler" @click="toggleMenu">
         <fontAwesomeIcon :icon="['fa', 'bars']" />
-      </a>
+      </button>
 
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
         <ul class="navbar-nav">
@@ -55,9 +55,9 @@
             </ul>
           </li>
         </ul>
-        <a class="theme-toggler" @click="toggleTheme">
+        <button class="theme-toggler" @click="toggleTheme">
           <fontAwesomeIcon :icon="['fa', 'sun']" />
-        </a>
+        </button>
       </div>
     </div>
   </nav>
@@ -75,21 +75,17 @@ export default {
       menuItems: [
         { label: 'Home', to: '/' },
         { label: 'About', to: '/about' },
+
+        { label: 'Contact', to: '/contact' },
         {
-          label: 'Services',
+          label: 'Docs',
           children: [
-            { label: 'Service 1', to: '/service1' },
-            { label: 'Service 2', to: '/service2' }
+            { label: 'API', to: '/docs/api' },
+            { label: 'Backend', to: '/docs/backend' }
           ]
         },
-        {
-          label: 'Test',
-          children: [
-            { label: 'Test 1', to: '/service4' },
-            { label: 'Test 2', to: '/service5' }
-          ]
-        },
-        { label: 'Contact', to: '/contact' }
+        { label: 'Login', to: '/login' },
+
       ]
     };
   },
@@ -157,6 +153,7 @@ export default {
 }
 
 .navbar-toggler {
+  outline: none;
   display: none;
   height: 24px;
   border: none;
@@ -168,6 +165,9 @@ export default {
 }
 
 .theme-toggler {
+  outline: none;
+  border: none;
+  background: none;
   color: var(--text);
   display: flex;
   align-items: center;
@@ -196,7 +196,7 @@ export default {
   position: relative;
 }
 
-a{
+.dropdown-toggle{
   cursor: pointer;
 }
 
