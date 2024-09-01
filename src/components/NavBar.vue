@@ -20,7 +20,7 @@
                 'active-route': isActiveRoute(item.to, item.children)
               }">
             <router-link
-                v-if="!item.children"
+                v-if="!item.children && !item.action"
                 :to="item.to"
                 class="nav-link"
                 :class="{ 'active-route': isActiveRoute(item.to) }"
@@ -28,7 +28,14 @@
               {{ item.label }}
             </router-link>
             <a
-                v-else
+                v-if="item.action"
+                class="nav-link"
+                :class="item.customClass"
+                @click="handleAction(item.action)">
+              {{ item.label }}
+            </a>
+            <a
+                v-if="item.children"
                 class="nav-link dropdown-toggle"
                 :class="{ 'active-route': isActiveRoute(item.to, item.children) }"
                 @click="toggleDropdown(index)">
@@ -44,36 +51,19 @@
                   :key="childIndex"
                   class="dropdown-list">
                 <router-link
+                    v-if="!child.action"
                     :to="child.to"
                     class="dropdown-item"
-                    :class="{ 'active-route': isActiveRoute(child.to) }"
+                    :class="[child.customClass, { 'active-route': isActiveRoute(child.to) }]"
                     @click="closeMenu">
                   {{ child.label }}
                 </router-link>
-              </li>
-            </ul>
-          </li>
-
-          <li v-if="isLoggedIn" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" @click="toggleDropdown('account')">
-              {{ username }}<fontAwesomeIcon class="dropdown-symbol" :icon="['fa', 'caret-down']" />
-            </a>
-            <ul
-                class="dropdown-menu"
-                :class="{ show: isDropdownOpen === 'account' }">
-              <li class="dropdown-list">
-                <router-link to="/profile" class="dropdown-item" @click="closeMenu">
-                  Profile
-                </router-link>
-              </li>
-              <li class="dropdown-list">
-                <router-link to="/settings" class="dropdown-item" @click="closeMenu">
-                  Settings
-                </router-link>
-              </li>
-              <li class="dropdown-list">
-                <a @click="logout" class="dropdown-item logout">
-                  Logout
+                <a
+                    v-if="child.action"
+                    @click="handleAction(child.action)"
+                    class="dropdown-item"
+                    :class="child.customClass">
+                  {{ child.label }}
                 </a>
               </li>
             </ul>
@@ -99,7 +89,7 @@ export default {
       isDropdownOpen: null,
       isLoggedIn: false,
       username: null,
-      menuItems: [
+      baseMenuItems: [
         { label: 'Home', to: '/' },
         { label: 'About', to: '/about' },
         { label: 'Contact', to: '/contact' },
@@ -110,16 +100,33 @@ export default {
             { label: 'Backend', to: '/docs/backend' }
           ]
         },
-        { label: 'Login', to: '/login', onlyIfLoggedOut: true },
-      ]
+        { label: 'Login', to: '/login', onlyIfLoggedOut: true }
+      ],
     };
   },
   computed: {
+    menuItems() {
+      if (this.isLoggedIn) {
+        return [
+          ...this.baseMenuItems,
+          {
+            label: this.username,
+            onlyIfLoggedIn: true,
+            children: [
+              { label: 'Profile', to: '/profile' },
+              { label: 'Settings', to: '/settings' },
+              { label: 'Logout', to: null, customClass: 'logout', action: 'logout' }
+            ]
+          }
+        ];
+      }
+      return this.baseMenuItems;
+    },
     filteredMenuItems() {
       return this.menuItems.filter(item =>
           (item.onlyIfLoggedOut && !this.isLoggedIn) ||
-          (!item.onlyIfLoggedOut && this.isLoggedIn) ||
-          (!item.onlyIfLoggedOut && !this.isLoggedIn)
+          (item.onlyIfLoggedIn && this.isLoggedIn) ||
+          (!item.onlyIfLoggedOut && !item.onlyIfLoggedIn)
       );
     }
   },
@@ -165,7 +172,12 @@ export default {
       Cookies.remove('token');
       this.isLoggedIn = false;
       this.$router.push('/');
-    }
+    },
+    handleAction(action) {
+      if (action === 'logout') {
+        this.logout();
+      }
+    },
   },
   created() {
     this.checkLoginStatus();
