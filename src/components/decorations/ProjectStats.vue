@@ -49,7 +49,7 @@ export default {
   },
   created() {
     this.updateStats();
-    this.interval = setInterval(this.updateStats, 5000);
+    this.interval = setInterval(this.updateStats, 10000);
   },
   beforeUnmount() {
     clearInterval(this.interval);
