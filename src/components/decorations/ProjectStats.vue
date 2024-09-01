@@ -9,16 +9,16 @@
       <div class="metric-card" v-if="stats">
         <h3 class="metric-title">Total Animes</h3>
         <p class="metric-value">{{ stats.AnimeEntries }}</p>
-        <p class="metric-description">Total number of entries in the database.</p>
+        <p class="metric-description">Total number of Anime entries in the database.</p>
       </div>
       <div class="metric-card" v-if="stats">
         <h3 class="metric-title">Total Characters</h3>
         <p class="metric-value">{{ stats.CharacterEntries }}</p>
-        <p class="metric-description">Number of ongoing projects currently in progress.</p>
+        <p class="metric-description">Total number of Character entries in the database.</p>
       </div>
       <div class="metric-card" v-if="stats">
         <h3 class="metric-title">API Requests</h3>
-        <p class="metric-value">{{ stats.CharacterEntries }}</p>
+        <p class="metric-value">{{ stats.RequestsLast30Days }}</p>
         <p class="metric-description">Number of API requests made in the past month.</p>
       </div>
     </div>
@@ -64,18 +64,6 @@ export default {
   padding: 4em 2em;
 }
 
-.section-title {
-  font-size: var(--text-2xl);
-  font-weight: 400;
-  color: var(--text-800);
-  margin-bottom: 0.5em;
-}
-
-.section-subtitle {
-  font-size: var(--text-xl);
-  color: var(--text-600);
-  margin-bottom: 2em;
-}
 
 .metrics-container {
   display: flex;
