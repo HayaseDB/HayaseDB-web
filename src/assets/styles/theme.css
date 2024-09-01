@@ -283,6 +283,9 @@ button {
     color: var(--text-600);
     cursor: not-allowed;
 }
+button:disabled {
+    cursor: not-allowed;
+}
 
 .btn-disabled:hover {
     background-color: var(--background-300);

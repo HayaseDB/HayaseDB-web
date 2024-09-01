@@ -1,5 +1,11 @@
 <template>
   <div class="auth-form">
+
+    <div v-if="loading" class="loading-overlay">
+      <img class="loading-icon rotate-scale" src="../assets/nagatoro_loading.png" alt="Loading" />
+    </div>
+
+
     <h1 class="auth-title">{{ isLogin ? 'Login' : 'Register' }}</h1>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
@@ -39,8 +45,13 @@
       <p v-if="errorMessage" class="message error-message">{{ errorMessage }}</p>
       <div class="form-bottom">
         <button
-            :class="{'btn-primary': !isLogin, 'btn-secondary': isLogin}"
+            :class="{
+              'btn-primary': !isLogin,
+              'btn-secondary': isLogin,
+              'btn-disabled': loading
+            }"
             type="submit"
+            :disabled="loading"
         >
           {{ isLogin ? 'Login' : 'Register' }}
         </button>
@@ -50,11 +61,11 @@
           <a @click="toggleAuthMode">{{ isLogin ? 'Register' : 'Login' }}</a>
         </p>
       </div>
-
     </form>
     <img class="form-image" src="../assets/nagatoro_inspect.png" alt="">
   </div>
 </template>
+
 
 <script setup>
 import { ref, watch } from 'vue';
@@ -65,6 +76,7 @@ const route = useRoute();
 const router = useRouter();
 
 const isLogin = ref(route.path === '/login');
+const loading = ref(false);
 
 const form = ref({
   email: '',
@@ -97,9 +109,11 @@ const toggleAuthMode = () => {
 const handleSubmit = async () => {
   successMessage.value = '';
   errorMessage.value = '';
+  loading.value = true;
 
   if (!isLogin.value && form.value.password !== form.value.confirmPassword) {
     errorMessage.value = 'Passwords do not match!';
+    loading.value = false;
     return;
   }
 
@@ -119,9 +133,12 @@ const handleSubmit = async () => {
     }
   } catch (error) {
     errorMessage.value = error.message;
+  } finally {
+    loading.value = false;
   }
 };
 </script>
+
 
 <style scoped>
 .auth-form {
@@ -160,6 +177,25 @@ form {
   flex-direction: column;
   text-align: left;
 }
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.loading-icon {
+  width: 70px;
+  height: 70px;
+}
+
 
 .form-group label {
   display: block;
