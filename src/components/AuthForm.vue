@@ -44,7 +44,6 @@
           <a @click="toggleAuthMode">{{ isLogin ? 'Register' : 'Login' }}</a>
         </p>
       </div>
-
     </form>
     <img class="form-image" src="../assets/nagatoro_inspect.png" alt="">
   </div>
@@ -53,6 +52,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { register, login } from '@/services/authService';
 
 const route = useRoute();
 const router = useRouter();
@@ -71,8 +71,8 @@ watch(
       isLogin.value = newPath === '/login';
       form.value = {
         confirmPassword: '',
-            password: '',
-          email: ''
+        password: '',
+        email: ''
       }
     }
 );
@@ -82,15 +82,28 @@ const toggleAuthMode = () => {
   router.push(newPath);
 };
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (!isLogin.value && form.value.password !== form.value.confirmPassword) {
     alert('Passwords do not match!');
     return;
   }
 
-  alert(`${isLogin.value ? 'Login' : 'Registration'} successful!`);
+  try {
+    if (isLogin.value) {
+      await login(form.value.email, form.value.password);
+      alert('Login successful!');
+      await router.push('/dashboard');
+    } else {
+      await register(form.value.email, form.value.password);
+      alert('Registration successful!');
+      await router.push('/login');
+    }
+  } catch (error) {
+    alert(error.message);
+  }
 };
 </script>
+
 
 
 

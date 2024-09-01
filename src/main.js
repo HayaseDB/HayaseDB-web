@@ -7,7 +7,7 @@ import './assets/styles/animations.css';
 import {FontAwesomeIcon} from './utils/fontAwesome'
 
 const app = createApp(App)
-
+console.log(process.env.VUE_APP_API_URL)
 app.use(router)
 
 app.component('fontAwesomeIcon', FontAwesomeIcon);
