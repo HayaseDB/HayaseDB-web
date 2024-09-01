@@ -10,6 +10,7 @@
             type="email"
             placeholder="Enter your email"
             required
+            autocomplete="email"
         />
       </div>
       <div class="form-group">
@@ -20,6 +21,7 @@
             type="password"
             placeholder="Enter your password"
             required
+            autocomplete="current-password"
         />
       </div>
       <div v-if="!isLogin" class="form-group">
@@ -30,6 +32,7 @@
             type="password"
             placeholder="Confirm your password"
             required
+            autocomplete="password"
         />
       </div>
       <div class="form-bottom">
