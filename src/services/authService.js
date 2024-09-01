@@ -36,10 +36,10 @@ export const checkToken = async () => {
     }
 
     try {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/user/validate`, {
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/user/check`, {
             headers: { Authorization: `Bearer ${token}` }
         });
-        return response.data.isValid;
+        return response.data;
     } catch (error) {
         throw new Error(error.response?.data?.message || 'Token validation failed');
     }

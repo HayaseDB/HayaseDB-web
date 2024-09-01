@@ -95,11 +95,11 @@ const handleSubmit = async () => {
     if (isLogin.value) {
       await login(form.value.email, form.value.password);
       alert('Login successful!');
-      await router.push('/dashboard');
+      window.location.href = '/';
     } else {
       await register(form.value.email, form.value.password);
       alert('Registration successful!');
-      await router.push('/login');
+      window.location.href = '/';
     }
   } catch (error) {
     alert(error.message);

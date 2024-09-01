@@ -33,7 +33,6 @@
                 :class="{ 'active-route': isActiveRoute(item.to, item.children) }"
                 @click="toggleDropdown(index)">
               {{ item.label }}<fontAwesomeIcon class="dropdown-symbol" :icon="['fa', 'caret-down']" />
-
             </a>
             <ul
                 v-if="item.children"
@@ -54,6 +53,31 @@
               </li>
             </ul>
           </li>
+
+          <li v-if="isLoggedIn" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" @click="toggleDropdown('account')">
+              {{ username }}<fontAwesomeIcon class="dropdown-symbol" :icon="['fa', 'caret-down']" />
+            </a>
+            <ul
+                class="dropdown-menu"
+                :class="{ show: isDropdownOpen === 'account' }">
+              <li class="dropdown-list">
+                <router-link to="/profile" class="dropdown-item" @click="closeMenu">
+                  Profile
+                </router-link>
+              </li>
+              <li class="dropdown-list">
+                <router-link to="/settings" class="dropdown-item" @click="closeMenu">
+                  Settings
+                </router-link>
+              </li>
+              <li class="dropdown-list">
+                <a @click="logout" class="dropdown-item logout">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <button class="theme-toggler" @click="toggleTheme">
           <fontAwesomeIcon :icon="['fa', 'sun']" />
@@ -65,17 +89,20 @@
 
 
 <script>
-import {toggleTheme} from "@/utils/theme";
+import { checkToken } from '@/services/authService';
+import { toggleTheme } from "@/utils/theme";
+import Cookies from 'js-cookie';
 
 export default {
   data() {
     return {
       isMenuOpen: false,
       isDropdownOpen: null,
+      isLoggedIn: false,
+      username: null,
       menuItems: [
         { label: 'Home', to: '/' },
         { label: 'About', to: '/about' },
-
         { label: 'Contact', to: '/contact' },
         {
           label: 'Docs',
@@ -84,8 +111,7 @@ export default {
             { label: 'Backend', to: '/docs/backend' }
           ]
         },
-        { label: 'Login', to: '/login' },
-
+        { label: 'Login', to: '/login', onlyIfLoggedOut: true },
       ]
     };
   },
@@ -117,11 +143,26 @@ export default {
       }
 
       return false;
+    },
+    async checkLoginStatus() {
+      try {
+        const loggedInUser = await checkToken();
+        this.isLoggedIn = loggedInUser.isValid;
+        this.username = loggedInUser.user.username;
+      } catch (error) {
+        this.isLoggedIn = false;
+      }
+    },
+    logout() {
+      Cookies.remove('token');
+      this.isLoggedIn = false;
+      this.$router.push('/login');
     }
+  },
+  created() {
+    this.checkLoginStatus();
   }
 };
-
-
 </script>
 
 
@@ -173,6 +214,11 @@ export default {
   align-items: center;
   cursor: pointer;
   padding: 0 10px;
+}
+
+.logout:hover{
+  background-color: rgba(255, 0, 0, 0.42) !important;
+  color: var(--text) !important;
 }
 
 .navbar-left {
@@ -242,6 +288,10 @@ export default {
   border: 1px solid var(--background-100);
   z-index: 1000;
   min-width: 150px;
+}
+
+a{
+  cursor: pointer;
 }
 
 .dropdown-menu.show {
