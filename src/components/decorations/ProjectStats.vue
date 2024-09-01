@@ -1,33 +1,59 @@
 <template>
   <section class="project-overview">
     <div class="metrics-container">
-      <div class="metric-card">
+      <div class="metric-card" v-if="stats">
         <h3 class="metric-title">Total Users</h3>
-        <p class="metric-value">1,245</p>
+        <p class="metric-value">{{ stats.userCount }}</p>
         <p class="metric-description">Number of active users registered on the platform.</p>
       </div>
-      <div class="metric-card">
-        <h3 class="metric-title">Database Entries</h3>
-        <p class="metric-value">5,678</p>
+      <div class="metric-card" v-if="stats">
+        <h3 class="metric-title">Total Animes</h3>
+        <p class="metric-value">{{ stats.AnimeEntries }}</p>
         <p class="metric-description">Total number of entries in the database.</p>
       </div>
-      <div class="metric-card">
-        <h3 class="metric-title">API Requests</h3>
-        <p class="metric-value">12,345</p>
-        <p class="metric-description">Number of API requests made in the past month.</p>
-      </div>
-      <div class="metric-card">
-        <h3 class="metric-title">Active Projects</h3>
-        <p class="metric-value">87</p>
+      <div class="metric-card" v-if="stats">
+        <h3 class="metric-title">Total Characters</h3>
+        <p class="metric-value">{{ stats.CharacterEntries }}</p>
         <p class="metric-description">Number of ongoing projects currently in progress.</p>
       </div>
+      <div class="metric-card" v-if="stats">
+        <h3 class="metric-title">API Requests</h3>
+        <p class="metric-value">{{ stats.CharacterEntries }}</p>
+        <p class="metric-description">Number of API requests made in the past month.</p>
+      </div>
     </div>
+    <div v-if="error" class="error-message">{{ error }}</div>
   </section>
 </template>
 
 <script>
+import { fetchStats } from '@/services/fetchService';
+
 export default {
   name: 'ProjectOverview',
+  data() {
+    return {
+      stats: null,
+      error: null,
+    };
+  },
+  methods: {
+    async updateStats() {
+      try {
+        this.stats = await fetchStats();
+        this.error = null;
+      } catch (error) {
+        this.error = error.message || 'Failed to load stats.';
+      }
+    }
+  },
+  created() {
+    this.updateStats();
+    this.interval = setInterval(this.updateStats, 5000);
+  },
+  beforeUnmount() {
+    clearInterval(this.interval);
+  }
 };
 </script>
 
@@ -92,6 +118,12 @@ export default {
 .metric-description {
   color: var(--text-600);
   font-size: var(--text-base);
+}
+
+.error-message {
+  color: red;
+  font-size: var(--text-lg);
+  margin-top: 1em;
 }
 
 @media (max-width: 1110px) {
