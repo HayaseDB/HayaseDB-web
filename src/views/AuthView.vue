@@ -1,7 +1,8 @@
 <template>
-  <div class="container">
-    <LoginForm class="smooth-slide-in-bottom" />
-  </div>
+    <div class="container">
+      <LoginForm class="smooth-slide-in-bottom" />
+    </div>
+
 </template>
 
 <style scoped>
@@ -14,7 +15,10 @@
   height: 100vh;
   background: var(--background-50);
   padding: 0 20px;
+  min-height: 840px;
 }
+
+
 </style>
 
 <script>

@@ -17,6 +17,9 @@
     --secondary: #b396e9;
     --accent: #39446a;
 
+    --danger: red;
+    --success:green;
+
     /* Text Colors */
     --text-50: #eef0f6;
     --text-100: #dde2ee;

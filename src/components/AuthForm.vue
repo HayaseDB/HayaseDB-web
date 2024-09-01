@@ -35,6 +35,8 @@
             autocomplete="password"
         />
       </div>
+      <p v-if="successMessage" class="message success-message">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="message error-message">{{ errorMessage }}</p>
       <div class="form-bottom">
         <button
             :class="{'btn-primary': !isLogin, 'btn-secondary': isLogin}"
@@ -42,11 +44,13 @@
         >
           {{ isLogin ? 'Login' : 'Register' }}
         </button>
+
         <p class="auth-toggle">
           {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
           <a @click="toggleAuthMode">{{ isLogin ? 'Register' : 'Login' }}</a>
         </p>
       </div>
+
     </form>
     <img class="form-image" src="../assets/nagatoro_inspect.png" alt="">
   </div>
@@ -68,6 +72,9 @@ const form = ref({
   confirmPassword: '',
 });
 
+const successMessage = ref('');
+const errorMessage = ref('');
+
 watch(
     () => route.path,
     (newPath) => {
@@ -76,7 +83,9 @@ watch(
         confirmPassword: '',
         password: '',
         email: ''
-      }
+      };
+      successMessage.value = '';
+      errorMessage.value = '';
     }
 );
 
@@ -86,32 +95,35 @@ const toggleAuthMode = () => {
 };
 
 const handleSubmit = async () => {
+  successMessage.value = '';
+  errorMessage.value = '';
+
   if (!isLogin.value && form.value.password !== form.value.confirmPassword) {
-    alert('Passwords do not match!');
+    errorMessage.value = 'Passwords do not match!';
     return;
   }
 
   try {
     if (isLogin.value) {
       await login(form.value.email, form.value.password);
-      alert('Login successful!');
-      window.location.href = '/';
+      successMessage.value = 'Login successful! Redirecting...';
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
     } else {
       await register(form.value.email, form.value.password);
-      alert('Registration successful!');
-      window.location.href = '/';
+      successMessage.value = 'Registration successful!';
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000);
     }
   } catch (error) {
-    alert(error.message);
+    errorMessage.value = error.message;
   }
 };
 </script>
 
-
-
-
 <style scoped>
-
 .auth-form {
   background: var(--background);
   border-radius: var(--border-radius-lg);
@@ -122,17 +134,16 @@ const handleSubmit = async () => {
   width: 100%;
   position: relative;
   overflow: hidden;
-
   text-align: center;
 }
 
-form{
-  height: 400px;
+form {
+  height: 440px;
   display: flex;
   flex-direction: column;
 }
 
-.form-bottom{
+.form-bottom {
   margin-top: auto;
 }
 
@@ -164,14 +175,6 @@ input {
   background-color: var(--background-50);
   color: var(--text);
   transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.form-image{
-  width: 80px;
-  position: absolute;
-  bottom: 0;
-  left: -10px;
-
 }
 
 input:focus {
@@ -213,5 +216,26 @@ button:active {
 .auth-toggle a:hover {
   color: var(--primary-500);
   text-decoration: underline;
+}
+
+.message {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: var(--text-sm);
+}
+
+.success-message {
+  color: var(--success);
+}
+
+.error-message {
+  color: var(--danger);
+}
+
+.form-image {
+  width: 80px;
+  position: absolute;
+  bottom: 0;
+  left: -10px;
 }
 </style>
