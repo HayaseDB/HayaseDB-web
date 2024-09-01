@@ -12,7 +12,7 @@
       <div :class="{'navbar-collapse': true, 'show': isMenuOpen}">
         <ul class="navbar-nav">
           <li
-              v-for="(item, index) in menuItems"
+              v-for="(item, index) in filteredMenuItems"
               :key="index"
               :class="{
                 'nav-item': true,
@@ -87,7 +87,6 @@
   </nav>
 </template>
 
-
 <script>
 import { checkToken } from '@/services/authService';
 import { toggleTheme } from "@/utils/theme";
@@ -114,6 +113,16 @@ export default {
         { label: 'Login', to: '/login', onlyIfLoggedOut: true },
       ]
     };
+  },
+  computed: {
+    filteredMenuItems() {
+      return this.menuItems.filter(item =>
+          (item.onlyIfLoggedOut && !this.isLoggedIn) ||
+          (!item.onlyIfLoggedOut && this.isLoggedIn) ||
+          (!item.onlyIfLoggedOut && !this.isLoggedIn)
+
+      );
+    }
   },
   methods: {
     toggleMenu() {
@@ -164,6 +173,7 @@ export default {
   }
 };
 </script>
+
 
 
 <style scoped>
