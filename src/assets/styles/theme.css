@@ -35,6 +35,7 @@
 
     /* Background Colors */
     --background-50: #edf0f7;
+    --background-75: #dfe2ec;
     --background-100: #dbe0f0;
     --background-200: #b8c2e0;
     --background-300: #94a3d1;
@@ -131,6 +132,7 @@
 
     /* Dark Mode Background Colors */
     --background-50: #080a12;
+    --background-75: #0d0f17;
     --background-100: #0f1424;
     --background-200: #1f2947;
     --background-300: #2e3d6b;

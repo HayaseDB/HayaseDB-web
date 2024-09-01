@@ -2,9 +2,15 @@
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-content">
-        <div class="footer-section footer-about">
-          <h2 class="footer-heading">About Us</h2>
-          <p class="footer-text about-us-text">We offer a free, open-source anime database with a community driven collection of data and a powerful API for developers.</p>
+
+        <div class="footer-section footer-social">
+          <h2 class="footer-heading">Follow Us</h2>
+          <div class="social-icons">
+            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
+            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
+            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
+            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+          </div>
         </div>
         <div class="footer-section footer-links">
           <h2 class="footer-heading">Quick Links</h2>
@@ -14,14 +20,9 @@
             <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
           </ul>
         </div>
-        <div class="footer-section footer-social">
-          <h2 class="footer-heading">Follow Us</h2>
-          <div class="social-icons">
-            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
-            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
-            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
-            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
-          </div>
+        <div class="footer-section footer-about">
+          <h2 class="footer-heading">About Us</h2>
+          <p class="footer-text about-us-text">We offer a free, open-source anime database with a community driven collection of data and a powerful API for developers.</p>
         </div>
       </div>
     </div>
@@ -142,7 +143,7 @@ export default {
 .footer-image {
   position: absolute;
   bottom: 0;
-  right: 10%;
+  left: 10%;
   width: 100px;
   height: auto;
   margin-left: 15px;

@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: var(--background-50);
+  background: var(--background-75);
   padding: 0 20px;
   min-height: 840px;
 }

@@ -92,8 +92,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 140px 40px 0;
-  background-color: var(--background-50);
+  padding: 150px 40px 0;
+  background-color: var(--background-75);
   overflow: hidden;
 
 
