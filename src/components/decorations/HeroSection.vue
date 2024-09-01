@@ -94,6 +94,8 @@ export default {
   justify-content: center;
   padding: 140px 40px 0;
   background-color: var(--background-50);
+  overflow: hidden;
+
 
 }
 

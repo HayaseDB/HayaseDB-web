@@ -120,7 +120,6 @@ export default {
           (item.onlyIfLoggedOut && !this.isLoggedIn) ||
           (!item.onlyIfLoggedOut && this.isLoggedIn) ||
           (!item.onlyIfLoggedOut && !this.isLoggedIn)
-
       );
     }
   },
@@ -165,7 +164,7 @@ export default {
     logout() {
       Cookies.remove('token');
       this.isLoggedIn = false;
-      this.$router.push('/login');
+      this.$router.push('/');
     }
   },
   created() {
