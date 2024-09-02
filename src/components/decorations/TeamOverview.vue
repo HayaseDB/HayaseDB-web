@@ -2,7 +2,7 @@
   <section class="team-section">
     <div class="team-content">
       <div class="team-info">
-        <h2>Our Team <font-awesome-icon class="heart-icon" :icon="['fa', 'heart']"/></h2>
+        <h2>Our Team <font-awesome-icon class="heart-icon pulse-animation" :icon="['fa', 'heart']"/></h2>
         <p>We are proud to offer HayaseDB to you. As passionate young developers and designers, we dedicate ourselves to this project to provide value to our community.</p>
       </div>
 
@@ -238,6 +238,10 @@ export default {
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
   }
 
 
