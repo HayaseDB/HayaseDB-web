@@ -1,22 +1,22 @@
 <template>
   <section class="project-overview">
     <div class="metrics-container">
-      <div class="metric-card smooth-fade-in" v-if="stats">
+      <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Users</h3>
         <p class="metric-value">{{ animatedValues.userCount }}</p>
         <p class="metric-description">Number of active users registered on the platform.</p>
       </div>
-      <div class="metric-card smooth-fade-in" v-if="stats">
+      <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Animes</h3>
         <p class="metric-value">{{ animatedValues.AnimeEntries }}</p>
         <p class="metric-description">Total number of Anime entries in the database.</p>
       </div>
-      <div class="metric-card smooth-fade-in" v-if="stats">
+      <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Characters</h3>
         <p class="metric-value">{{ animatedValues.CharacterEntries }}</p>
         <p class="metric-description">Total number of Character entries in the database.</p>
       </div>
-      <div class="metric-card smooth-fade-in" v-if="stats">
+      <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">API Requests</h3>
         <p class="metric-value">{{ animatedValues.RequestsLast30Days }}</p>
         <p class="metric-description">Number of API requests made in the past month.</p>
@@ -26,9 +26,8 @@
   </section>
 </template>
 
-
 <script>
-import {fetchStats} from "@/services/fetchService";
+import { fetchStats } from "@/services/fetchService";
 
 export default {
   name: 'ProjectOverview',
@@ -62,7 +61,7 @@ export default {
 
       Object.keys(this.animatedValues).forEach((key) => {
         const startValue = this.animatedValues[key];
-        const endValue = newStats[key];
+        const endValue = newStats[key] || startValue;
         const increment = (endValue - startValue) / steps;
 
         let currentStep = 0;
@@ -88,8 +87,8 @@ export default {
     clearInterval(this.interval);
   }
 };
-
 </script>
+
 <style scoped>
 .project-overview {
   background-color: var(--background);
@@ -145,7 +144,6 @@ export default {
   font-size: var(--text-lg);
   margin-top: 1em;
 }
-
 
 @media (max-width: 1110px) {
   .metrics-container {
