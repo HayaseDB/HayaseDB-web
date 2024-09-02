@@ -3,22 +3,22 @@
     <div class="metrics-container">
       <div class="metric-card smooth-fade-in" v-if="stats">
         <h3 class="metric-title">Total Users</h3>
-        <p class="metric-value">{{ stats.userCount }}</p>
+        <p class="metric-value">{{ animatedValues.userCount }}</p>
         <p class="metric-description">Number of active users registered on the platform.</p>
       </div>
       <div class="metric-card smooth-fade-in" v-if="stats">
         <h3 class="metric-title">Total Animes</h3>
-        <p class="metric-value">{{ stats.AnimeEntries }}</p>
+        <p class="metric-value">{{ animatedValues.AnimeEntries }}</p>
         <p class="metric-description">Total number of Anime entries in the database.</p>
       </div>
       <div class="metric-card smooth-fade-in" v-if="stats">
         <h3 class="metric-title">Total Characters</h3>
-        <p class="metric-value">{{ stats.CharacterEntries }}</p>
+        <p class="metric-value">{{ animatedValues.CharacterEntries }}</p>
         <p class="metric-description">Total number of Character entries in the database.</p>
       </div>
       <div class="metric-card smooth-fade-in" v-if="stats">
         <h3 class="metric-title">API Requests</h3>
-        <p class="metric-value">{{ stats.RequestsLast30Days }}</p>
+        <p class="metric-value">{{ animatedValues.RequestsLast30Days }}</p>
         <p class="metric-description">Number of API requests made in the past month.</p>
       </div>
     </div>
@@ -26,8 +26,9 @@
   </section>
 </template>
 
+
 <script>
-import { fetchStats } from '@/services/fetchService';
+import {fetchStats} from "@/services/fetchService";
 
 export default {
   name: 'ProjectOverview',
@@ -35,16 +36,48 @@ export default {
     return {
       stats: null,
       error: null,
+      animatedValues: {
+        userCount: 0,
+        AnimeEntries: 0,
+        CharacterEntries: 0,
+        RequestsLast30Days: 0,
+      },
     };
   },
   methods: {
     async updateStats() {
       try {
-        this.stats = await fetchStats();
+        const newStats = await fetchStats();
+        this.stats = newStats;
         this.error = null;
+        this.animateValues(newStats);
       } catch (error) {
         this.error = error.message || 'Failed to load stats.';
       }
+    },
+    animateValues(newStats) {
+      const duration = 1000;
+      const stepTime = 20;
+      const steps = duration / stepTime;
+
+      Object.keys(this.animatedValues).forEach((key) => {
+        const startValue = this.animatedValues[key];
+        const endValue = newStats[key];
+        const increment = (endValue - startValue) / steps;
+
+        let currentStep = 0;
+
+        const updateValue = () => {
+          currentStep += 1;
+          this.animatedValues[key] = Math.round(startValue + increment * currentStep);
+
+          if (currentStep < steps) {
+            setTimeout(updateValue, stepTime);
+          }
+        };
+
+        updateValue();
+      });
     }
   },
   created() {
@@ -55,15 +88,14 @@ export default {
     clearInterval(this.interval);
   }
 };
-</script>
 
+</script>
 <style scoped>
 .project-overview {
   background-color: var(--background);
   text-align: center;
   padding: 4em 2em;
 }
-
 
 .metrics-container {
   display: flex;
@@ -113,6 +145,7 @@ export default {
   font-size: var(--text-lg);
   margin-top: 1em;
 }
+
 
 @media (max-width: 1110px) {
   .metrics-container {
