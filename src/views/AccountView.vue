@@ -2,7 +2,7 @@
   <div class="account-view-container">
 
   <AccountSidebar/>
-  <div>
+  <div class="account-content-container">
     <h1>Account</h1>
     <router-view />
   </div>
@@ -22,9 +22,16 @@ export default {
 
 <style>
 .account-view-container{
-
   display: flex;
   min-height: 100vh;
   flex-direction: row;
+}
+
+.account-content-container{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px;
+
 }
 </style>

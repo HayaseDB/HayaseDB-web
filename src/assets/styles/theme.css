@@ -20,6 +20,16 @@
     --danger: red;
     --success:green;
 
+    /* Warning Colors */
+    --warning-400: #f5a623;
+    --warning-500: #c88220;
+    --warning-600: #a16819;
+
+    /* Danger Colors */
+    --danger-400: #e74c3c;
+    --danger-500: #c0392b;
+    --danger-600: #a93226;
+
     /* Text Colors */
     --text-50: #eef0f6;
     --text-100: #dde2ee;
@@ -285,6 +295,25 @@ button {
     color: var(--text-600);
     cursor: not-allowed;
 }
+
+
+.btn-warning {
+    background-color: var(--warning-400);
+}
+
+.btn-warning:hover {
+    background-color: var(--warning-500);
+}
+
+.btn-danger {
+    background-color: var(--danger-400);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-500);
+}
+
+
 button:disabled {
     cursor: not-allowed;
 }
