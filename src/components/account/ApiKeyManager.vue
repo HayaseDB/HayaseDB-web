@@ -29,7 +29,7 @@
             <td>{{ formatDate(key.createdAt) }}</td>
             <td>{{ formatDate(key.lastRequest) }}</td>
             <td>{{ key.requests }}</td>
-            <td :class="{ 'rate-limit-active': key.rateLimitActive }">{{ key.rateLimit }}</td>
+            <td :class="{ 'rate-limit-active': key.rateLimitActive }">{{key.limitRequestsCounter}}/{{ key.rateLimit }}</td>
             <td class="actions">
               <div class="actions-container">
                 <button @click="regenerateKey(key._id)" class="btn-warning"><fontAwesomeIcon :icon="['fa', 'rotate']" /></button>
@@ -148,9 +148,9 @@ export default {
 }
 
 .modal-content {
+  background-color: var(--background-100);
   display: flex;
   flex-direction: column;
-  background: white;
   padding: 2em;
   position: relative;
   top: 40px;
