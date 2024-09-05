@@ -35,7 +35,6 @@
                 <button @click="regenerateKey(key._id)" class="btn-warning"><fontAwesomeIcon :icon="['fa', 'rotate']" /></button>
                 <button @click="revokeKey(key._id)" class="btn-danger"><fontAwesomeIcon :icon="['fa', 'trash']" /></button>
               </div>
-
             </td>
           </tr>
           </tbody>
@@ -45,20 +44,35 @@
     <div v-else class="no-keys">
       <p>No API keys found.</p>
     </div>
+
+    <!-- Modal for displaying API key -->
+    <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
+      <div class="modal-content">
+        <h3>API Key Created</h3>
+        <p>Your new API key is:</p>
+        <input type="text" :value="newApiKey" readonly />
+        <div class="modal-footer">
+          <button @click="copyToClipboard">Copy</button>
+          <button @click="closeModal">Close</button>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 
-
 <script>
 import { createApiKey, listApiKeys, regenerateApiKey, revokeApiKey } from '@/services/apiKeyService';
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
-  components: {FontAwesomeIcon},
+  components: { FontAwesomeIcon },
   data() {
     return {
       newKeyTitle: '',
-      keys: []
+      keys: [],
+      newApiKey: '', // Store the new API key here
+      showModal: false // Control modal visibility
     };
   },
   methods: {
@@ -71,9 +85,11 @@ export default {
     },
     async createApiKey() {
       try {
-        await createApiKey(this.newKeyTitle);
+        const response = await createApiKey(this.newKeyTitle);
+        this.newApiKey = response.apiKey; // Assuming response contains the new API key
         this.newKeyTitle = '';
         await this.fetchKeys();
+        this.showModal = true; // Show the modal
       } catch (error) {
         console.error(error.message);
       }
@@ -96,6 +112,14 @@ export default {
     },
     formatDate(date) {
       return new Date(date).toLocaleString();
+    },
+    copyToClipboard() {
+      navigator.clipboard.writeText(this.newApiKey)
+          .then(() => alert('API key copied to clipboard'))
+          .catch(err => console.error('Failed to copy API key: ', err));
+    },
+    closeModal() {
+      this.showModal = false;
     }
   },
   mounted() {
@@ -106,6 +130,82 @@ export default {
 
 
 <style scoped>
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 2em;
+  position: relative;
+  top: 40px;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  width: 80%;
+  height: 220px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+}
+
+.modal-footer{
+
+  flex-direction: row;
+}
+
+.modal-content input {
+  padding: 0.5em;
+  margin: 1em 0;
+  border: 1px solid var(--background-300);
+  border-radius: var(--border-radius-md);
+}
+
+.modal-content button {
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  margin: 0.5em;
+}
+
+.modal-content button:first-of-type {
+  background: var(--primary);
+  color: white;
+}
+
+.modal-content button:last-of-type {
+  background: var(--danger);
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 650px) {
+  .modal-content {
+    padding: 1em;
+  }
+
+
+}
+
 .api-key-manager {
   padding: 2em;
   background-color: var(--background);

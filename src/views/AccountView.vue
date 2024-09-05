@@ -42,7 +42,7 @@ export default {
 }
 
 .account-view-content-wrapper{
-  margin: 0 15px;
+  margin: 0 15px 50px;
   width: 100%;
 }
 </style>
