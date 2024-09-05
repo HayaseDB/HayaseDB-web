@@ -113,8 +113,8 @@ export default {
             label: this.username,
             onlyIfLoggedIn: true,
             children: [
-              { label: 'Profile', to: '/profile' },
-              { label: 'Settings', to: '/settings' },
+              { label: 'Profile', to: '/account/profile' },
+              { label: 'Developer', to: '/account/developer' },
               { label: 'Logout', to: null, customClass: 'logout', action: 'logout' }
             ]
           }
