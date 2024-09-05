@@ -1,6 +1,6 @@
 <template>
   <div class="developer-view">
-    <h2>Developer Dashboard</h2>
+    <h1>Developer Dashboard</h1>
     <ApiKeyManager/>
   </div>
 </template>
@@ -16,6 +16,8 @@ export default {
 </script>
 
 <style>
+
+
 
 </style>
 

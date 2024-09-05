@@ -10,7 +10,7 @@
       <nav class="sidebar-nav">
         <ul>
           <li v-for="(item, index) in menuItems" :key="index">
-            <router-link :to="item.link" :class="{ 'active': currentSection === item.name }" @click="currentSection = item.name">
+            <router-link :to="item.link" active-class="active" @click="currentSection = item.name">
               {{ item.label }}
             </router-link>
           </li>
@@ -138,5 +138,10 @@ nav ul li a.active {
 .sidebar-footer {
   margin-top: auto;
   text-align: center;
+}
+@media (max-width: 1150px) {
+.sidebar {
+  position: fixed;
+}
 }
 </style>

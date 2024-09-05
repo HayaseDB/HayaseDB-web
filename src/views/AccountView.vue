@@ -1,12 +1,15 @@
 <template>
-  <div class="account-view-container">
+    <div class="account-view-container">
 
-  <AccountSidebar/>
-  <div class="account-content-container">
-    <h1>Account</h1>
-    <router-view />
+      <AccountSidebar/>
+      <div class="account-view-content-wrapper">
+
+      <div class="account-content-container">
+        <router-view />
+      </div>
+    </div>
   </div>
-  </div>
+
 
 </template>
 
@@ -22,6 +25,7 @@ export default {
 
 <style>
 .account-view-container{
+  background-color: var(--background-75);
   display: flex;
   min-height: 100vh;
   flex-direction: row;
@@ -31,7 +35,14 @@ export default {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  margin: 20px;
 
+  margin: 80px auto 0;
+  max-width: 1200px;
+
+}
+
+.account-view-content-wrapper{
+  margin: 0 15px;
+  width: 100%;
 }
 </style>
