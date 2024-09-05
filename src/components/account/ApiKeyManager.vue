@@ -48,14 +48,13 @@
     <!-- Modal for displaying API key -->
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
       <div class="modal-content">
-        <h3>API Key Created</h3>
-        <p>Your new API key is:</p>
+        <h3>{{ modalTitle }}</h3>
+        <p>Your API key is:</p>
         <input type="text" :value="newApiKey" readonly />
         <div class="modal-footer">
           <button @click="copyToClipboard">Copy</button>
           <button @click="closeModal">Close</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -71,8 +70,9 @@ export default {
     return {
       newKeyTitle: '',
       keys: [],
-      newApiKey: '', // Store the new API key here
-      showModal: false // Control modal visibility
+      newApiKey: '',
+      showModal: false,
+      modalTitle: ''
     };
   },
   methods: {
@@ -86,18 +86,22 @@ export default {
     async createApiKey() {
       try {
         const response = await createApiKey(this.newKeyTitle);
-        this.newApiKey = response.apiKey; // Assuming response contains the new API key
+        this.newApiKey = response.key;
         this.newKeyTitle = '';
         await this.fetchKeys();
-        this.showModal = true; // Show the modal
+        this.modalTitle = 'API Key Created';
+        this.showModal = true;
       } catch (error) {
         console.error(error.message);
       }
     },
     async regenerateKey(keyId) {
       try {
-        await regenerateApiKey(keyId);
+        const response = await regenerateApiKey(keyId);
+        this.newApiKey = response.key;
         await this.fetchKeys();
+        this.modalTitle = 'API Key Regenerated';
+        this.showModal = true;
       } catch (error) {
         console.error(error.message);
       }
