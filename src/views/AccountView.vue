@@ -45,4 +45,11 @@ export default {
   margin: 0 15px 50px;
   width: 100%;
 }
+
+@media (max-width: 1400px) {
+  .account-content-container{
+    margin: 140px auto 0;
+  }
+
+}
 </style>

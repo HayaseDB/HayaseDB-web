@@ -23,6 +23,7 @@
                 id="username"
                 v-model="username"
                 class="input-field"
+                :placeholder="currentUser.username || 'Username'"
                 :aria-invalid="errors.username ? 'true' : 'false'"
                 aria-describedby="username-error"
             />
@@ -46,6 +47,7 @@
                 id="email"
                 v-model="email"
                 class="input-field"
+                :placeholder="currentUser.email || 'Email Address'"
                 :aria-invalid="errors.email ? 'true' : 'false'"
                 aria-describedby="email-error"
             />
@@ -114,19 +116,37 @@
 </template>
 
 <script>
+import { checkToken } from '@/services/authService';
+import { updateUserCredentials } from '@/services/userService';
+
 export default {
   data() {
     return {
       profilePicture: 'https://api.picscape.xyz/image/view/73501',
       username: '',
       email: '',
-      roles: ["test", "user"],
+      roles: [],
       password: '',
       newPassword: '',
       confirmPassword: '',
       errors: {},
-      submissionError: ''
+      submissionError: '',
+      loading: true,
+      currentUser: {}
     };
+  },
+  async created() {
+    try {
+      const userInfo = await checkToken();
+      this.currentUser = userInfo.user || {};
+      this.username = '';
+      this.email = '';
+      this.roles = [];
+      this.loading = false;
+    } catch (error) {
+      this.submissionError = 'Failed to load user information. Please try again later.';
+      this.loading = false;
+    }
   },
   methods: {
     handlePictureChange(event) {
@@ -146,17 +166,19 @@ export default {
 
       return Object.keys(this.errors).length === 0;
     },
-    submitForm() {
+    async submitForm() {
       if (this.validateForm()) {
-        console.log('Form submitted', {
-          username: this.username,
-          email: this.email,
-          roles: this.roles,
-          password: this.password,
-          newPassword: this.newPassword,
-          confirmPassword: this.confirmPassword
-        });
-        // Submit the form
+        try {
+          const response = await updateUserCredentials(
+              this.password,
+              this.newPassword,
+              this.username,
+              this.email
+          );
+          console.log('Profile updated successfully', response);
+        } catch (error) {
+          this.submissionError = error.message;
+        }
       } else {
         this.submissionError = 'Please fix the errors above and try again.';
       }
@@ -168,12 +190,14 @@ export default {
 
 <style scoped>
 .profile-settings {
-  max-width: 650px;
-  margin: 0 auto;
+  max-width: 800px;
+  margin: 0 auto 50px;
+  width: 100%;
   padding: 30px;
   background-color: var(--background);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-xl);
+  box-sizing: border-box;
 }
 
 h1 {
@@ -183,17 +207,19 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 1.8em;
-  width: 100%;
+  margin-bottom: 1.5em;
+  position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .profile-picture-container {
   text-align: center;
   position: relative;
+  width: 100%;
 }
-
 
 .profile-picture-upload {
   display: flex;
@@ -203,8 +229,8 @@ h1 {
   position: relative;
   overflow: hidden;
   border-radius: 20px;
+  width: 100%;
 }
-
 
 .profile-picture-preview {
   width: 100%;
@@ -213,6 +239,7 @@ h1 {
   box-shadow: var(--shadow-md);
   transition: transform 0.3s ease;
 }
+
 .file-input {
   display: none;
 }
@@ -236,7 +263,6 @@ h1 {
   overflow: hidden;
 }
 
-
 .profile-picture-upload:hover .change-pfp-message {
   opacity: 1;
 }
@@ -246,6 +272,8 @@ h1 {
   font-size: var(--text-base);
   border-radius: var(--border-radius-md);
   transition: box-shadow 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .input-field:focus {
@@ -279,17 +307,25 @@ h1 {
   display: flex;
   gap: 20px;
   flex-direction: row;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .form-header {
   display: flex;
   flex-direction: row;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-header-right {
-  display: flex;
-  flex-direction: column;
   flex: 1;
 }
 
@@ -306,7 +342,6 @@ h1 {
 
 .role-tag {
   background-color: var(--primary-200);
-
   padding: 6px 12px;
   border-radius: var(--border-radius-md);
   font-size: var(--text-sm);
@@ -317,6 +352,24 @@ h1 {
   color: var(--accent);
   font-size: var(--text-sm);
 }
+
+@media (max-width: 500px) {
+  .form-header {
+    flex-direction: column;
+  }
+
+  .form-header-left, .form-header-right {
+    flex: 1;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .password-group {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
 
 
 </style>
