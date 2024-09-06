@@ -29,6 +29,15 @@
             <p v-if="errors.username" id="username-error" class="error-message">{{ errors.username }}</p>
           </div>
 
+          <!-- Roles -->
+          <div class="form-group">
+            <label class="text-secondary">Roles</label>
+            <div class="roles-tags">
+              <span v-for="role in roles" :key="role" class="role-tag">{{ role }}</span>
+              <p v-if="roles.length === 0" class="no-roles-message">No roles assigned.</p>
+            </div>
+          </div>
+
           <!-- Email -->
           <div class="form-group">
             <label for="email" class="text-secondary">Email</label>
@@ -111,6 +120,7 @@ export default {
       profilePicture: 'https://api.picscape.xyz/image/view/73501',
       username: '',
       email: '',
+      roles: ["test", "user"],
       password: '',
       newPassword: '',
       confirmPassword: '',
@@ -128,7 +138,6 @@ export default {
     validateForm() {
       this.errors = {};
 
-      // Only validate password fields if the new password is provided
       if (this.newPassword || this.confirmPassword) {
         if (!this.password) this.errors.password = 'Old password is required.';
         if (!this.newPassword) this.errors.newPassword = 'New password is required.';
@@ -142,6 +151,7 @@ export default {
         console.log('Form submitted', {
           username: this.username,
           email: this.email,
+          roles: this.roles,
           password: this.password,
           newPassword: this.newPassword,
           confirmPassword: this.confirmPassword
@@ -154,6 +164,8 @@ export default {
   }
 };
 </script>
+
+
 <style scoped>
 .profile-settings {
   max-width: 650px;
@@ -284,5 +296,25 @@ h1 {
 .form-header-left {
   flex: 0 0 auto;
   width: 30%;
+}
+
+.roles-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.role-tag {
+  background-color: var(--primary-200);
+  color: var(--primary-800);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-md);
+  font-size: var(--text-sm);
+  display: inline-block;
+}
+
+.no-roles-message {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
 }
 </style>
