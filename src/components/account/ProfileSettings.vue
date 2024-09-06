@@ -117,12 +117,12 @@
 
 <script>
 import { checkToken } from '@/services/authService';
-import { updateUserCredentials } from '@/services/userService';
+import { updateUserCredentials, uploadProfilePicture } from '@/services/userService';
 
 export default {
   data() {
     return {
-      profilePicture: 'https://api.picscape.xyz/image/view/73501',
+      profilePicture: '',
       username: '',
       email: '',
       roles: [],
@@ -132,7 +132,8 @@ export default {
       errors: {},
       submissionError: '',
       loading: true,
-      currentUser: {}
+      currentUser: {},
+      selectedFile: null,
     };
   },
   async created() {
@@ -140,8 +141,9 @@ export default {
       const userInfo = await checkToken();
       this.currentUser = userInfo.user || {};
       this.username = '';
-      this.email = '';
-      this.roles = [];
+      this.email =  '';
+      this.roles = this.currentUser.roles || [];
+      this.profilePicture = this.currentUser.profilePicture || '';
       this.loading = false;
     } catch (error) {
       this.submissionError = 'Failed to load user information. Please try again later.';
@@ -152,6 +154,7 @@ export default {
     handlePictureChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.selectedFile = file;
         this.profilePicture = URL.createObjectURL(file);
       }
     },
@@ -169,13 +172,24 @@ export default {
     async submitForm() {
       if (this.validateForm()) {
         try {
+          const formData = new FormData();
+          if (this.selectedFile) {
+            formData.append('profilePicture', this.selectedFile);
+          }
+
+          if (this.selectedFile) {
+            await uploadProfilePicture(this.selectedFile);
+          }
+
           const response = await updateUserCredentials(
               this.password,
               this.newPassword,
               this.username,
               this.email
           );
+
           console.log('Profile updated successfully', response);
+          this.submissionError = '';
         } catch (error) {
           this.submissionError = error.message;
         }

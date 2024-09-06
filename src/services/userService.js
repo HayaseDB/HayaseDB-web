@@ -33,10 +33,29 @@ export const updateUserCredentials = async (currentPassword, newPassword, userna
             newEmail: email
         };
 
-        console.log('Sending request with body:', body);
-
         const response = await apiClient.post('/user/edit', body, {
             headers: getAuthHeader()
+        });
+
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+
+
+
+export const uploadProfilePicture = async (file) => {
+    try {
+        const formData = new FormData();
+        formData.append('profilePicture', file);
+
+        const response = await apiClient.post('/user/edit', formData, {
+            headers: {
+                ...getAuthHeader(),
+                'Content-Type': 'multipart/form-data'
+            }
         });
 
         return response.data;
