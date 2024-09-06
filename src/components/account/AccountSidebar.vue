@@ -44,6 +44,7 @@ export default {
 
 <style scoped>
 .sidebar {
+  z-index: 100;
   width: 250px;
   background-color: var(--background);
   color: var(--text);
