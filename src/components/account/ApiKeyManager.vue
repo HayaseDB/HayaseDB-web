@@ -148,18 +148,20 @@ export default {
 }
 
 .modal-content {
-  background-color: var(--background-100);
+  background-color: var(--background);
   display: flex;
   flex-direction: column;
   padding: 2em;
   position: relative;
-  top: 40px;
+  top: 90px;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--background-300);
   width: 80%;
   height: 220px;
   max-width: 500px;
   text-align: center;
+
 }
 
 .modal-content h3 {
