@@ -1,6 +1,8 @@
 <template>
   <div class="profile-settings">
-
+    <div v-if="loading" class="loading-overlay">
+      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
+    </div>
 
     <h1 class="gradient-animation">Profile Settings</h1>
     <form @submit.prevent="submitForm">
@@ -221,6 +223,8 @@ export default {
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-xl);
   box-sizing: border-box;
+  position: relative; /* Add relative positioning */
+
 }
 
 h1 {
@@ -394,6 +398,24 @@ h1 {
 }
 
 
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--border-radius-lg);
+}
+
+.loading-icon {
+  width: 80px;
+  height: 80px;
+}
 
 
 
