@@ -1,6 +1,11 @@
 <template>
   <div class="developer-view">
-    <h1>Developer Dashboard</h1>
+    <div class="developer-view-header">
+      <h1>Developer Dashboard</h1>
+      <hr class="header-hr" />
+    </div>
+
+
     <ApiKeyManager/>
   </div>
 </template>
@@ -14,9 +19,3 @@ export default {
   }
 };
 </script>
-
-<style>
-
-
-</style>
-

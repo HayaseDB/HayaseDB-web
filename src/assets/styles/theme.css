@@ -117,6 +117,9 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+
+
 }
 
 [data-theme='dark'] {
@@ -264,6 +267,19 @@ button {
     white-space: nowrap;
     flex-shrink: 0;
 }
+
+h1{
+    padding-bottom: 0;
+}
+
+
+.header-hr{
+    margin-bottom: 60px;
+    border-color: rgba(17, 22, 34, 0.31) !important;
+}
+
+
+
 
 /* Button Variants */
 .btn-primary {
