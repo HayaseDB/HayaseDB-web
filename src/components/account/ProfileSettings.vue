@@ -1,6 +1,6 @@
 <template>
   <div class="profile-settings">
-    <h1 class="text-primary gradient-animation">Profile Settings</h1>
+    <h1 class="gradient-animation">Profile Settings</h1>
     <form @submit.prevent="submitForm">
       <div class="form-header">
         <div class="form-header-left">
@@ -16,7 +16,7 @@
         <div class="form-header-right">
           <!-- Username -->
           <div class="form-group">
-            <label for="username" class="text-secondary">Username</label>
+            <label for="username" class="text">Username</label>
             <input
                 autocomplete="username"
                 type="text"
@@ -31,7 +31,7 @@
 
           <!-- Roles -->
           <div class="form-group">
-            <label class="text-secondary">Roles</label>
+            <label class="text">Roles</label>
             <div class="roles-tags">
               <span v-for="role in roles" :key="role" class="role-tag">{{ role }}</span>
               <p v-if="roles.length === 0" class="no-roles-message">No roles assigned.</p>
@@ -40,7 +40,7 @@
 
           <!-- Email -->
           <div class="form-group">
-            <label for="email" class="text-secondary">Email</label>
+            <label for="email" class="text">Email</label>
             <input
                 type="email"
                 id="email"
@@ -57,7 +57,7 @@
       <div class="form-footer">
         <!-- Old Password -->
         <div class="form-group">
-          <label for="password" class="text-secondary">Old Password</label>
+          <label for="password" class="text">Old Password</label>
           <input
               autocomplete="current-password"
               type="password"
@@ -74,7 +74,7 @@
         <!-- New Password and Confirm Password -->
         <div class="password-group">
           <div class="form-group">
-            <label for="new-password" class="text-secondary">New Password</label>
+            <label for="new-password" class="text">New Password</label>
             <input
                 autocomplete="new-password"
                 type="password"
@@ -88,7 +88,7 @@
             <p v-if="errors.newPassword" id="new-password-error" class="error-message">{{ errors.newPassword }}</p>
           </div>
           <div class="form-group">
-            <label for="confirm-password" class="text-secondary">Confirm Password</label>
+            <label for="confirm-password" class="text">Confirm Password</label>
             <input
                 autocomplete="new-password"
                 type="password"
@@ -306,7 +306,7 @@ h1 {
 
 .role-tag {
   background-color: var(--primary-200);
-  color: var(--primary-800);
+
   padding: 6px 12px;
   border-radius: var(--border-radius-md);
   font-size: var(--text-sm);
@@ -314,7 +314,9 @@ h1 {
 }
 
 .no-roles-message {
-  color: var(--text-secondary);
+  color: var(--accent);
   font-size: var(--text-sm);
 }
+
+
 </style>

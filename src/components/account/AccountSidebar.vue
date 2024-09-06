@@ -146,6 +146,7 @@ nav ul li a.active {
 @media (max-width: 1150px) {
 .sidebar {
   position: fixed;
+  height: 100%;
 }
 }
 </style>
