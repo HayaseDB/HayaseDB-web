@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import HeroSection from '../components/decorations/HeroSection.vue';
+import HeroSection from '@/components/decorations/HeroSection.vue';
 import PlansOverview from "@/components/decorations/PlansOverview.vue";
 import ProjectOverview from "@/components/decorations/ProjectStats.vue";
 import TeamOverview from "@/components/decorations/TeamOverview.vue";

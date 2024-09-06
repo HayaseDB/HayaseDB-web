@@ -20,6 +20,16 @@
     --danger: red;
     --success:green;
 
+    /* Warning Colors */
+    --warning-400: #f5a623;
+    --warning-500: #c88220;
+    --warning-600: #a16819;
+
+    /* Danger Colors */
+    --danger-400: #e74c3c;
+    --danger-500: #c0392b;
+    --danger-600: #a93226;
+
     /* Text Colors */
     --text-50: #eef0f6;
     --text-100: #dde2ee;
@@ -107,6 +117,9 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+
+
+
 }
 
 [data-theme='dark'] {
@@ -255,6 +268,19 @@ button {
     flex-shrink: 0;
 }
 
+h1{
+    padding-bottom: 0;
+}
+
+
+.header-hr{
+    margin-bottom: 60px;
+    border-color: rgba(17, 22, 34, 0.31) !important;
+}
+
+
+
+
 /* Button Variants */
 .btn-primary {
     background-color: var(--primary-400);
@@ -285,6 +311,25 @@ button {
     color: var(--text-600);
     cursor: not-allowed;
 }
+
+
+.btn-warning {
+    background-color: var(--warning-400);
+}
+
+.btn-warning:hover {
+    background-color: var(--warning-500);
+}
+
+.btn-danger {
+    background-color: var(--danger-400);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-500);
+}
+
+
 button:disabled {
     cursor: not-allowed;
 }

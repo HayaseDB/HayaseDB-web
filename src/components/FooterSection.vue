@@ -42,6 +42,7 @@ export default {
 
 <style scoped>
 .footer {
+  z-index: 100;
   background: var(--gradient-footer);
   color: var(--text-100);
   padding: 40px 20px 0;
