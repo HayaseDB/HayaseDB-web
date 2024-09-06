@@ -117,6 +117,7 @@
       <div class="form-group submit-group">
         <button type="submit" class="btn-primary btn-save rounded-lg">Save Changes</button>
         <p v-if="submissionError" class="error-message">{{ submissionError }}</p>
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
       </div>
     </form>
   </div>
@@ -138,6 +139,7 @@ export default {
       confirmPassword: '',
       errors: {},
       submissionError: '',
+      successMessage: '',
       loading: true,
       currentUser: {},
       selectedFile: null,
@@ -200,7 +202,12 @@ export default {
 
           console.log('Profile updated successfully', response);
           this.submissionError = '';
-          this.fetchUserCredentials();
+          this.successMessage = 'Profile updated successfully!';
+          await this.fetchUserCredentials();
+
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
         } catch (error) {
           this.submissionError = error.message;
         }
@@ -418,5 +425,12 @@ h1 {
 }
 
 
+
+.success-message {
+  color: var(--success);
+  position: relative;
+  font-size: var(--text-sm);
+  margin-top: 0.5em;
+}
 
 </style>
