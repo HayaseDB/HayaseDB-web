@@ -52,7 +52,7 @@
         <p>Your API key is:</p>
         <input type="text" :value="newApiKey" readonly />
         <div class="modal-footer">
-          <button @click="copyToClipboard">Copy</button>
+          <button :class="{ copied: isCopied }" @click="copyToClipboard">{{ copyButtonText }}</button>
           <button @click="closeModal">Close</button>
         </div>
       </div>
@@ -72,7 +72,9 @@ export default {
       keys: [],
       newApiKey: '',
       showModal: false,
-      modalTitle: ''
+      modalTitle: '',
+      isCopied: false,
+      copyButtonText: 'Copy'
     };
   },
   methods: {
@@ -119,11 +121,20 @@ export default {
     },
     copyToClipboard() {
       navigator.clipboard.writeText(this.newApiKey)
-          .then(() => alert('API key copied to clipboard'))
+          .then(() => {
+            this.isCopied = true;
+            this.copyButtonText = 'Copied!';
+            setTimeout(() => {
+              this.isCopied = false;
+              this.copyButtonText = 'Copy';
+            }, 2000);
+          })
           .catch(err => console.error('Failed to copy API key: ', err));
     },
     closeModal() {
       this.showModal = false;
+      this.isCopied = false;
+      this.copyButtonText = 'Copy';
     }
   },
   mounted() {
