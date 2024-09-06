@@ -54,11 +54,14 @@ export default {
   position: relative;
   left: 0;
   transition: width 0.3s ease, padding 0.3s ease;
+
 }
 
 .sidebar.collapsed {
   width: 0;
   padding: 1em 0;
+  left: -3px;
+
 
 
 
