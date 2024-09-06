@@ -1,5 +1,11 @@
 <template>
   <div class="api-key-manager">
+
+    <div v-if="loading" class="loading-overlay">
+      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
+    </div>
+
+
     <h2>API Key Management</h2>
 
     <form @submit.prevent="createApiKey" class="create-form">
@@ -74,15 +80,19 @@ export default {
       showModal: false,
       modalTitle: '',
       isCopied: false,
+      loading: false,
       copyButtonText: 'Copy'
     };
   },
   methods: {
     async fetchKeys() {
+      this.loading = true;
       try {
         this.keys = await listApiKeys();
       } catch (error) {
         console.error(error.message);
+      } finally {
+        this.loading = false;
       }
     },
     async createApiKey() {
@@ -224,6 +234,7 @@ export default {
 }
 
 .api-key-manager {
+  position: relative;
   padding: 2em;
   background-color: var(--background);
   color: var(--text);
@@ -416,4 +427,24 @@ export default {
     margin-bottom: 0;
   }
 }
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--border-radius-lg);
+}
+
+.loading-icon {
+  width: 80px;
+  height: 80px;
+}
+
 </style>
