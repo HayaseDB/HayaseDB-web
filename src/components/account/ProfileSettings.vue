@@ -1,11 +1,15 @@
 <template>
   <div class="profile-settings">
+
+
     <h1 class="gradient-animation">Profile Settings</h1>
     <form @submit.prevent="submitForm">
+
       <div class="form-header">
         <div class="form-header-left">
           <!-- Profile Picture -->
           <div class="form-group profile-picture-container">
+
             <label class="profile-picture-upload">
               <img :src="profilePicture" alt="Profile Picture" class="profile-picture-preview" />
               <input type="file" id="profile-picture" @change="handlePictureChange" accept="image/*" class="file-input" />
@@ -14,6 +18,7 @@
           </div>
         </div>
         <div class="form-header-right">
+
           <!-- Username -->
           <div class="form-group">
             <label for="username" class="text">Username</label>
@@ -137,20 +142,23 @@ export default {
     };
   },
   async created() {
-    try {
-      const userInfo = await checkToken();
-      this.currentUser = userInfo.user || {};
-      this.username = '';
-      this.email =  '';
-      this.roles = this.currentUser.roles || [];
-      this.profilePicture = this.currentUser.profilePicture || '';
-      this.loading = false;
-    } catch (error) {
-      this.submissionError = 'Failed to load user information. Please try again later.';
-      this.loading = false;
-    }
+    await this.fetchUserCredentials()
   },
   methods: {
+    async fetchUserCredentials() {
+      try {
+        const userInfo = await checkToken();
+        this.currentUser = userInfo.user || {};
+        this.username = '';
+        this.email = '';
+        this.roles = this.currentUser.roles || [];
+        this.profilePicture = this.currentUser.profilePicture || '';
+        this.loading = false;
+      } catch (error) {
+        this.submissionError = 'Failed to load user information. Please try again later.';
+        this.loading = false;
+      }
+    },
     handlePictureChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -190,6 +198,7 @@ export default {
 
           console.log('Profile updated successfully', response);
           this.submissionError = '';
+          this.fetchUserCredentials();
         } catch (error) {
           this.submissionError = error.message;
         }
@@ -383,6 +392,8 @@ h1 {
     gap: 0;
   }
 }
+
+
 
 
 
