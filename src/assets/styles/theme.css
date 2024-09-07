@@ -414,3 +414,15 @@ footer{
 
 
 
+
+.background-card {
+    border: 1px solid var(--background-300);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    padding: 30px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+

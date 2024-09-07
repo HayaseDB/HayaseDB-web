@@ -100,7 +100,7 @@ export default {
 
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 16px;
 }
 
@@ -111,14 +111,13 @@ export default {
   border-radius: var(--border-radius-lg);
   background: var(--background-50);
   overflow: hidden;
-  height: 310px;
+  height: 270px;
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .grid-item:hover {
   box-shadow: var(--shadow-md);
-  transform: scale(1.02);
 }
 
 .image-wrapper {

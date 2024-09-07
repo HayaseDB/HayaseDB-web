@@ -1,11 +1,17 @@
 <template>
-  <div class="explore-view">
-    <AnimeGrid
-        filter="date"
-        sort="desc"
-        :initialPage="1"
-    />
+  <div class="explore-container">
+    <div class="explore-view">
+      <div class="left-block background-card">
+        <AnimeGrid
+            filter="date"
+            sort="desc"
+            initial-count="20"
+        />
+      </div>
+
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -19,7 +25,20 @@ export default {
 </script>
 
 <style>
+
+.explore-container {
+  display: flex;
+  justify-content: center;
+}
+
 .explore-view {
   margin-top: 80px;
+  max-width: 1000px;
+  width: 100%;
 }
+
+
+
+
+
 </style>
