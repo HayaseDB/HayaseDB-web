@@ -17,6 +17,7 @@
     "core-js": "^3.8.3",
     "js-cookie": "^3.0.5",
     "vue": "^3.2.13",
+    "vue-disable-autocomplete": "^0.0.4",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {

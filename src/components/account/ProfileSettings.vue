@@ -25,7 +25,7 @@
           <div class="form-group">
             <label for="username" class="text">Username</label>
             <input
-                autocomplete="username"
+                autocomplete="off"
                 type="text"
                 id="username"
                 v-model="username"
@@ -50,6 +50,7 @@
           <div class="form-group">
             <label for="email" class="text">Email</label>
             <input
+                autocomplete="off"
                 type="email"
                 id="email"
                 v-model="email"
@@ -68,7 +69,7 @@
         <div class="form-group">
           <label for="password" class="text">Old Password</label>
           <input
-              autocomplete="current-password"
+              autocomplete="off"
               type="password"
               id="password"
               v-model="password"
@@ -85,7 +86,7 @@
           <div class="form-group">
             <label for="new-password" class="text">New Password</label>
             <input
-                autocomplete="new-password"
+                autocomplete="off"
                 type="password"
                 id="new-password"
                 v-model="newPassword"
@@ -99,7 +100,7 @@
           <div class="form-group">
             <label for="confirm-password" class="text">Confirm Password</label>
             <input
-                autocomplete="new-password"
+                autocomplete="off"
                 type="password"
                 id="confirm-password"
                 v-model="confirmPassword"
