@@ -76,7 +76,6 @@
     </div>
   </nav>
 </template>
-
 <script>
 import { checkToken } from '@/services/authService';
 import { toggleTheme } from "@/utils/theme";
@@ -160,17 +159,39 @@ export default {
       return false;
     },
     async checkLoginStatus() {
-      try {
-        const loggedInUser = await checkToken();
-        this.isLoggedIn = loggedInUser.isValid;
-        this.username = loggedInUser.user.username;
-      } catch (error) {
-        this.isLoggedIn = false;
+    try {
+      const loggedInUser = await checkToken();
+      this.isLoggedIn = loggedInUser.isValid;
+      this.username = loggedInUser.user.username;
+
+      localStorage.setItem('cachedUser', JSON.stringify(loggedInUser));
+    } catch (error) {
+      this.isLoggedIn = false;
+      this.username = null;
+      localStorage.removeItem('cachedUser');
+    }
+  },
+  async updateLoginStatus() {
+    try {
+      const updatedUser = await checkToken();
+      if (updatedUser.isValid !== this.isLoggedIn || updatedUser.user.username !== this.username) {
+        this.isLoggedIn = updatedUser.isValid;
+        this.username = updatedUser.user.username;
+
+        localStorage.setItem('cachedUser', JSON.stringify(updatedUser));
       }
-    },
+    } catch (error) {
+      this.isLoggedIn = false;
+      this.username = null;
+      localStorage.removeItem('cachedUser');
+    }
+  },
+
     logout() {
       Cookies.remove('token');
+      localStorage.removeItem('cachedUser');
       this.isLoggedIn = false;
+      this.username = null;
       this.$router.push('/');
     },
     handleAction(action) {
