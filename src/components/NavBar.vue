@@ -90,8 +90,7 @@ export default {
       username: null,
       baseMenuItems: [
         { label: 'Home', to: '/' },
-        { label: 'About', to: '/about' },
-        { label: 'Contact', to: '/contact' },
+        { label: 'Explore', to: '/explore' },
         {
           label: 'Docs',
           children: [
