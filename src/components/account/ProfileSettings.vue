@@ -161,19 +161,20 @@ export default {
   },
   methods: {
     async fetchUserCredentials() {
-      try {
-        const userInfo = await checkToken();
-        this.currentUser = userInfo.user || {};
-        this.username = '';
-        this.email = '';
-        this.roles = this.currentUser.roles || [];
-        this.profilePicture = this.currentUser.profilePicture || '';
-        this.loading = false;
-      } catch (error) {
-        this.submissionError = 'Failed to load user information. Please try again later.';
-        this.loading = false;
-      }
-    },
+  try {
+    const userInfo = await checkToken();
+    this.currentUser = userInfo.user || {};
+    this.username = '';
+    this.email = '';
+    this.roles = this.currentUser.roles || [];
+    this.profilePicture = this.currentUser.profilePicture + '?t=' + new Date().getTime();
+    this.loading = false;
+  } catch (error) {
+    this.submissionError = 'Failed to load user information. Please try again later.';
+    this.loading = false;
+  }
+},
+
     handlePictureChange(event) {
       const file = event.target.files[0];
       if (file) {
@@ -193,39 +194,43 @@ export default {
       return Object.keys(this.errors).length === 0;
     },
     async submitForm() {
-      if (this.validateForm()) {
-        try {
-          const formData = new FormData();
-          if (this.selectedFile) {
-            formData.append('profilePicture', this.selectedFile);
-          }
+  if (this.validateForm()) {
+    try {
+      this.loading = true;
 
-          if (this.selectedFile) {
-            await uploadProfilePicture(this.selectedFile);
-          }
+      const formData = new FormData();
+      if (this.selectedFile) {
+        formData.append('profilePicture', this.selectedFile);
 
-          const response = await updateUserCredentials(
-              this.password,
-              this.newPassword,
-              this.username,
-              this.email
-          );
-
-          console.log('Profile updated successfully', response);
-          this.submissionError = '';
-          this.successMessage = 'Profile updated successfully!';
-          await this.fetchUserCredentials();
-
-          setTimeout(() => {
-            this.successMessage = '';
-          }, 3000);
-        } catch (error) {
-          this.submissionError = error.message;
-        }
-      } else {
-        this.submissionError = 'Please fix the errors above and try again.';
+        await uploadProfilePicture(this.selectedFile);
       }
+
+      const updateResponse = await updateUserCredentials(
+        this.password,
+        this.newPassword,
+        this.username,
+        this.email
+      );
+
+      console.log('Profile updated successfully', updateResponse);
+
+      this.submissionError = '';
+      this.successMessage = 'Profile updated successfully!';
+      
+      await this.fetchUserCredentials();
+
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
+    } catch (error) {
+      this.submissionError = error.message;
+    } finally {
+      this.loading = false;
     }
+  } else {
+    this.submissionError = 'Please fix the errors above and try again.';
+  }
+}
   }
 };
 </script>

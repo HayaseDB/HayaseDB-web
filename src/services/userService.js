@@ -27,9 +27,9 @@ const getAuthHeader = () => {
 export const updateUserCredentials = async (currentPassword, newPassword, username, email) => {
     try {
         const body = {
-            newUsername: username,
             currentPassword,
             newPassword,
+            newUsername: username,
             newEmail: email
         };
 
@@ -37,14 +37,15 @@ export const updateUserCredentials = async (currentPassword, newPassword, userna
             headers: getAuthHeader()
         });
 
-        return response.data;
+        if (response.status === 200 && response.data) {
+            return response.data;
+        } else {
+            throw new Error('Unexpected response from server');
+        }
     } catch (error) {
         throw new Error(handleAxiosError(error));
     }
 };
-
-
-
 
 export const uploadProfilePicture = async (file) => {
     try {
