@@ -16,7 +16,6 @@
   </div>
 </template>
 
-
 <script>
 import { fetchAnimes } from '@/services/fetchService';
 
@@ -31,9 +30,9 @@ export default {
       type: String,
       default: 'asc',
     },
-    initialPage: {
+    initialCount: {
       type: Number,
-      default: 1,
+      default: 20,
     },
     pageSize: {
       type: Number,
@@ -43,7 +42,7 @@ export default {
   data() {
     return {
       animes: [],
-      page: this.initialPage,
+      page: 1,
       loading: false,
       hasMore: true,
     };
@@ -53,13 +52,16 @@ export default {
       if (!this.hasMore || this.loading) return;
 
       this.loading = true;
+      let fetchedItems = 0;
+
       try {
-        console.log(this.sort, this.filter, this.page)
-        const response = await fetchAnimes(this.filter, this.sort, this.page);
-        console.log(response);
-        this.animes.push(...response.animes);
-        this.page += 1;
-        this.hasMore = response.total > this.animes.length;
+        while (fetchedItems < this.initialCount && this.hasMore) {
+          const response = await fetchAnimes(this.filter, this.sort, this.page, this.pageSize);
+          this.animes.push(...response.animes);
+          fetchedItems += response.animes.length;
+          this.page += 1;
+          this.hasMore = response.animes.length === this.pageSize;
+        }
       } catch (error) {
         console.error('Failed to load more animes:', error);
       } finally {
@@ -119,7 +121,7 @@ export default {
 }
 
 .image-wrapper {
-  flex: 6;
+  height: 80%;
   position: relative;
   width: 100%;
 }
@@ -146,7 +148,6 @@ export default {
 }
 
 .anime-info {
-  flex: 1;
   background: var(--background-50);
   padding: 7px;
 }
