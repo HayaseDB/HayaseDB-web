@@ -255,7 +255,7 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 1.5em;
+  margin-bottom: 0.7em;
   position: relative;
   display: flex;
   flex-direction: column;

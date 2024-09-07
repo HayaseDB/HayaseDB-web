@@ -161,7 +161,7 @@ export default {
 }
 
 .anime-info {
-  background: #151a2b;
+  background-color: var(--anime-slider-card);
 
   height: 20%;
   padding: 6px;

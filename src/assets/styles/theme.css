@@ -20,6 +20,8 @@
     --danger: red;
     --success:green;
 
+    --anime-slider-card: #d1ddf3;
+
     /* Warning Colors */
     --warning-400: #f5a623;
     --warning-500: #c88220;
@@ -195,6 +197,11 @@
     --accent-800: #bdc3db;
     --accent-900: #dee1ed;
     --accent-950: #eef0f6;
+
+
+    --anime-slider-card: #14192c;
+
+
 }
 
 /* General Styles */
