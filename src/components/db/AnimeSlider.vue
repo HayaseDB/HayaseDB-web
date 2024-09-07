@@ -100,7 +100,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .mySwiper {
   width: 100%;
@@ -120,15 +119,24 @@ export default {
   overflow: hidden;
   height: 270px;
   cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.slide-item:hover {
-  box-shadow: var(--shadow-md);
+.slide-item:hover img{
+  transform: scale(1.05);
+}
+.slide-item:hover .anime-info {
+  filter: grayscale(0%);
+
+}
+
+.slide-item img{
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .image-wrapper {
   height: 80%;
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -157,7 +165,9 @@ export default {
 .anime-info {
   height: 20%;
   background: var(--background-50);
-  padding: 7px;
+  padding: 6px;
+  filter: grayscale(50%);
+  transition: filter 0.3s ease;
   box-sizing: border-box;
 }
 
@@ -170,8 +180,6 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-
 
 .anime-info p {
   color: var(--text-600);
@@ -190,7 +198,6 @@ export default {
   word-break: break-word;
   text-overflow: ellipsis;
   white-space: nowrap;
-
 }
 
 .genre-tag {
@@ -200,7 +207,6 @@ export default {
   border-radius: var(--border-radius-sm);
   font-size: 10px;
 }
-
 
 .loading {
   text-align: center;
