@@ -171,21 +171,7 @@ export default {
       localStorage.removeItem('cachedUser');
     }
   },
-  async updateLoginStatus() {
-    try {
-      const updatedUser = await checkToken();
-      if (updatedUser.isValid !== this.isLoggedIn || updatedUser.user.username !== this.username) {
-        this.isLoggedIn = updatedUser.isValid;
-        this.username = updatedUser.user.username;
 
-        localStorage.setItem('cachedUser', JSON.stringify(updatedUser));
-      }
-    } catch (error) {
-      this.isLoggedIn = false;
-      this.username = null;
-      localStorage.removeItem('cachedUser');
-    }
-  },
 
     logout() {
       Cookies.remove('token');
