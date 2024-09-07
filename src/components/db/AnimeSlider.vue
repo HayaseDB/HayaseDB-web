@@ -201,7 +201,7 @@ export default {
 
 .genre-tag {
 
-  background-color: var(--background-200);
+  background-color: var(--background-card-slider-tag);
   color: var(--text-600);
   padding: 2px 5px;
   border-radius: var(--border-radius-sm);

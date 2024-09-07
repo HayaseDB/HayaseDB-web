@@ -120,6 +120,11 @@
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
 
+    --background-card-slider-tag: #b8c2e0;
+
+
+    --background-card: #f1f3f9;
+
 
 
 }
@@ -199,9 +204,12 @@
     --accent-950: #eef0f6;
 
 
-    --anime-slider-card: #14192c;
+    --anime-slider-card: #1d243c;
+    --background-card-slider-tag: #25344e;
 
-    --background-card: #101525;
+
+    --background-card: #141823;
+    --background-card-border: #2f3853;
 
 
 }
@@ -425,40 +433,40 @@ footer{
 
 
 .background-card {
-    border: 1px solid var(--background-300);
+    border: 1px solid var(--background-card-border);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     padding: 30px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-sizing: border-box;
-    background-color: var(--background);
+    background-color: var(--background-card);
 
 }
 
 
 .background-card-sm {
-    border: 1px solid var(--background-300);
+    border: 1px solid var(--background-card-border);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
     padding: 18px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-sizing: border-box;
-    background-color: var(--background);
+    background-color: var(--background-card);
 
 }
 
 
 .background-card-xs {
-    border: 1px solid var(--background-300);
+    border: 1px solid var(--background-card-border);
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
     padding: 15px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-sizing: border-box;
-    background-color: var(--background);
+    background-color: var(--background-card);
 
 }
 
