@@ -30,6 +30,21 @@ export const fetchStats = async () => {
     }
 };
 
+
+export const fetchAnimes = async (filter, sort, page) => {
+    try {
+        const response = await apiClient.get('/api/fetch/list/anime', {
+            params: {
+                ...filter,
+                sort,
+                page,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
 export const getToken = () => {
     return Cookies.get('token');
 };

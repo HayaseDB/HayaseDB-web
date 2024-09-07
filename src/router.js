@@ -4,6 +4,7 @@ import AuthView from "@/views/AuthView.vue";
 import AccountView from "@/views/AccountView.vue";
 import DeveloperView from "@/views/account/DeveloperView.vue";
 import ProfileView from "@/views/account/ProfileView.vue";
+import ExploreView from "@/views/db/ExploreView.vue";
 
 const routes = [
     {
@@ -62,7 +63,17 @@ const routes = [
                 }
             }
         ]
-    }
+    },
+    {
+        path: '/explore',
+        name: 'Explore',
+        component: ExploreView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+
+    },
 
 ];
 
