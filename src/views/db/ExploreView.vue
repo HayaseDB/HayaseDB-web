@@ -86,7 +86,7 @@ export default {
     flex-direction: column;
   }
   .explore-container{
-    padding: 0;
+    padding: 10px;
   }
 
   .right-block {
