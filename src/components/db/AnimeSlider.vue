@@ -95,7 +95,7 @@ export default {
       return cover?.url || '';
     },
     goToAnimeDetail(id) {
-      this.$router.push(`/anime/${id}`); 
+      this.$router.push(`/anime/${id}`);
     },
   },
   mounted() {
