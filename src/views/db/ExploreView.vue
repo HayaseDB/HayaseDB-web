@@ -2,6 +2,9 @@
   <div class="explore-container">
     <div class="explore-view">
       <div class="left-block background-card">
+        <AnimeSlider
+
+        />
         <AnimeGrid
             filter="date"
             sort="desc"
@@ -16,9 +19,11 @@
 
 <script>
 import AnimeGrid from '@/components/db/AnimesGrid.vue';
+import AnimeSlider from "@/components/db/AnimeSlider.vue";
 
 export default {
   components: {
+    AnimeSlider,
     AnimeGrid,
   },
 };
