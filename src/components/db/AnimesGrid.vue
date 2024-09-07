@@ -112,6 +112,7 @@ export default {
   background: var(--background-50);
   overflow: hidden;
   height: 310px;
+  cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
