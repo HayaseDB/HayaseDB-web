@@ -30,9 +30,32 @@
       </div>
       <div class="right-block background-card">
         <h2>Database Stats</h2>
-        <h5>Animes: {{ stats.AnimeEntries }}</h5>
-        <h5>Characters: {{ stats.CharacterEntries }}</h5>
+        <div class="table-container">
+          <table class="key-table">
+            <thead>
+            <tr>
+              <th>Statistic</th>
+              <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>Animes</td>
+              <td>{{ stats.AnimeEntries }}</td>
+            </tr>
+            <tr>
+              <td>Characters</td>
+              <td>{{ stats.CharacterEntries }}</td>
+            </tr>
+            <tr>
+              <td>Media</td>
+              <td>{{ stats.MediaEntries }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+
 
       </div>
   </div>
@@ -62,11 +85,11 @@ export default {
 </script>
 
 <style>
-
 .explore-container {
   display: flex;
   justify-content: center;
   padding: 20px;
+  background-color: var(--background-75);
 }
 
 .explore-view {
@@ -77,12 +100,7 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 10px;
-
-
 }
-
-
-
 
 .left-block {
   flex: 3;
@@ -91,7 +109,7 @@ export default {
 
 .right-block {
   flex: 1;
-  width: 100%;
+  min-width: min-content;
   height: min-content;
 }
 
@@ -111,9 +129,37 @@ export default {
     flex: auto;
   }
 
+}
 
+.right-block .table-container {
 
+  width: 100%;
+}
 
+.right-block .key-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
 
+.right-block .key-table th, .key-table td {
+  padding: 0.6em;
+  text-align: left;
+  border-bottom: 1px solid var(--background-300);
+  font-size: 0.875em;
+}
+
+.right-block .key-table th {
+  background-color: var(--background-200);
+  font-size: 0.9em;
+}
+
+.right-block .key-table td {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.right-block .key-table tr:nth-child(even) {
+  background-color: var(--background-50);
 }
 </style>
