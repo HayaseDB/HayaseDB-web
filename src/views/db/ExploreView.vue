@@ -30,7 +30,9 @@
       </div>
       <div class="right-block background-card">
         <h2>Database Stats</h2>
-</div>
+        <h5>Animes: {{ stats.AnimeEntries }}</h5>
+        <h5>Characters: {{ stats.CharacterEntries }}</h5>
+      </div>
 
       </div>
   </div>
@@ -39,11 +41,23 @@
 
 <script>
 import AnimeSlider from "@/components/db/AnimeSlider.vue";
+import {fetchStats} from "@/services/fetchService";
 
 export default {
   components: {
     AnimeSlider,
   },
+  data() {
+    return {
+      stats: {},
+
+
+    };
+  },
+  async created() {
+    this.stats = await fetchStats();
+    console.log(this.stats);
+  }
 };
 </script>
 
