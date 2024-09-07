@@ -11,7 +11,6 @@
         <div class="form-header-left">
           <!-- Profile Picture -->
           <div class="form-group profile-picture-container">
-
             <label class="profile-picture-upload">
               <img :src="profilePicture" alt="Profile Picture" class="profile-picture-preview" />
               <input type="file" id="profile-picture" @change="handlePictureChange" accept="image/*" class="file-input" />
@@ -25,7 +24,6 @@
           <div class="form-group">
             <label for="username" class="text">Username</label>
             <input
-                autocomplete="off"
                 type="text"
                 id="username"
                 v-model="username"
@@ -33,6 +31,7 @@
                 :placeholder="currentUser.username || 'Username'"
                 :aria-invalid="errors.username ? 'true' : 'false'"
                 aria-describedby="username-error"
+                autocomplete="off"
             />
             <p v-if="errors.username" id="username-error" class="error-message">{{ errors.username }}</p>
           </div>
@@ -50,7 +49,6 @@
           <div class="form-group">
             <label for="email" class="text">Email</label>
             <input
-                autocomplete="off"
                 type="email"
                 id="email"
                 v-model="email"
@@ -58,6 +56,7 @@
                 :placeholder="currentUser.email || 'Email Address'"
                 :aria-invalid="errors.email ? 'true' : 'false'"
                 aria-describedby="email-error"
+                autocomplete="off"
             />
             <p v-if="errors.email" id="email-error" class="error-message">{{ errors.email }}</p>
           </div>
@@ -69,7 +68,6 @@
         <div class="form-group">
           <label for="password" class="text">Old Password</label>
           <input
-              autocomplete="off"
               type="password"
               id="password"
               v-model="password"
@@ -77,6 +75,7 @@
               placeholder="Enter old password"
               :aria-invalid="errors.password ? 'true' : 'false'"
               aria-describedby="password-error"
+              autocomplete="off"
           />
           <p v-if="errors.password" id="password-error" class="error-message">{{ errors.password }}</p>
         </div>
@@ -86,7 +85,6 @@
           <div class="form-group">
             <label for="new-password" class="text">New Password</label>
             <input
-                autocomplete="off"
                 type="password"
                 id="new-password"
                 v-model="newPassword"
@@ -94,13 +92,13 @@
                 placeholder="Enter new password"
                 :aria-invalid="errors.newPassword ? 'true' : 'false'"
                 aria-describedby="new-password-error"
+                autocomplete="off"
             />
             <p v-if="errors.newPassword" id="new-password-error" class="error-message">{{ errors.newPassword }}</p>
           </div>
           <div class="form-group">
             <label for="confirm-password" class="text">Confirm Password</label>
             <input
-                autocomplete="off"
                 type="password"
                 id="confirm-password"
                 v-model="confirmPassword"
@@ -108,6 +106,7 @@
                 placeholder="Re-enter new password"
                 :aria-invalid="errors.confirmPassword ? 'true' : 'false'"
                 aria-describedby="confirm-password-error"
+                autocomplete="off"
             />
             <p v-if="errors.confirmPassword" id="confirm-password-error" class="error-message">{{ errors.confirmPassword }}</p>
           </div>
@@ -123,6 +122,7 @@
     </form>
   </div>
 </template>
+
 
 <script>
 import { checkToken } from '@/services/authService';
