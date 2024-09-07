@@ -1,5 +1,5 @@
 <template>
-  <div class="releasedate-module background-card-sm">
+  <div class="releasedate-module background-card-child">
     <label class="card-title">Release:</label>
     <div class="releasedate-container">
       {{ formattedReleaseDate }}

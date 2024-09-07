@@ -1,5 +1,5 @@
 <template>
-  <div class="genre-module background-card-sm">
+  <div class="genre-module background-card-child">
     <label class="card-title">Genres:</label>
     <div class="tags-container">
 

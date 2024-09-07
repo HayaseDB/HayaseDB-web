@@ -122,8 +122,10 @@
 
     --background-card-slider-tag: #b8c2e0;
 
-
+    --background-card-border-child: #e7e7f3;
+    --background-card-border: #f1f3f9;
     --background-card: #f1f3f9;
+    --background-card-child: #e7e7f3;
 
 
 
@@ -208,11 +210,13 @@
     --background-card-slider-tag: #25344e;
 
 
+    --background-card-border-child: #20283a;
+    --background-card-border: #20283a;
+
     --background-card: #141823;
-    --background-card-border: #2f3853;
 
 
-
+    --background-card-child: #1c2030;
 
 
 }
@@ -451,7 +455,7 @@ footer{
 .background-card-sm {
     border: 1px solid var(--background-card-border);
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
     padding: 18px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
@@ -466,11 +470,22 @@ footer{
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
-    padding: 15px;
+    padding: 12px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-sizing: border-box;
     background-color: var(--background-card);
 
+}
+
+.background-card-child{
+    border: 1px solid var(--background-card-border-child);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    padding: 15px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+    background-color: var(--background-card-child);
 }
 
 
