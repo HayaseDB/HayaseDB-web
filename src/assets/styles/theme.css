@@ -212,6 +212,9 @@
     --background-card-border: #2f3853;
 
 
+
+
+
 }
 
 /* General Styles */
@@ -468,5 +471,13 @@ footer{
     box-sizing: border-box;
     background-color: var(--background-card);
 
+}
+
+
+
+.card-title{
+    color: var(--text-800);
+    font-weight: 500;
+    font-size: 18px;
 }
 

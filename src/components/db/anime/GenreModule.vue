@@ -1,5 +1,6 @@
 <template>
   <div class="genre-module background-card-sm">
+    <label class="card-title">Genres:</label>
     <div class="tags-container">
 
       <div class="tag" v-for="(genre, index) in genres" :key="index">
@@ -27,6 +28,7 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 6px;
+  margin-top: 5px;
 }
 
 .tag {

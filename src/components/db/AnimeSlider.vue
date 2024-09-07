@@ -7,7 +7,7 @@
       class="mySwiper"
   >
     <swiper-slide v-for="anime in displayedAnimes" :key="anime.id">
-      <div class="slide-item">
+      <div class="slide-item" @click="goToAnimeDetail(anime.id)">
         <div class="image-wrapper">
           <img :src="getImageSrc(anime.cover)" :alt="anime.title" />
           <div v-if="!anime.cover" class="placeholder">No Image</div>
@@ -93,6 +93,9 @@ export default {
     },
     getImageSrc(cover) {
       return cover?.url || '';
+    },
+    goToAnimeDetail(id) {
+      this.$router.push(`/anime/${id}`); 
     },
   },
   mounted() {
