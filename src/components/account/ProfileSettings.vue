@@ -175,13 +175,17 @@ export default {
   }
 },
 
-    handlePictureChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.selectedFile = file;
-        this.profilePicture = URL.createObjectURL(file);
+handlePictureChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+      if (this.profilePictureUrl) {
+        URL.revokeObjectURL(this.profilePictureUrl);
       }
-    },
+      this.selectedFile = file;
+      this.profilePictureUrl = URL.createObjectURL(file);
+      this.profilePicture = this.profilePictureUrl;
+    }
+  },
     validateForm() {
       this.errors = {};
 
@@ -268,24 +272,30 @@ h1 {
   text-align: center;
   position: relative;
   width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
 }
+
 
 .profile-picture-upload {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow: hidden;
   border-radius: 20px;
-  width: 100%;
 }
 
 .profile-picture-preview {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   border-radius: 20px;
-  box-shadow: var(--shadow-md);
   transition: transform 0.3s ease;
 }
 
