@@ -422,6 +422,8 @@ footer{
     overflow: hidden;
     padding: 30px;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+
 }
 
 

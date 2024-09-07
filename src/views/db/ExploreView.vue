@@ -1,7 +1,12 @@
 <template>
   <div class="explore-container">
     <div class="explore-view">
+
       <div class="left-block background-card">
+        <div class="text-container">
+          <h1>Welcome to HayaseDB</h1>
+          <p>HayaseDB is a free, open-source anime database providing comprehensive details through a user-friendly web platform and a powerful API for developers.</p>
+        </div>
         <div class="newest">
           <h2>Newest Uploads</h2>
           <AnimeSlider
@@ -24,6 +29,7 @@
 
       </div>
       <div class="right-block background-card">
+        <h2>Database Stats</h2>
 </div>
 
       </div>
@@ -46,15 +52,19 @@ export default {
 .explore-container {
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .explore-view {
-  margin-top: 80px;
+  margin-bottom: 40px;
+  margin-top: 120px;
   max-width: 1000px;
   width: 100%;
   display: flex;
   flex-direction: row;
   gap: 10px;
+
+
 }
 
 
@@ -66,10 +76,30 @@ export default {
 }
 
 .right-block {
-  flex: 1; /* Adjust this value based on how much space you want */
-  width: 100%; /* Optional, makes sure it uses the full flex basis */
+  flex: 1;
+  width: 100%;
+  height: min-content;
 }
 
+@media (max-width: 700px) {
+  .explore-view {
+    flex-direction: column;
+  }
+  .explore-container{
+    padding: 0;
+  }
+
+  .right-block {
+    flex: auto;
+  }
+
+  .left-block {
+    flex: auto;
+  }
 
 
+
+
+
+}
 </style>
