@@ -14,7 +14,11 @@
         </div>
         <div class="anime-info">
           <h4>{{ anime.title }}</h4>
-          <p>{{ anime.genre || 'Unknown' }}</p>
+          <div class="genre-tags">
+            <span v-for="(genre, index) in anime.genre" :key="index" class="genre-tag">
+              {{ genre }}
+            </span>
+          </div>
         </div>
       </div>
     </swiper-slide>
@@ -167,6 +171,8 @@ export default {
   white-space: nowrap;
 }
 
+
+
 .anime-info p {
   color: var(--text-600);
   font-size: 13px;
@@ -177,6 +183,24 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.genre-tags {
+  display: flex;
+  gap: 4px;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+.genre-tag {
+  background-color: var(--background-200);
+  color: var(--text-600);
+  padding: 2px 5px;
+  border-radius: var(--border-radius-sm);
+  font-size: 10px;
+}
+
 
 .loading {
   text-align: center;
