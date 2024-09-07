@@ -113,9 +113,7 @@ export default {
 .slide-item {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--background-300);
   border-radius: var(--border-radius-lg);
-  background: var(--background-50);
   overflow: hidden;
   height: 270px;
   cursor: pointer;
@@ -163,8 +161,9 @@ export default {
 }
 
 .anime-info {
+  background: #151a2b;
+
   height: 20%;
-  background: var(--background-50);
   padding: 6px;
   filter: grayscale(50%);
   transition: filter 0.3s ease;
@@ -201,6 +200,7 @@ export default {
 }
 
 .genre-tag {
+
   background-color: var(--background-200);
   color: var(--text-600);
   padding: 2px 5px;
