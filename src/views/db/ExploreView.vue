@@ -5,7 +5,7 @@
         <AnimeSlider
             filter="date"
             sort="desc"
-            limit="5"
+            limit="20"
         />
         <AnimeGrid
             filter="date"
