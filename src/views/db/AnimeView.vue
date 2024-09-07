@@ -11,7 +11,8 @@
 
         </div>
         <GenreModule :genres="anime.genre"/>
-        <p><strong>Release Date:</strong> {{ new Date(anime.releaseDate).toLocaleDateString() }}</p>
+        <ReleaseDate :release-date="this.anime.releaseDate" />
+
         <p><strong>Status:</strong> {{ anime.status || 'N/A' }}</p>
         <p><strong>Studio:</strong> {{ anime.studio || 'N/A' }}</p>
         <p><strong>Author:</strong> {{ anime.author || 'N/A' }}</p>
@@ -30,9 +31,11 @@ import { useRoute } from 'vue-router';
 import { fetchAnime } from '@/services/fetchService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue'
+import ReleaseDate from "@/components/db/anime/ReleaseDateModule.vue";
 export default {
   name: 'AnimeView',
   components: {
+    ReleaseDate,
     CoverImage,
     GenreModule
   },
