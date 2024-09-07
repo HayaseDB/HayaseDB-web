@@ -4,7 +4,7 @@
       <div class="left-block" v-if="anime">
         <CoverImage :url="anime.cover.url" />
       </div>
-      <div class="right-block " v-if="anime">
+      <div class="right-block" v-if="anime">
         <div class="info-head">
           <div class="background-card-sm">
             <h1>{{ anime.title || 'N/A' }}</h1>
@@ -13,20 +13,16 @@
         <div class="card-body background-card-xs">
           <GenreModule :genres="anime.genre || ['N/A']"/>
           <div class="two-columns">
-            <div>
-              <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
-            </div>
-            <div>
-              <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
-            </div>
+            <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
+            <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
           </div>
         </div>
-
-
-        <p><strong>Status:</strong> {{ anime.status || 'N/A' }}</p>
-        <p><strong>Studio:</strong> {{ anime.studio || 'N/A' }}</p>
-        <p><strong>Author:</strong> {{ anime.author || 'N/A' }}</p>
-        <p><strong>Episodes:</strong> {{ anime.episodes && anime.episodes.length ? anime.episodes.length : 'N/A' }}</p>
+        <div class="anime-details">
+          <p><strong>Status:</strong> {{ anime.status || 'N/A' }}</p>
+          <p><strong>Studio:</strong> {{ anime.studio || 'N/A' }}</p>
+          <p><strong>Author:</strong> {{ anime.author || 'N/A' }}</p>
+          <p><strong>Episodes:</strong> {{ anime.episodes?.length || 'N/A' }}</p>
+        </div>
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -41,14 +37,14 @@ import { useRoute } from 'vue-router';
 import { fetchAnime } from '@/services/fetchService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
-import ReleaseDate from "@/components/db/anime/ReleaseDateModule.vue";
+import ReleaseDate from '@/components/db/anime/ReleaseDateModule.vue';
 
 export default {
   name: 'AnimeView',
   components: {
-    ReleaseDate,
     CoverImage,
-    GenreModule
+    GenreModule,
+    ReleaseDate
   },
   setup() {
     const route = useRoute();
@@ -63,9 +59,7 @@ export default {
       }
     };
 
-    onMounted(() => {
-      getAnime();
-    });
+    onMounted(getAnime);
 
     return {
       anime
@@ -83,27 +77,47 @@ export default {
 }
 
 .anime-view {
-  margin-bottom: 40px;
-  margin-top: 100px;
-  max-width: 1100px;
-  width: 100%;
   display: flex;
   flex-direction: row;
   gap: 10px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 100px 0 40px;
 }
 
 .left-block {
   flex: 1.1;
-  width: 100%;
 }
 
 .right-block {
+  flex: 2.5;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  flex: 2.5;
   min-width: min-content;
-  height: min-content;
+}
+
+
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.two-columns {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.two-columns > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.anime-details p {
+  margin: 5px 0;
 }
 
 @media (max-width: 700px) {
@@ -115,30 +129,9 @@ export default {
     padding: 10px;
   }
 
+  .left-block,
   .right-block {
     flex: auto;
   }
-
-  .left-block {
-    flex: auto;
-  }
-}
-
-.two-columns {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 10px;
-}
-
-.two-columns > div {
-  flex: 1;
-  min-width: 0;
-}
-
-.card-body{
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
 }
 </style>
