@@ -205,27 +205,20 @@ handlePictureChange(event) {
       const formData = new FormData();
       if (this.selectedFile) {
         formData.append('profilePicture', this.selectedFile);
-
         await uploadProfilePicture(this.selectedFile);
       }
 
-      const updateResponse = await updateUserCredentials(
+      await updateUserCredentials(
         this.password,
         this.newPassword,
         this.username,
         this.email
       );
 
-      console.log('Profile updated successfully', updateResponse);
-
       this.submissionError = '';
-      this.successMessage = 'Profile updated successfully!';
       
-      await this.fetchUserCredentials();
+      window.location.reload();
 
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
     } catch (error) {
       this.submissionError = error.message;
     } finally {
@@ -234,8 +227,8 @@ handlePictureChange(event) {
   } else {
     this.submissionError = 'Please fix the errors above and try again.';
   }
-}
-  }
+}}
+
 };
 </script>
 
