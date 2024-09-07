@@ -235,6 +235,8 @@ handlePictureChange(event) {
 
 <style scoped>
 .profile-settings {
+  border: 1px solid var(--background-300);
+
   max-width: 800px;
   margin: 0 auto 50px;
   width: 100%;
