@@ -94,8 +94,8 @@ export default {
 
 .explore-view {
   margin-bottom: 40px;
-  margin-top: 120px;
-  max-width: 1000px;
+  margin-top: 100px;
+  max-width: 1100px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -103,7 +103,7 @@ export default {
 }
 
 .left-block {
-  flex: 3;
+  flex: 2.5;
   width: 100%;
 }
 
