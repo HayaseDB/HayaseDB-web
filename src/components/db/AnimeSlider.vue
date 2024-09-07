@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       animes: [],
+      page: 1,
       loading: false,
     };
   },
@@ -69,9 +70,17 @@ export default {
       if (this.loading) return;
 
       this.loading = true;
+      let fetchedItems = 0;
+
       try {
-        const response = await fetchAnimes(this.filter, this.sort, 1, this.limit);
-        this.animes = response.animes;
+        while (fetchedItems < this.limit) {
+          const response = await fetchAnimes(this.filter, this.sort, this.page);
+          this.animes.push(...response.animes);
+          fetchedItems += response.animes.length;
+          this.page += 1;
+
+          if (response.animes.length === 0) break;
+        }
       } catch (error) {
         console.error('Failed to fetch animes:', error);
       } finally {

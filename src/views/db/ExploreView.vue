@@ -3,7 +3,9 @@
     <div class="explore-view">
       <div class="left-block background-card">
         <AnimeSlider
-
+            filter="date"
+            sort="desc"
+            limit="5"
         />
         <AnimeGrid
             filter="date"
