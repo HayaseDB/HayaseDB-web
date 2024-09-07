@@ -201,6 +201,8 @@
 
     --anime-slider-card: #14192c;
 
+    --background-card: #101525;
+
 
 }
 
@@ -434,4 +436,29 @@ footer{
 
 }
 
+
+.background-card-sm {
+    border: 1px solid var(--background-300);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    padding: 18px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+    background-color: var(--background);
+
+}
+
+
+.background-card-xs {
+    border: 1px solid var(--background-300);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    padding: 15px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+    background-color: var(--background);
+
+}
 

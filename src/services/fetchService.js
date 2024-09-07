@@ -45,6 +45,17 @@ export const fetchAnimes = async (filter, sort, page) => {
         throw new Error(handleAxiosError(error));
     }
 };
+
+export const fetchAnime = async (id) => {
+    try {
+        const response = await apiClient.get(`/api/fetch/anime/${id}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+
 export const getToken = () => {
     return Cookies.get('token');
 };

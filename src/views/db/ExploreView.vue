@@ -84,11 +84,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .explore-container {
   display: flex;
   justify-content: center;
   padding: 20px;
+  height: 100%;
   background-color: var(--background-75);
 }
 
