@@ -158,34 +158,57 @@ export default {
       return false;
     },
     async checkLoginStatus() {
-    try {
-      const loggedInUser = await checkToken();
-      this.isLoggedIn = loggedInUser.isValid;
-      this.username = loggedInUser.user.username;
+      try {
+        const cachedUser = JSON.parse(localStorage.getItem('cachedUser'));
 
-      localStorage.setItem('cachedUser', JSON.stringify(loggedInUser));
-    } catch (error) {
-      this.isLoggedIn = false;
-      this.username = null;
-      localStorage.removeItem('cachedUser');
-    }
-  },
+        if (cachedUser && cachedUser.user) {
+          this.isLoggedIn = true;
+          this.username = cachedUser.user.username;
+        }
 
+        const loggedInUser = await checkToken();
 
-    logout() {
-      Cookies.remove('token');
-      localStorage.removeItem('cachedUser');
-      this.isLoggedIn = false;
-      this.username = null;
-      this.$router.push('/');
-    },
-    handleAction(action) {
-      if (action === 'logout') {
-        this.logout();
+        if (loggedInUser.isValid) {
+          if (!cachedUser || cachedUser.user.username !== loggedInUser.user.username) {
+            this.isLoggedIn = true;
+            this.username = loggedInUser.user.username;
+            localStorage.setItem('cachedUser', JSON.stringify(loggedInUser));
+          }
+        } else {
+          this.isLoggedIn = false;
+          this.username = null;
+          localStorage.removeItem('cachedUser');
+        }
+      } catch (error) {
+        this.isLoggedIn = false;
+        this.username = null;
+        localStorage.removeItem('cachedUser');
       }
     },
   },
+
+
+  logout() {
+    Cookies.remove('token');
+    localStorage.removeItem('cachedUser');
+    this.isLoggedIn = false;
+    this.username = null;
+    this.$router.push('/');
+  },
+  handleAction(action) {
+    if (action === 'logout') {
+      this.logout();
+    }
+  },
+
   created() {
+    const cachedUser = JSON.parse(localStorage.getItem('cachedUser'));
+
+    if (cachedUser && cachedUser.user) {
+      this.isLoggedIn = true;
+      this.username = cachedUser.user.username;
+    }
+
     this.checkLoginStatus();
   }
 };
