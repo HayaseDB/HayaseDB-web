@@ -44,7 +44,6 @@ export default {
   methods: {
     async updateRating(newRating) {
       this.currentRating = newRating;
-      this.errorMessage = null;
 
       try {
         await updateRating(this.id, newRating);
@@ -55,6 +54,7 @@ export default {
         if (error.code === 401) {
           this.errorMessage = "you need to login";
         }
+        this.errorMessage = null;
 
         this.currentRating = this.rating;
       }
