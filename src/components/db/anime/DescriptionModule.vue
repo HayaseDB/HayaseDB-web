@@ -2,28 +2,152 @@
   <div class="description-module background-card-child">
     <label class="card-title">Description</label>
     <div class="description-container">
-      {{ description }}
+      <div class="description-content" :class="{ 'collapsed': isCollapsed }">
+        {{ description }}
+      </div>
+      <div class="fade-out" v-if="isCollapsed && isContentOverflowing"></div>
+    </div>
+    <div class="arrow-container" v-if="isContentOverflowing">
+      <fontAwesomeIcon
+          @click="toggleCollapse"
+          :icon="['fa', 'chevron-down']"
+          class="arrow"
+          :class="{ 'rotate': !isCollapsed }"
+      />
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+export default defineComponent({
   name: 'DescriptionModule',
+  components: {
+    FontAwesomeIcon
+  },
   props: {
     description: {
       type: String,
       required: true
     }
+  },
+  data() {
+    return {
+      isCollapsed: true,
+      isContentOverflowing: false
+    };
+  },
+  mounted() {
+    this.checkContentOverflow();
+    window.addEventListener('resize', this.handleResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  },
+  watch: {
+    description: {
+      immediate: true,
+      handler() {
+        this.$nextTick(() => {
+          this.checkContentOverflow();
+        });
+      }
+    }
+  },
+  methods: {
+    toggleCollapse() {
+      this.isCollapsed = !this.isCollapsed;
+    },
+    handleResize() {
+      this.isCollapsed = true;
+      this.checkContentOverflow();
+    },
+    checkContentOverflow() {
+      this.$nextTick(() => {
+        const content = this.$el.querySelector('.description-content');
+        if (content) {
+          this.isContentOverflowing = content.scrollHeight > content.clientHeight;
+        }
+      });
+    }
   }
-};
+});
 </script>
 
 <style scoped>
+.description-module {
+  position: relative;
+  border-radius: 10px;
+  background-color: var(--background-card-child);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.description-module:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-800);
+}
+
 .description-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.description-content {
   display: flex;
   flex-direction: row;
   gap: 6px;
   margin-top: 5px;
+  line-height: 1.6;
+  font-size: 15px;
+  transition: height 0.4s ease, opacity 0.3s ease;
+}
+
+.description-content.collapsed {
+  height: 100px;
+  overflow: hidden;
+}
+
+.description-content:not(.collapsed) {
+  height: auto;
+  opacity: 1;
+}
+
+.fade-out {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), var(--background-card-child));
+  pointer-events: none;
+}
+
+.arrow-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.arrow {
+  font-size: 20px;
+  color: var(--accent-300);
+  cursor: pointer;
+  transition: transform 0.4s ease, color 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+.arrow:hover {
+  color: var(--primary);
 }
 </style>
