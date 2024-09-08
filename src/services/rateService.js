@@ -18,13 +18,15 @@ const handleAxiosError = (error) => {
     return error.response?.data?.message || 'An error occurred. Please try again.';
 };
 
+
 export const updateRating = async (animeId, rating) => {
     try {
         const token = Cookies.get('token');
-        const response = await apiClient.post('/api/rate', {
-            animeId,
-            rating
-        }, {
+        const response = await apiClient.post('/api/modify/post/rate', null, {
+            params: {
+                animeId,
+                rating
+            },
             headers: {
                 Authorization: `Bearer ${token}`
             }
