@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .author-container {
   display: flex;
   flex-direction: row;

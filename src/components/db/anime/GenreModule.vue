@@ -23,7 +23,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .tags-container{
   display: flex;
   flex-direction: row;

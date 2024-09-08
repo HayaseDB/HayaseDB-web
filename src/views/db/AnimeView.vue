@@ -6,9 +6,8 @@
       </div>
       <div class="right-block" v-if="anime">
         <div class="info-head">
-          <div class="background-card-sm">
-            <h1>{{ anime.title || 'N/A' }}</h1>
-          </div>
+          <TitleModule :title="anime.title || 'N/A'" :id="anime._id"/>
+
         </div>
         <div class="card-body background-card-xs">
           <GenreModule :genres="anime.genre || ['N/A']"/>
@@ -23,12 +22,7 @@
           <EpisodesModule :episodes="anime.episodes || 'N/A'" />
         </div>
 
-        <div class="anime-details">
-          <p><strong>Status:</strong> {{ anime.status || 'N/A' }}</p>
-          <p><strong>Studio:</strong> {{ anime.studio || 'N/A' }}</p>
-          <p><strong>Author:</strong> {{ anime.author || 'N/A' }}</p>
-          <p><strong>Episodes:</strong> {{ anime.episodes?.length || 'N/A' }}</p>
-        </div>
+
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -48,7 +42,7 @@ import StudioModule from '@/components/db/anime/StudioModule.vue';
 import AuthorModule from '@/components/db/anime/AuthorModule.vue';
 import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
 import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
-
+import TitleModule from '@/components/db/anime/TitleModule.vue';
 export default {
   name: 'AnimeView',
   components: {
@@ -58,7 +52,8 @@ export default {
     StatusModule,
     StudioModule,
     AuthorModule,
-    EpisodesModule
+    EpisodesModule,
+    TitleModule
   },
   setup() {
     const route = useRoute();

@@ -19,7 +19,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .status-container {
   display: flex;
   flex-direction: row;

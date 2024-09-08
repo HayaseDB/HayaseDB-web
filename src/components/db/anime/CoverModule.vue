@@ -16,7 +16,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cover-image-container {
   display: flex;
   justify-content: center;
@@ -24,7 +24,6 @@ export default {
   width: auto;
   height: auto;
   overflow: hidden;
-  border: 2px solid #ccc;
 }
 
 .cover-image {

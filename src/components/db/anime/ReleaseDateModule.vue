@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .releasedate-container{
   display: flex;
   flex-direction: row;
