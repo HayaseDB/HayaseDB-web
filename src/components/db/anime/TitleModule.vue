@@ -39,4 +39,10 @@ export default {
   display: flex;
   flex-direction: row;
 }
+
+
+.title-module{
+  padding-left: 27px;
+  padding-right: 27px;
+}
 </style>
