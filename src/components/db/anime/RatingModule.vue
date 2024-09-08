@@ -21,6 +21,10 @@
 export default {
   name: 'RatingModule',
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     rating: {
       type: Number,
       required: true
@@ -28,12 +32,15 @@ export default {
   },
   data() {
     return {
-      hoveredRating: null
+      hoveredRating: null,
+      currentRating: this.rating
     };
   },
   methods: {
     updateRating(newRating) {
-      this.$emit('update-rating', newRating);
+      this.currentRating = newRating;
+
+      console.log(`Rating for item ${this.id} updated to: ${newRating}`);
     },
     previewRating(star) {
       this.hoveredRating = star;
