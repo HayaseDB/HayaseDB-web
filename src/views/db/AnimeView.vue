@@ -11,6 +11,9 @@
         </div>
         <div class="card-body background-card-xs">
           <GenreModule :genres="anime.genre || ['N/A']"/>
+
+          <DescriptionModule :description="anime.description || 'N/A'" />
+
           <div class="two-columns">
             <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
             <StatusModule :status="anime.status || 'N/A'" />
@@ -19,6 +22,7 @@
             <AuthorModule :author="anime.author || 'N/A'" />
             <StudioModule :studio="anime.studio || 'N/A'" />
           </div>
+
           <EpisodesModule :episodes="anime.episodes || 'N/A'" />
         </div>
 
@@ -43,9 +47,11 @@ import AuthorModule from '@/components/db/anime/AuthorModule.vue';
 import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
 import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 import TitleModule from '@/components/db/anime/TitleModule.vue';
+import DescriptionModule from "@/components/db/anime/DescriptionModule.vue";
 export default {
   name: 'AnimeView',
   components: {
+    DescriptionModule,
     CoverImage,
     GenreModule,
     ReleaseDateModule,
