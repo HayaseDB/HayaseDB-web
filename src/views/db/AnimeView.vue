@@ -14,11 +14,12 @@
 
           <DescriptionModule :description="anime.description || 'N/A'" />
 
-          <div class="two-columns">
+          <div class="row">
             <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
             <StatusModule :status="anime.status || 'N/A'" />
+            <RatingModule rating="4"/>
           </div>
-          <div class="two-columns">
+          <div class="row">
             <AuthorModule :author="anime.author || 'N/A'" />
             <StudioModule :studio="anime.studio || 'N/A'" />
           </div>
@@ -48,9 +49,11 @@ import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
 import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 import TitleModule from '@/components/db/anime/TitleModule.vue';
 import DescriptionModule from "@/components/db/anime/DescriptionModule.vue";
+import RatingModule from "@/components/db/anime/RatingModule.vue";
 export default {
   name: 'AnimeView',
   components: {
+    RatingModule,
     DescriptionModule,
     CoverImage,
     GenreModule,
@@ -120,13 +123,13 @@ export default {
   gap: 10px;
 }
 
-.two-columns {
+.row {
   display: flex;
   gap: 10px;
   width: 100%;
 }
 
-.two-columns > div {
+.row > div {
   flex: 1;
   min-width: 0;
 }
