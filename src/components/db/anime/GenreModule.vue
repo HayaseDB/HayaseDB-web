@@ -35,10 +35,10 @@ export default {
 
   display: inline-block;
   padding: 5px 10px;
-  background-color: var(--secondary-200);
+  background-color: var(--secondary-500);
+  color: #fff;
   border-radius: 5px;
-  font-size: 0.9em;
-  color: var(--text);
+  font-size: 0.8em;
   text-transform: capitalize;
 }
 </style>
