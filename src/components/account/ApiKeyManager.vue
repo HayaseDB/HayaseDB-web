@@ -1,5 +1,5 @@
 <template>
-  <div class="api-key-manager">
+  <div class="background-card api-key-manager">
 
     <div v-if="loading" class="loading-overlay">
       <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
@@ -47,13 +47,13 @@
         </table>
       </div>
     </div>
-    <div v-else class="no-keys">
+    <div v-else class="background-card-child no-keys">
       <p>No API keys found.</p>
     </div>
 
     <!-- Modal for displaying API key -->
     <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content">
+      <div class="background-card modal-content">
         <h3>{{ modalTitle }}</h3>
         <p>Your API key is:</p>
         <input type="text" :value="newApiKey" readonly />
@@ -169,17 +169,13 @@ export default {
 }
 
 .modal-content {
-  background-color: var(--background);
   display: flex;
   flex-direction: column;
   padding: 2em;
   position: relative;
   top: 90px;
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--background-300);
   width: 80%;
-  height: 220px;
+  height: min-content;
   max-width: 500px;
   text-align: center;
 
@@ -236,12 +232,8 @@ export default {
 .api-key-manager {
   position: relative;
   padding: 2em;
-  background-color: var(--background);
   color: var(--text);
-  border: 1px solid var(--background-300);
-  border-radius: var(--border-radius-md);
   max-width: 100%;
-  box-shadow: var(--shadow-md);
   overflow-x: hidden;
 }
 
@@ -314,7 +306,6 @@ export default {
 
 .no-keys {
   padding: 1em;
-  background-color: var(--background-50);
   border-radius: var(--border-radius-md);
   text-align: center;
 }

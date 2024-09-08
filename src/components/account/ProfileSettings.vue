@@ -1,10 +1,10 @@
 <template>
-  <div class="profile-settings">
+  <div class="profile-settings background-card">
     <div v-if="loading" class="loading-overlay">
       <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
     </div>
 
-    <h1 class="gradient-animation">Profile Settings</h1>
+    <h1>Profile Settings</h1>
     <form  @submit.prevent="submitForm">
 
       <div class="form-header">
@@ -235,15 +235,11 @@ handlePictureChange(event) {
 
 <style scoped>
 .profile-settings {
-  border: 1px solid var(--background-300);
 
   max-width: 800px;
   margin: 0 auto 50px;
   width: 100%;
   padding: 30px;
-  background-color: var(--background);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-xl);
   box-sizing: border-box;
   position: relative;
 }
