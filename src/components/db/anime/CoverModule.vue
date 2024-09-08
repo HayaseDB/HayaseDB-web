@@ -37,7 +37,7 @@ export default {
 
 .cover-placeholder {
   width: 100%;
-  height: 400px;
+  height: 450px;
   background-color: var(--background-100);
   color: var(--text-400);
   display: flex;
