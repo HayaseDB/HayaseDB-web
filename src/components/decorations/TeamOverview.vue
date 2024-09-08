@@ -32,8 +32,6 @@
 
 <script>
 import AIOImage from '@/assets/AIO.png';
-import LiamImage from '@/assets/Liam.png';
-import RobinImage from '@/assets/Robin.png';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
@@ -53,28 +51,7 @@ export default {
             github: { url: '#' }
           }
         },
-        {
-          name: 'Liam',
-          role: 'Full Stack Developer',
-          img: LiamImage,
-          socials: {
-            instagram: { url: '#' },
-            discord: { url: '#' },
-            twitter: { url: '#' },
-            github: { url: '#' }
-          }
-        },
-        {
-          name: 'Robin',
-          role: 'Full Stack Developer',
-          img: RobinImage,
-          socials: {
-            instagram: { url: '#' },
-            discord: { url: '#' },
-            twitter: { url: '#' },
-            github: { url: '#' }
-          }
-        },
+
 
       ]
     };
