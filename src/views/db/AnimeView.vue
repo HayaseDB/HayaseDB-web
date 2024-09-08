@@ -13,10 +13,16 @@
         <div class="card-body background-card-xs">
           <GenreModule :genres="anime.genre || ['N/A']"/>
           <div class="two-columns">
-            <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
-            <ReleaseDate :release-date="anime.releaseDate || 'N/A'" />
+            <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
+            <StatusModule :status="anime.status || 'N/A'" />
           </div>
+          <div class="two-columns">
+            <AuthorModule :author="anime.author || 'N/A'" />
+            <StudioModule :studio="anime.studio || 'N/A'" />
+          </div>
+          <EpisodesModule :episodes="anime.episodes || 'N/A'" />
         </div>
+
         <div class="anime-details">
           <p><strong>Status:</strong> {{ anime.status || 'N/A' }}</p>
           <p><strong>Studio:</strong> {{ anime.studio || 'N/A' }}</p>
@@ -37,14 +43,22 @@ import { useRoute } from 'vue-router';
 import { fetchAnime } from '@/services/fetchService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
-import ReleaseDate from '@/components/db/anime/ReleaseDateModule.vue';
+import StatusModule from '@/components/db/anime/StatusModule.vue';
+import StudioModule from '@/components/db/anime/StudioModule.vue';
+import AuthorModule from '@/components/db/anime/AuthorModule.vue';
+import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
+import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 
 export default {
   name: 'AnimeView',
   components: {
     CoverImage,
     GenreModule,
-    ReleaseDate
+    ReleaseDateModule,
+    StatusModule,
+    StudioModule,
+    AuthorModule,
+    EpisodesModule
   },
   setup() {
     const route = useRoute();
