@@ -6,8 +6,10 @@
           v-for="star in 5"
           :key="star"
           class="star"
-          :class="{ filled: star <= rating }"
+          :class="{ filled: star <= (hoveredRating || rating) }"
           @click="updateRating(star)"
+          @mouseover="previewRating(star)"
+          @mouseleave="resetPreview"
       >
         ★
       </span>
@@ -24,9 +26,20 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      hoveredRating: null
+    };
+  },
   methods: {
     updateRating(newRating) {
       this.$emit('update-rating', newRating);
+    },
+    previewRating(star) {
+      this.hoveredRating = star;
+    },
+    resetPreview() {
+      this.hoveredRating = null;
     }
   }
 };
@@ -44,6 +57,7 @@ export default {
   cursor: pointer;
   font-size: 24px;
   color: #ccc;
+  transition: color 0.2s ease-in-out;
 }
 
 .star.filled {

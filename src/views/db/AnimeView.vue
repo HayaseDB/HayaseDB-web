@@ -10,6 +10,7 @@
 
         </div>
         <div class="card-body background-card-xs">
+
           <GenreModule :genres="anime.genre || ['N/A']"/>
 
           <DescriptionModule :description="anime.description || 'N/A'" />
