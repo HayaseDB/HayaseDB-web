@@ -37,7 +37,7 @@ export const updateRating = async (animeId, rating) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        return response.data;
+        return response;
     } catch (error) {
         const { message, code } = handleAxiosError(error);
         throw { message, code };

@@ -1,6 +1,6 @@
 <template>
   <div class="studio-module background-card-child">
-    <label class="card-title">Studio:</label>
+    <label class="card-title">Studio</label>
     <div class="studio-container">
       {{ studio }}
     </div>

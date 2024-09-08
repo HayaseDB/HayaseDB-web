@@ -1,6 +1,6 @@
 <template>
   <div class="genre-module background-card-child">
-    <label class="card-title">Genres:</label>
+    <label class="card-title">Genres</label>
     <div class="tags-container">
       <div class="tag" v-for="(genre, index) in genres" :key="index">
         {{ genre }}

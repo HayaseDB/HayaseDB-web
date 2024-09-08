@@ -18,7 +18,7 @@
           <div class="row">
             <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
             <StatusModule :status="anime.status || 'N/A'" />
-            <RatingModule :rating="anime.averageRating" :id="anime._id" />
+            <RatingModule :rating="anime.averageRating" :ratingCount="anime.ratingCount" :id="anime._id" />
           </div>
           <div class="row">
             <AuthorModule :author="anime.author || 'N/A'" />

@@ -1,6 +1,6 @@
 <template>
   <div class="status-module background-card-child">
-    <label class="card-title">Status:</label>
+    <label class="card-title">Status</label>
     <div class="status-container">
       {{ status }}
     </div>

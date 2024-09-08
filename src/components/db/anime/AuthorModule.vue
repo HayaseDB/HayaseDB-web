@@ -1,6 +1,6 @@
 <template>
   <div class="author-module background-card-child">
-    <label class="card-title">Author:</label>
+    <label class="card-title">Author</label>
     <div class="author-container">
       {{ author }}
     </div>

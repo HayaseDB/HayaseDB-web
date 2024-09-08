@@ -1,6 +1,6 @@
 <template>
   <div class="rating-module background-card-child">
-    <label class="card-title">Rating:</label>
+    <label class="card-title">Rating <span class="ratingsCount">({{ localRatingCount }})</span></label>
     <div class="rating-container">
       <span
           v-for="star in 5"
@@ -31,12 +31,17 @@ export default {
     rating: {
       type: Number,
       required: true
+    },
+    ratingCount: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
       hoveredRating: null,
       currentRating: this.rating,
+      localRatingCount: this.ratingCount,
       errorMessage: null,
       errorCode: null
     };
@@ -47,13 +52,18 @@ export default {
       this.errorMessage = null;
 
       try {
-        await updateRating(this.id, newRating);
+        const { data } = await updateRating(this.id, newRating);
+        this.localRatingCount = data.UpdatedAnime.ratingCount;
+
         console.log(`Rating for item ${this.id} updated to: ${newRating}`);
       } catch (error) {
         console.error('Error updating rating:', error.message);
         this.errorCode = error.code;
+
         if (error.code === 401) {
-          this.errorMessage = "you need to login";
+          this.errorMessage = "You need to log in";
+        } else {
+          this.errorMessage = "An error occurred while updating the rating.";
         }
 
         this.currentRating = this.rating;
@@ -100,5 +110,11 @@ export default {
   font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.ratingsCount{
+  font-weight: 300;
+  color: var(--accent-500);
+  letter-spacing: 1px;
 }
 </style>

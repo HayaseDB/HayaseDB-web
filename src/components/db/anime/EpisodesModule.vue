@@ -1,6 +1,6 @@
 <template>
   <div class="episodes-module background-card-child">
-    <label class="card-title">Episodes:</label>
+    <label class="card-title">Episodes</label>
     <div class="episodes-container">
       {{ episodes }}
     </div>
