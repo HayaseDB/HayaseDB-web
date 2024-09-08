@@ -35,9 +35,9 @@ export const fetchAnimes = async (filter, sort, page) => {
     try {
         const response = await apiClient.get('/api/fetch/list/anime', {
             params: {
-                ...filter,
-                sort,
                 page,
+                filter,
+                sort,
             },
         });
         return response.data;
@@ -45,6 +45,7 @@ export const fetchAnimes = async (filter, sort, page) => {
         throw new Error(handleAxiosError(error));
     }
 };
+
 
 export const fetchAnime = async (id) => {
     try {

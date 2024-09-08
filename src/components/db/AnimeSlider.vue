@@ -54,7 +54,6 @@ export default {
       type: Number,
       default: 20,
     },
-
   },
   data() {
     return {
@@ -103,6 +102,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .mySwiper {
   width: 100%;
