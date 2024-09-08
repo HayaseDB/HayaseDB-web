@@ -1,6 +1,6 @@
 <template>
   <div class="description-module background-card-child">
-    <label class="card-description">Description:</label>
+    <label class="card-title">Description:</label>
     <div class="description-container">
       {{ description }}
     </div>
