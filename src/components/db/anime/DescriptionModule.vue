@@ -1,5 +1,5 @@
 <template>
-  <div class="description-module background-card-child">
+  <div class="background-card-child">
     <label class="card-title">Description</label>
     <div class="description-container">
       <div class="description-content" :class="{ 'collapsed': isCollapsed }">
@@ -77,11 +77,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.description-module {
-  position: relative;
-  border-radius: 10px;
-  background-color: var(--background-card-child);
-}
+
 
 
 .card-title {
