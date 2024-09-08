@@ -84,7 +84,7 @@ export default {
 
 .star {
   cursor: pointer;
-  font-size: 24px;
+  font-size: 20px;
   color: #ccc;
   transition: color 0.2s ease-in-out;
 }

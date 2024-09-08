@@ -105,18 +105,15 @@ export default {
 }
 
 .left-block {
-  flex: 1.1;
+  flex: 1;
 }
 
 .right-block {
-  flex: 2.5;
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-width: min-content;
 }
-
-
 
 .card-body {
   display: flex;
@@ -127,12 +124,12 @@ export default {
 .row {
   display: flex;
   gap: 10px;
-  width: 100%;
+  flex-wrap: wrap;
 }
 
 .row > div {
   flex: 1;
-  min-width: 0;
+  min-width: 150px;
 }
 
 .anime-details p {
@@ -151,6 +148,8 @@ export default {
   .left-block,
   .right-block {
     flex: auto;
+    min-width: 0;
   }
 }
+
 </style>
