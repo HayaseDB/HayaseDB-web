@@ -81,13 +81,8 @@ export default defineComponent({
   position: relative;
   border-radius: 10px;
   background-color: var(--background-card-child);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
 }
 
-.description-module:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
 
 .card-title {
   font-size: 18px;
