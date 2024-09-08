@@ -2,13 +2,11 @@
   <div class="genre-module background-card-child">
     <label class="card-title">Genres:</label>
     <div class="tags-container">
-
       <div class="tag" v-for="(genre, index) in genres" :key="index">
         {{ genre }}
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -24,21 +22,22 @@ export default {
 </script>
 
 <style scoped>
-.tags-container{
+.tags-container {
   display: flex;
   flex-direction: row;
   gap: 6px;
   margin-top: 5px;
+  flex-wrap: wrap;
 }
 
 .tag {
-
   display: inline-block;
   padding: 5px 10px;
   background-color: var(--secondary-500);
   color: #fff;
   border-radius: 5px;
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 </style>
