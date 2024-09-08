@@ -6,7 +6,7 @@
           v-for="star in 5"
           :key="star"
           class="star"
-          :class="{ filled: star <= (hoveredRating || rating) }"
+          :class="{ filled: star <= (hoveredRating || currentRating) }"
           @click="updateRating(star)"
           @mouseover="previewRating(star)"
           @mouseleave="resetPreview"
@@ -47,6 +47,7 @@ export default {
         console.log(`Rating for item ${this.id} updated to: ${newRating}`);
       } catch (error) {
         console.error('Error updating rating:', error.message);
+        this.currentRating = this.rating;
       }
     },
     previewRating(star) {
@@ -57,7 +58,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style scoped>
