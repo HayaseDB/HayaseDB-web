@@ -14,6 +14,7 @@
         ★
       </span>
     </div>
+    <div v-if="errorMessage" class="error-message" @click="handleErrorClick">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -35,18 +36,26 @@ export default {
   data() {
     return {
       hoveredRating: null,
-      currentRating: this.rating
+      currentRating: this.rating,
+      errorMessage: null,
+      errorCode: null
     };
   },
   methods: {
     async updateRating(newRating) {
       this.currentRating = newRating;
+      this.errorMessage = null;
 
       try {
         await updateRating(this.id, newRating);
         console.log(`Rating for item ${this.id} updated to: ${newRating}`);
       } catch (error) {
         console.error('Error updating rating:', error.message);
+        this.errorCode = error.code;
+        if (error.code === 401) {
+          this.errorMessage = "you need to login";
+        }
+
         this.currentRating = this.rating;
       }
     },
@@ -55,6 +64,11 @@ export default {
     },
     resetPreview() {
       this.hoveredRating = null;
+    },
+    handleErrorClick() {
+      if (this.errorCode === 401) {
+        this.$router.push('/login');
+      }
     }
   }
 };
@@ -77,5 +91,14 @@ export default {
 
 .star.filled {
   color: #f39c12;
+}
+
+.error-message {
+  margin-top: 10px;
+  color: #e74c3c;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>
