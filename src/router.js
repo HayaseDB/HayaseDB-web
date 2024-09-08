@@ -6,12 +6,22 @@ import DeveloperView from "@/views/account/DeveloperView.vue";
 import ProfileView from "@/views/account/ProfileView.vue";
 import ExploreView from "@/views/db/ExploreView.vue";
 import AnimeView from "@/views/db/AnimeView.vue";
+import imprint from "@/views/ImprintView.vue";
 
 const routes = [
     {
         path: '/',
         name: 'Home',
         component: Home,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+    },
+    {
+        path: '/imprint',
+        name: 'Imprint',
+        component: imprint,
         meta: {
             showNavBar: true,
             showFooter: true
