@@ -1,7 +1,6 @@
 <template>
   <div class="explore-container">
     <div class="explore-view">
-
       <div class="left-block background-card">
         <div class="text-container">
           <h1>Welcome to HayaseDB</h1>
@@ -14,24 +13,22 @@
               sort="desc"
               limit="20"
           />
-
         </div>
         <div class="popular">
           <h2>Currently Popular</h2>
-
           <AnimeSlider
               filter="popular"
               sort="desc"
               limit="20"
           />
         </div>
-
-
       </div>
       <div class="right-block background-card">
         <h2>Database Stats</h2>
         <div class="table-container">
-          <table class="key-table">
+          <div v-if="loading" class="loading-indicator">Loading...</div>
+          <div v-if="error" class="error-message">{{ error }}</div>
+          <table v-if="!loading && !error" class="key-table">
             <thead>
             <tr>
               <th>Statistic</th>
@@ -55,16 +52,13 @@
           </table>
         </div>
       </div>
-
-
-      </div>
+    </div>
   </div>
-
 </template>
 
 <script>
 import AnimeSlider from "@/components/db/AnimeSlider.vue";
-import {fetchStats} from "@/services/fetchService";
+import { fetchStats } from "@/services/fetchService";
 
 export default {
   components: {
@@ -73,13 +67,19 @@ export default {
   data() {
     return {
       stats: {},
-
-
+      loading: true,
+      error: null,
     };
   },
   async created() {
-    this.stats = await fetchStats();
-    console.log(this.stats);
+    try {
+      this.stats = await fetchStats();
+    } catch (err) {
+      this.error = "Failed to load database statistics. Please try again later.";
+      console.error("Error fetching stats:", err);
+    } finally {
+      this.loading = false;
+    }
   }
 };
 </script>
@@ -118,7 +118,7 @@ export default {
   .explore-view {
     flex-direction: column;
   }
-  .explore-container{
+  .explore-container {
     padding: 10px;
   }
 
@@ -129,11 +129,9 @@ export default {
   .left-block {
     flex: auto;
   }
-
 }
 
 .right-block .table-container {
-
   width: 100%;
 }
 
@@ -162,5 +160,17 @@ export default {
 
 .right-block .key-table tr:nth-child(even) {
   background-color: var(--background-50);
+}
+
+.loading-indicator {
+  text-align: center;
+  color: var(--text);
+  font-size: var(--text-lg);
+}
+
+.error-message {
+  color: var(--danger);
+  text-align: center;
+  font-size: var(--text-base);
 }
 </style>

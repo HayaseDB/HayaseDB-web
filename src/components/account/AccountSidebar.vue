@@ -51,7 +51,6 @@ export default {
   min-height: 100vh;
   box-sizing: border-box;
   padding: 1em;
-  border-right: 1px solid var(--background-300);
   position: relative;
   left: 0;
   transition: width 0.3s ease, padding 0.3s ease;
