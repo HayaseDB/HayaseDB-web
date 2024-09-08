@@ -185,21 +185,22 @@ export default {
         localStorage.removeItem('cachedUser');
       }
     },
+    handleAction(action) {
+      if (action === 'logout') {
+        this.logout();
+      }
+    },
+    logout() {
+      Cookies.remove('token');
+      localStorage.removeItem('cachedUser');
+      this.isLoggedIn = false;
+      this.username = null;
+      this.$router.push('/');
+    },
+
   },
 
 
-  logout() {
-    Cookies.remove('token');
-    localStorage.removeItem('cachedUser');
-    this.isLoggedIn = false;
-    this.username = null;
-    this.$router.push('/');
-  },
-  handleAction(action) {
-    if (action === 'logout') {
-      this.logout();
-    }
-  },
 
   created() {
     const cachedUser = JSON.parse(localStorage.getItem('cachedUser'));
