@@ -2,7 +2,7 @@
   <div class="anime-view-container">
     <div class="anime-view">
       <div class="left-block" v-if="anime">
-        <CoverImage :url="anime.cover.url" />
+        <CoverImage :url="anime.cover?.url || null" />
       </div>
       <div class="right-block" v-if="anime">
         <div class="info-head">
@@ -18,7 +18,7 @@
           <div class="row">
             <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
             <StatusModule :status="anime.status || 'N/A'" />
-            <RatingModule :rating="anime.rating" :id="anime._id" />
+            <RatingModule :rating="anime.averageRating" :id="anime._id" />
           </div>
           <div class="row">
             <AuthorModule :author="anime.author || 'N/A'" />

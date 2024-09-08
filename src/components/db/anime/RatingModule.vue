@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { updateRating } from '@/services/rateService';
+
 export default {
   name: 'RatingModule',
   props: {
@@ -37,10 +39,15 @@ export default {
     };
   },
   methods: {
-    updateRating(newRating) {
+    async updateRating(newRating) {
       this.currentRating = newRating;
 
-      console.log(`Rating for item ${this.id} updated to: ${newRating}`);
+      try {
+        await updateRating(this.id, newRating);
+        console.log(`Rating for item ${this.id} updated to: ${newRating}`);
+      } catch (error) {
+        console.error('Error updating rating:', error.message);
+      }
     },
     previewRating(star) {
       this.hoveredRating = star;
@@ -50,6 +57,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>
