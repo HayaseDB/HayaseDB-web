@@ -11,7 +11,7 @@
               @keyup.enter="updateTags"
               type="text"
           />
-          <span class="remove-tag" @click="removeTag(index)">x</span>
+          <span class="remove-tag" @click="removeTag(index)"><fontAwesomeIcon :icon="['fa', 'xmark']" /></span>
         </div>
         <div class="add-tag" @click="addTag">+ Add Genre</div>
       </template>
