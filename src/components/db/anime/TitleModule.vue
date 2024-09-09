@@ -1,17 +1,22 @@
 <template>
   <div class="title-module background-card-sm">
-    <div class="title-container">
-      {{ title }}
+    <div v-if="editMode">
+      <input v-model="editableTitle" @blur="handleBlur" />
     </div>
-    <div class="id-container">
-      {{ id }}
+    <div v-else>
+      <div class="title-container">
+        {{ title }}
+      </div>
+      <div class="id-container" v-if="id">
+        {{ id }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AuthorModule',
+  name: 'TitleModule',
   props: {
     title: {
       type: String,
@@ -20,11 +25,33 @@ export default {
     id: {
       type: String,
       required: false
+    },
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+    createMode: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      editableTitle: this.title
+    };
+  },
+  methods: {
+    handleBlur() {
+      this.$emit('update-title', this.editableTitle);
+    }
+  },
+  watch: {
+    title(newTitle) {
+      this.editableTitle = newTitle;
     }
   }
 };
 </script>
-
 <style scoped>
 .title-container {
   font-size: 30px;
@@ -32,6 +59,7 @@ export default {
   display: flex;
   flex-direction: row;
 }
+
 .id-container {
   font-size: 13px;
   font-weight: 300;
@@ -40,9 +68,15 @@ export default {
   flex-direction: row;
 }
 
+.title-module {
+  padding: 27px;
+}
 
-.title-module{
-  padding-left: 27px;
-  padding-right: 27px;
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 </style>

@@ -1,19 +1,24 @@
 <template>
   <div class="background-card-child">
     <label class="card-title">Description</label>
-    <div class="description-container">
-      <div class="description-content" :class="{ 'collapsed': isCollapsed }">
-        {{ description }}
-      </div>
-      <div class="fade-out" v-if="isCollapsed && isContentOverflowing"></div>
+    <div v-if="editMode">
+      <textarea v-model="editableDescription" class="input-field" rows="5" />
     </div>
-    <div class="arrow-container" v-if="isContentOverflowing">
-      <fontAwesomeIcon
-          @click="toggleCollapse"
-          :icon="['fa', 'chevron-down']"
-          class="arrow"
-          :class="{ 'rotate': !isCollapsed }"
-      />
+    <div v-else>
+      <div class="description-container">
+        <div class="description-content" :class="{ 'collapsed': isCollapsed }">
+          {{ description }}
+        </div>
+        <div class="fade-out" v-if="isCollapsed && isContentOverflowing"></div>
+      </div>
+      <div class="arrow-container" v-if="isContentOverflowing">
+        <fontAwesomeIcon
+            @click="toggleCollapse"
+            :icon="['fa', 'chevron-down']"
+            class="arrow"
+            :class="{ 'rotate': !isCollapsed }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,13 +36,23 @@ export default defineComponent({
     description: {
       type: String,
       required: true
+    },
+    editMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       isCollapsed: true,
-      isContentOverflowing: false
+      isContentOverflowing: false,
+      editableDescription: this.description
     };
+  },
+  watch: {
+    description(newVal) {
+      this.editableDescription = newVal;
+    }
   },
   mounted() {
     this.checkContentOverflow();
@@ -45,16 +60,6 @@ export default defineComponent({
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize);
-  },
-  watch: {
-    description: {
-      immediate: true,
-      handler() {
-        this.$nextTick(() => {
-          this.checkContentOverflow();
-        });
-      }
-    }
   },
   methods: {
     toggleCollapse() {
@@ -71,15 +76,14 @@ export default defineComponent({
           this.isContentOverflowing = content.scrollHeight > content.clientHeight;
         }
       });
+    },
+    updateDescription() {
+      this.$emit('update-description', this.editableDescription);
     }
   }
 });
 </script>
-
 <style scoped>
-
-
-
 .card-title {
   font-size: 18px;
   font-weight: 500;
@@ -140,5 +144,13 @@ export default defineComponent({
 
 .arrow:hover {
   color: var(--primary);
+}
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 </style>

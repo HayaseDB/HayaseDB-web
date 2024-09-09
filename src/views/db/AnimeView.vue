@@ -1,34 +1,40 @@
 <template>
   <div class="anime-view-container">
     <div class="anime-view">
-      <div class="left-block" v-if="anime">
-        <CoverImage :url="anime.cover?.url || null" />
+      <div class="left-block" v-if="anime || createMode">
+        <CoverImage :url="anime?.cover?.url || null" />
       </div>
-      <div class="right-block" v-if="anime">
+      <div class="right-block" v-if="anime || createMode">
         <div class="info-head">
-          <TitleModule :title="anime.title || 'N/A'" :id="anime._id"/>
-
+          <TitleModule
+              :title="anime?.title || 'N/A'"
+              :id="anime?._id || null"
+              :edit-mode="editMode"
+              @update-title="updateTitle"
+              :createMode="createMode"
+          />
         </div>
         <div class="card-body background-card-xs">
-
-          <GenreModule :genres="anime.genre || ['N/A']"/>
-
-          <DescriptionModule :description="anime.description || 'N/A'" />
-
+          <GenreModule :genres="anime?.genre || ['N/A']"               :edit-mode="editMode"
+          />
+          <DescriptionModule :description="anime?.description || 'N/A'"              :edit-mode="editMode"
+          />
           <div class="row">
-            <ReleaseDateModule :release-date="anime.releaseDate || 'N/A'" />
-            <StatusModule :status="anime.status || 'N/A'" />
-            <RatingModule :rating="anime.averageRating" :ratingCount="anime.ratingCount" :id="anime._id" />
+            <ReleaseDateModule :release-date="anime?.releaseDate || 'N/A'"               :edit-mode="editMode"
+            />
+            <StatusModule :status="anime?.status || 'N/A'" />
+            <RatingModule :rating="anime?.averageRating" :ratingCount="anime?.ratingCount" :id="anime?._id || null"               :edit-mode="editMode"
+            />
           </div>
           <div class="row">
-            <AuthorModule :author="anime.author || 'N/A'" />
-            <StudioModule :studio="anime.studio || 'N/A'" />
+            <AuthorModule :author="anime?.author || 'N/A'"              :edit-mode="editMode"
+            />
+            <StudioModule :studio="anime?.studio || 'N/A'"              :edit-mode="editMode"
+            />
           </div>
-
-          <EpisodesModule :episodes="anime.episodes || 'N/A'" />
+          <EpisodesModule :episodes="anime?.episodes || 'N/A'"              :edit-mode="editMode"
+          />
         </div>
-
-
       </div>
       <div v-else>
         <p>Loading...</p>
@@ -38,7 +44,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchAnime } from '@/services/fetchService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
@@ -51,6 +57,7 @@ import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 import TitleModule from '@/components/db/anime/TitleModule.vue';
 import DescriptionModule from "@/components/db/anime/DescriptionModule.vue";
 import RatingModule from "@/components/db/anime/RatingModule.vue";
+
 export default {
   name: 'AnimeView',
   components: {
@@ -65,23 +72,64 @@ export default {
     EpisodesModule,
     TitleModule
   },
-  setup() {
+  props: {
+    createMode: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props) {
     const route = useRoute();
     const animeId = route.params.id;
     const anime = ref(null);
+    const editMode = ref(true);
 
     const getAnime = async () => {
       try {
-        anime.value = await fetchAnime(animeId);
+        if (!props.createMode) {
+          anime.value = await fetchAnime(animeId);
+        }
       } catch (error) {
         console.error('Error fetching anime:', error.message);
       }
     };
 
-    onMounted(getAnime);
+    const updateTitle = (newTitle) => {
+      if (anime.value) {
+        anime.value.title = newTitle;
+      }
+    };
+
+    onMounted(() => {
+      if (!props.createMode) {
+        getAnime();
+      }
+    });
+
+    watch(() => props.createMode, (newVal) => {
+      if (newVal) {
+        anime.value = {
+          title: '',
+          _id: null,
+          cover: { url: null },
+          genre: [],
+          description: '',
+          releaseDate: '',
+          status: '',
+          averageRating: 0,
+          ratingCount: 0,
+          author: '',
+          studio: '',
+          episodes: []
+        };
+        editMode.value = true;
+      }
+    });
 
     return {
-      anime
+      anime,
+      editMode,
+      updateTitle
     };
   }
 };

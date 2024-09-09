@@ -19,23 +19,18 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'EpisodesModule',
   props: {
     episodes: {
       type: Array,
-      required: true,
-      validator(value) {
-        return value.every(
-            episode => 'number' in episode && 'title' in episode
-        );
-      }
+      default: () => []
     }
   }
 };
 </script>
+
 
 <style scoped>
 
