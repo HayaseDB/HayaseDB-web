@@ -76,7 +76,6 @@
     </div>
   </nav>
 </template>
-
 <script>
 import { checkToken } from '@/services/authService';
 import { toggleTheme } from "@/utils/theme";
@@ -91,8 +90,7 @@ export default {
       username: null,
       baseMenuItems: [
         { label: 'Home', to: '/' },
-        { label: 'About', to: '/about' },
-        { label: 'Contact', to: '/contact' },
+        { label: 'Explore', to: '/explore' },
         {
           label: 'Docs',
           children: [
@@ -161,25 +159,57 @@ export default {
     },
     async checkLoginStatus() {
       try {
+        const cachedUser = JSON.parse(localStorage.getItem('cachedUser'));
+
+        if (cachedUser && cachedUser.user) {
+          this.isLoggedIn = true;
+          this.username = cachedUser.user.username;
+        }
+
         const loggedInUser = await checkToken();
-        this.isLoggedIn = loggedInUser.isValid;
-        this.username = loggedInUser.user.username;
+
+        if (loggedInUser.isValid) {
+          if (!cachedUser || cachedUser.user.username !== loggedInUser.user.username) {
+            this.isLoggedIn = true;
+            this.username = loggedInUser.user.username;
+            localStorage.setItem('cachedUser', JSON.stringify(loggedInUser));
+          }
+        } else {
+          this.isLoggedIn = false;
+          this.username = null;
+          localStorage.removeItem('cachedUser');
+        }
       } catch (error) {
         this.isLoggedIn = false;
+        this.username = null;
+        localStorage.removeItem('cachedUser');
       }
-    },
-    logout() {
-      Cookies.remove('token');
-      this.isLoggedIn = false;
-      this.$router.push('/');
     },
     handleAction(action) {
       if (action === 'logout') {
         this.logout();
       }
     },
+    logout() {
+      Cookies.remove('token');
+      localStorage.removeItem('cachedUser');
+      this.isLoggedIn = false;
+      this.username = null;
+      this.$router.push('/');
+    },
+
   },
+
+
+
   created() {
+    const cachedUser = JSON.parse(localStorage.getItem('cachedUser'));
+
+    if (cachedUser && cachedUser.user) {
+      this.isLoggedIn = true;
+      this.username = cachedUser.user.username;
+    }
+
     this.checkLoginStatus();
   }
 };

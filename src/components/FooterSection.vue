@@ -17,7 +17,8 @@
           <ul class="footer-link-list">
             <li><a href="/about" class="footer-link">About Us</a></li>
             <li><a href="/contact" class="footer-link">Contact</a></li>
-            <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
+            <li><a href="/imprint" class="footer-link">Imprint</a></li>
+            <li><a href="/imprint" class="footer-link">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="footer-section footer-about">

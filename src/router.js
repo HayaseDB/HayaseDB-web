@@ -4,12 +4,24 @@ import AuthView from "@/views/AuthView.vue";
 import AccountView from "@/views/AccountView.vue";
 import DeveloperView from "@/views/account/DeveloperView.vue";
 import ProfileView from "@/views/account/ProfileView.vue";
+import ExploreView from "@/views/db/ExploreView.vue";
+import AnimeView from "@/views/db/AnimeView.vue";
+import imprint from "@/views/ImprintView.vue";
 
 const routes = [
     {
         path: '/',
         name: 'Home',
         component: Home,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+    },
+    {
+        path: '/imprint',
+        name: 'Imprint',
+        component: imprint,
         meta: {
             showNavBar: true,
             showFooter: true
@@ -62,7 +74,27 @@ const routes = [
                 }
             }
         ]
-    }
+    },
+    {
+        path: '/explore',
+        name: 'Explore',
+        component: ExploreView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+
+    },
+    {
+        path: '/anime/:id',
+        name: 'Anime',
+        component: AnimeView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+
+    },
 
 ];
 

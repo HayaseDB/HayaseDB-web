@@ -1,10 +1,10 @@
 <template>
-  <div class="profile-settings">
+  <div class="profile-settings background-card">
     <div v-if="loading" class="loading-overlay">
       <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
     </div>
 
-    <h1 class="gradient-animation">Profile Settings</h1>
+    <h1>Profile Settings</h1>
     <form  @submit.prevent="submitForm">
 
       <div class="form-header">
@@ -205,27 +205,20 @@ handlePictureChange(event) {
       const formData = new FormData();
       if (this.selectedFile) {
         formData.append('profilePicture', this.selectedFile);
-
         await uploadProfilePicture(this.selectedFile);
       }
 
-      const updateResponse = await updateUserCredentials(
+      await updateUserCredentials(
         this.password,
         this.newPassword,
         this.username,
         this.email
       );
 
-      console.log('Profile updated successfully', updateResponse);
-
       this.submissionError = '';
-      this.successMessage = 'Profile updated successfully!';
       
-      await this.fetchUserCredentials();
+      window.location.reload();
 
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
     } catch (error) {
       this.submissionError = error.message;
     } finally {
@@ -234,21 +227,19 @@ handlePictureChange(event) {
   } else {
     this.submissionError = 'Please fix the errors above and try again.';
   }
-}
-  }
+}}
+
 };
 </script>
 
 
 <style scoped>
 .profile-settings {
+
   max-width: 800px;
   margin: 0 auto 50px;
   width: 100%;
   padding: 30px;
-  background-color: var(--background);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-xl);
   box-sizing: border-box;
   position: relative;
 }
@@ -260,7 +251,7 @@ h1 {
 }
 
 .form-group {
-  margin-bottom: 1.5em;
+  margin-bottom: 0.7em;
   position: relative;
   display: flex;
   flex-direction: column;
