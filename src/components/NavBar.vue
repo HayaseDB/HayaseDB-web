@@ -112,6 +112,7 @@ export default {
             onlyIfLoggedIn: true,
             children: [
               { label: 'Profile', to: '/account/profile' },
+              { label: 'Create Anime', to: '/anime/create' },
               { label: 'Developer', to: '/account/developer' },
               { label: 'Logout', to: null, customClass: 'logout', action: 'logout' }
             ]
