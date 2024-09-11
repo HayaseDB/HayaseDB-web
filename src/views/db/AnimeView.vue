@@ -65,10 +65,10 @@
         </div>
 
         <div class="action-buttons">
-          <button v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
-          <button v-if="internalEditMode && !createMode" @click="saveChanges">Save</button>
-          <button v-if="internalEditMode && !createMode" @click="cancelEdit">Cancel</button>
-          <button v-if="createMode" @click="createAnime">Create Anime</button>
+          <button class="btn-primary" v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
+          <button class="btn-secondary" v-if="internalEditMode && !createMode" @click="saveChanges">Save</button>
+          <button class="btn-danger" v-if="internalEditMode && !createMode" @click="cancelEdit">Cancel</button>
+          <button class="btn-warning" v-if="createMode" @click="createAnime">Create Anime</button>
         </div>
       </div>
       <div v-else>
@@ -310,14 +310,4 @@ export default {
   margin-top: 20px;
 }
 
-.action-buttons button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.action-buttons button:hover {
-  background-color: var(--primary-color-light);
-}
 </style>
