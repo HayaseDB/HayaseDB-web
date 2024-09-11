@@ -1,16 +1,16 @@
 <template>
   <div class="anime-view-container">
     <div class="anime-view">
-      <div class="left-block" v-if="anime || createMode">
+      <div class="left-block" v-if="currentData || createMode">
         <CoverImage :url="currentData?.cover?.url || null" />
       </div>
-      <div class="right-block" v-if="anime || createMode">
+      <div class="right-block" v-if="currentData || createMode">
         <div class="info-head">
           <TitleModule
               :title="currentData?.title || 'New Anime'"
               :id="currentData?._id || null"
               :edit-mode="internalEditMode"
-              @update="updateField('title')"
+              @update="updateField('title', $event)"
               :create-mode="createMode"
           />
         </div>
@@ -18,47 +18,48 @@
           <GenreModule
               :genres="currentData?.genre || ['N/A']"
               :edit-mode="internalEditMode"
-              @update="updateField('genre')"
+              @update="updateField('genre', $event)"
           />
           <DescriptionModule
               :description="currentData?.description || 'N/A'"
               :edit-mode="internalEditMode"
-              @update="updateField('description')"
+              @update="updateField('description', $event)"
           />
           <div class="row">
             <ReleaseDateModule
                 :release-date="currentData?.releaseDate || 'N/A'"
                 :edit-mode="internalEditMode"
-                @update="updateField('releaseDate')"
+                @update="updateField('releaseDate', $event)"
             />
             <StatusModule
                 :status="currentData?.status || 'N/A'"
-                @update="updateField('status')"
+                :edit-mode="internalEditMode"
+                @update="updateField('status', $event)"
             />
             <RatingModule
                 :rating="currentData?.averageRating"
                 :rating-count="currentData?.ratingCount"
                 :id="currentData?._id || null"
                 :edit-mode="internalEditMode"
-                @update="updateField('averageRating')"
+                @update="updateField('averageRating', $event)"
             />
           </div>
           <div class="row">
             <AuthorModule
                 :author="currentData?.author || 'N/A'"
                 :edit-mode="internalEditMode"
-                @update="updateField('author')"
+                @update="updateField('author', $event)"
             />
             <StudioModule
                 :studio="currentData?.studio || 'N/A'"
                 :edit-mode="internalEditMode"
-                @update="updateField('studio')"
+                @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
               :episodes="currentData?.episodes || 'N/A'"
               :edit-mode="internalEditMode"
-              @update="updateField('episodes')"
+              @update="updateField('episodes', $event)"
           />
         </div>
 
@@ -121,8 +122,8 @@ export default {
   },
   setup(props) {
     const router = useRouter();
-    const anime = ref(null);
     const currentData = ref(null);
+    const inputData = ref(null);
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
 
@@ -130,8 +131,8 @@ export default {
       if (props.animeId) {
         try {
           loading.value = true;
-          anime.value = await fetchAnime(props.animeId);
-          currentData.value = { ...anime.value };
+          currentData.value = await fetchAnime(props.animeId);
+          inputData.value = { ...currentData.value };
         } catch (error) {
           console.error('Error fetching anime:', error.message);
           alert('Failed to load anime details');
@@ -145,11 +146,11 @@ export default {
       try {
         loading.value = true;
         if (props.createMode) {
-          await createAnime(currentData.value);
+          await createAnime(inputData.value);
           alert('Anime created successfully');
           await router.push('/anime-list');
         } else {
-          await requestAnimeChange(props.animeId, currentData.value);
+          await requestAnimeChange(props.animeId, inputData.value);
           alert('Changes requested successfully');
           internalEditMode.value = false;
           await router.push(`/anime/${props.animeId}`);
@@ -164,66 +165,21 @@ export default {
 
     const enterEditMode = () => {
       internalEditMode.value = true;
+      if (props.animeId) {
+        router.push(`/anime/${props.animeId}/edit`);
+      }
     };
 
     const cancelEdit = () => {
       internalEditMode.value = false;
-      if (!props.createMode) {
-        getAnime();
+      if (props.animeId) {
+        router.push(`/anime/${props.animeId}`);
       }
     };
 
-    const updateTitle = (newTitle) => {
-      if (currentData.value) {
-        currentData.value.title = newTitle;
-      }
-    };
-
-    const updateGenres = (newGenres) => {
-      if (currentData.value) {
-        currentData.value.genre = newGenres;
-      }
-    };
-
-    const updateDescription = (newDescription) => {
-      if (currentData.value) {
-        currentData.value.description = newDescription;
-      }
-    };
-
-    const updateReleaseDate = (newReleaseDate) => {
-      if (currentData.value) {
-        currentData.value.releaseDate = newReleaseDate;
-      }
-    };
-
-    const updateStatus = (newStatus) => {
-      if (currentData.value) {
-        currentData.value.status = newStatus;
-      }
-    };
-
-    const updateRating = (newRating) => {
-      if (currentData.value) {
-        currentData.value.averageRating = newRating;
-      }
-    };
-
-    const updateAuthor = (newAuthor) => {
-      if (currentData.value) {
-        currentData.value.author = newAuthor;
-      }
-    };
-
-    const updateStudio = (newStudio) => {
-      if (currentData.value) {
-        currentData.value.studio = newStudio;
-      }
-    };
-
-    const updateEpisodes = (newEpisodes) => {
-      if (currentData.value) {
-        currentData.value.episodes = newEpisodes;
+    const updateField = (field, value) => {
+      if (inputData.value) {
+        inputData.value[field] = value;
       }
     };
 
@@ -238,31 +194,19 @@ export default {
     });
 
     return {
-      anime,
       currentData,
+      inputData,
       internalEditMode,
       saveChanges,
       enterEditMode,
       cancelEdit,
       loading,
-      updateTitle,
-      updateGenres,
-      updateDescription,
-      updateReleaseDate,
-      updateStatus,
-      updateRating,
-      updateAuthor,
-      updateStudio,
-      updateEpisodes
+      updateField
     };
   }
 };
 </script>
-
-
-
-
-<style scoped>
+  <style scoped>
 .anime-view-container {
   display: flex;
   justify-content: center;

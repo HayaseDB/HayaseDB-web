@@ -2,7 +2,7 @@
   <div class="background-card-child">
     <label class="card-title">Description</label>
     <div v-if="editMode">
-      <textarea v-model="editableDescription" class="input-field" rows="5" />
+      <textarea @input="emitUpdate" v-model="editableDescription" class="input-field" rows="5" />
     </div>
     <div v-else>
       <div class="description-container">
@@ -62,6 +62,9 @@ export default defineComponent({
     window.removeEventListener('resize', this.handleResize);
   },
   methods: {
+    emitUpdate() {
+      this.$emit('update', this.editableDescription);
+    },
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed;
     },

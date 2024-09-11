@@ -2,7 +2,7 @@
   <div class="status-module background-card-child">
     <label class="card-title">Status</label>
     <div v-if="editMode">
-      <input v-model="editableStatus" @blur="handleBlur" />
+      <input v-model="editableStatus" @input="emitUpdate" />
     </div>
     <div v-else>
       <div class="status-container">
@@ -31,8 +31,8 @@ export default {
     };
   },
   methods: {
-    handleBlur() {
-      this.$emit('update-status', this.editableStatus);
+    emitUpdate() {
+      this.$emit('update', this.editableStatus);
     }
   },
   watch: {
@@ -42,6 +42,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .status-container {
   display: flex;
@@ -49,4 +50,12 @@ export default {
   gap: 6px;
   margin-top: 5px;
 }
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 </style>

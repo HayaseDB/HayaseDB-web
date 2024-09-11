@@ -2,7 +2,7 @@
   <div class="author-module background-card-child">
     <label class="card-title">Author</label>
     <div v-if="editMode">
-      <input v-model="editableAuthor" class="input-field" />
+      <input  @input="emitUpdate" v-model="editableAuthor" class="input-field" />
     </div>
     <div v-else class="author-container">
       {{ author }}
@@ -34,8 +34,8 @@ export default {
     }
   },
   methods: {
-    updateAuthor() {
-      this.$emit('update-author', this.editableAuthor);
+    emitUpdate() {
+      this.$emit('update', this.editableAuthor);
     }
   }
 };

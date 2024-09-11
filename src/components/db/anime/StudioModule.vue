@@ -2,7 +2,7 @@
   <div class="studio-module background-card-child">
     <label class="card-title">Studio</label>
     <div v-if="editMode">
-      <input v-model="editableStudio" @blur="handleBlur" />
+      <input v-model="editableStudio" @input="emitUpdate" />
     </div>
     <div v-else>
       <div class="studio-container">
@@ -31,8 +31,8 @@ export default {
     };
   },
   methods: {
-    handleBlur() {
-      this.$emit('update-studio', this.editableStudio);
+    emitUpdate() {
+      this.$emit('update', this.editableStudio);
     }
   },
   watch: {
@@ -50,5 +50,13 @@ export default {
   flex-direction: row;
   gap: 6px;
   margin-top: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 </style>

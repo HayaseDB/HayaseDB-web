@@ -7,7 +7,7 @@
           <input
               v-model="editedGenres[index]"
               class="tag-input"
-              @blur="updateTags"
+              @input="updateTags"
               @keyup.enter="updateTags"
               type="text"
           />
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     updateTags() {
-      this.$emit('update-genres', this.editedGenres.filter((genre) => genre.trim() !== ''));
+      this.$emit('update', this.editedGenres.filter((genre) => genre.trim() !== ''));
     },
     addTag() {
       this.editedGenres.push('');

@@ -1,7 +1,7 @@
 <template>
   <div class="title-module background-card-sm">
     <div v-if="editMode">
-      <input v-model="editableTitle" @blur="handleBlur" />
+      <input v-model="editableTitle" @input="emitUpdate" />
     </div>
     <div v-else>
       <div class="title-container">
@@ -13,7 +13,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'TitleModule',
@@ -24,7 +23,7 @@ export default {
     },
     id: {
       type: String,
-      required: false
+      default: null
     },
     editMode: {
       type: Boolean,
@@ -37,10 +36,11 @@ export default {
     };
   },
   methods: {
-    handleBlur() {
-      this.$emit('update-title', this.editableTitle);
+    emitUpdate() {
+      this.$emit('update', this.editableTitle);
     }
   },
+
   watch: {
     title(newTitle) {
       this.editableTitle = newTitle;
@@ -48,6 +48,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .title-container {

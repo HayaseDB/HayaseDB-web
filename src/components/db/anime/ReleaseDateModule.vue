@@ -2,7 +2,7 @@
   <div class="releasedate-module background-card-child">
     <label class="card-title">Release</label>
     <div v-if="editMode">
-      <input type="date" v-model="formattedReleaseDate" class="input-field" />
+      <input type="date" v-model="editableReleaseDate" @change="emitUpdate" />
     </div>
     <div v-else class="releasedate-container">
       {{ formattedReleaseDate || 'N/A' }}
@@ -23,20 +23,42 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      editableReleaseDate: this.formatReleaseDateForInput(this.releaseDate)
+    };
+  },
+  watch: {
+    releaseDate(newVal) {
+      this.editableReleaseDate = this.formatReleaseDateForInput(newVal);
+    }
+  },
+  methods: {
+    emitUpdate() {
+      const date = new Date(this.editableReleaseDate);
+      this.$emit('update', date.toISOString());
+    },
+    formatReleaseDateForInput(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toISOString().split('T')[0];
+    }
+  },
   computed: {
-    formattedReleaseDate: {
-      get() {
-        if (!this.releaseDate) return '';
-        const date = new Date(this.releaseDate);
-        return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0];
-      },
-      set(newValue) {
-        this.$emit('update-release-date', newValue);
-      }
+    formattedReleaseDate() {
+      if (!this.releaseDate) return '';
+
+      const date = new Date(this.releaseDate);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
     }
   }
 };
 </script>
+
 <style scoped>
 .releasedate-container {
   display: flex;
@@ -45,7 +67,7 @@ export default {
   margin-top: 5px;
 }
 
-.input-field {
+input[type="date"] {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
