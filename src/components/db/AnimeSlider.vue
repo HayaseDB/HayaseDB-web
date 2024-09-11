@@ -33,7 +33,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
-import { fetchAnimes } from '@/services/fetchService';
+import { fetchAnimes } from '@/services/animeService';
 
 export default {
   name: 'AnimeSwiper',

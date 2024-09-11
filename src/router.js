@@ -6,7 +6,7 @@ import DeveloperView from "@/views/account/DeveloperView.vue";
 import ProfileView from "@/views/account/ProfileView.vue";
 import ExploreView from "@/views/db/ExploreView.vue";
 import AnimeView from "@/views/db/AnimeView.vue";
-import imprint from "@/views/ImprintView.vue";
+import ImprintView from "@/views/ImprintView.vue";
 
 const routes = [
     {
@@ -21,7 +21,7 @@ const routes = [
     {
         path: '/imprint',
         name: 'Imprint',
-        component: imprint,
+        component: ImprintView,
         meta: {
             showNavBar: true,
             showFooter: true
@@ -44,7 +44,6 @@ const routes = [
             showNavBar: true,
             showFooter: false
         }
-
     },
     {
         path: '/account',
@@ -83,19 +82,49 @@ const routes = [
             showNavBar: true,
             showFooter: true
         }
-
     },
     {
-        path: '/anime/:id',
-        name: 'Anime',
+        path: '/anime/create',
+        name: 'CreateAnime',
         component: AnimeView,
         meta: {
             showNavBar: true,
             showFooter: true
+        },
+        props: {
+            createMode: true,
+            editMode: true,
+            animeId: null
         }
-
     },
-
+    {
+        path: '/anime/:id/edit',
+        name: 'EditAnime',
+        component: AnimeView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        },
+        props: route => ({
+            createMode: false,
+            editMode: true,
+            animeId: route.params.id
+        })
+    },
+    {
+        path: '/anime/:id',
+        name: 'ViewAnime',
+        component: AnimeView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        },
+        props: route => ({
+            createMode: false,
+            editMode: false,
+            animeId: route.params.id
+        })
+    }
 ];
 
 const router = createRouter({

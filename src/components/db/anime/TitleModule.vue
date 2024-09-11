@@ -29,10 +29,6 @@ export default {
     editMode: {
       type: Boolean,
       default: false
-    },
-    createMode: {
-      type: Boolean,
-      default: false
     }
   },
   data() {
@@ -52,6 +48,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .title-container {
   font-size: 30px;

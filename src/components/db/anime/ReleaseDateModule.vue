@@ -5,7 +5,7 @@
       <input type="date" v-model="formattedReleaseDate" class="input-field" />
     </div>
     <div v-else class="releasedate-container">
-      {{ formattedReleaseDate }}
+      {{ formattedReleaseDate || 'N/A' }}
     </div>
   </div>
 </template>
@@ -27,7 +27,8 @@ export default {
     formattedReleaseDate: {
       get() {
         if (!this.releaseDate) return '';
-        return new Date(this.releaseDate).toISOString().split('T')[0];
+        const date = new Date(this.releaseDate);
+        return isNaN(date.getTime()) ? '' : date.toISOString().split('T')[0];
       },
       set(newValue) {
         this.$emit('update-release-date', newValue);

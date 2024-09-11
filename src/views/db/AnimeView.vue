@@ -2,38 +2,71 @@
   <div class="anime-view-container">
     <div class="anime-view">
       <div class="left-block" v-if="anime || createMode">
-        <CoverImage :url="anime?.cover?.url || null" />
+        <CoverImage :url="currentData?.cover?.url || null" />
       </div>
       <div class="right-block" v-if="anime || createMode">
         <div class="info-head">
           <TitleModule
-              :title="anime?.title || 'N/A'"
-              :id="anime?._id || null"
-              :edit-mode="editMode"
-              @update-title="updateTitle"
-              :createMode="createMode"
+              :title="currentData?.title || 'New Anime'"
+              :id="currentData?._id || null"
+              :edit-mode="internalEditMode"
+              @update="updateField('title')"
+              :create-mode="createMode"
           />
         </div>
         <div class="card-body background-card-xs">
-          <GenreModule :genres="anime?.genre || ['N/A']"               :edit-mode="editMode"
+          <GenreModule
+              :genres="currentData?.genre || ['N/A']"
+              :edit-mode="internalEditMode"
+              @update="updateField('genre')"
           />
-          <DescriptionModule :description="anime?.description || 'N/A'"              :edit-mode="editMode"
+          <DescriptionModule
+              :description="currentData?.description || 'N/A'"
+              :edit-mode="internalEditMode"
+              @update="updateField('description')"
           />
           <div class="row">
-            <ReleaseDateModule :release-date="anime?.releaseDate || 'N/A'"               :edit-mode="editMode"
+            <ReleaseDateModule
+                :release-date="currentData?.releaseDate || 'N/A'"
+                :edit-mode="internalEditMode"
+                @update="updateField('releaseDate')"
             />
-            <StatusModule :status="anime?.status || 'N/A'" />
-            <RatingModule :rating="anime?.averageRating" :ratingCount="anime?.ratingCount" :id="anime?._id || null"               :edit-mode="editMode"
+            <StatusModule
+                :status="currentData?.status || 'N/A'"
+                @update="updateField('status')"
+            />
+            <RatingModule
+                :rating="currentData?.averageRating"
+                :rating-count="currentData?.ratingCount"
+                :id="currentData?._id || null"
+                :edit-mode="internalEditMode"
+                @update="updateField('averageRating')"
             />
           </div>
           <div class="row">
-            <AuthorModule :author="anime?.author || 'N/A'"              :edit-mode="editMode"
+            <AuthorModule
+                :author="currentData?.author || 'N/A'"
+                :edit-mode="internalEditMode"
+                @update="updateField('author')"
             />
-            <StudioModule :studio="anime?.studio || 'N/A'"              :edit-mode="editMode"
+            <StudioModule
+                :studio="currentData?.studio || 'N/A'"
+                :edit-mode="internalEditMode"
+                @update="updateField('studio')"
             />
           </div>
-          <EpisodesModule :episodes="anime?.episodes || 'N/A'"              :edit-mode="editMode"
+          <EpisodesModule
+              :episodes="currentData?.episodes || 'N/A'"
+              :edit-mode="internalEditMode"
+              @update="updateField('episodes')"
           />
+        </div>
+
+        <div class="action-buttons">
+          <button v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
+          <button v-if="internalEditMode" @click="saveChanges">Save</button>
+          <button v-if="internalEditMode" @click="cancelEdit">Cancel</button>
+          <button v-if="createMode" @click="saveChanges">Create Anime</button>
         </div>
       </div>
       <div v-else>
@@ -45,8 +78,8 @@
 
 <script>
 import { ref, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { fetchAnime } from '@/services/fetchService';
+import { useRouter } from 'vue-router';
+import { fetchAnime, createAnime, requestAnimeChange } from '@/services/animeService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
 import StatusModule from '@/components/db/anime/StatusModule.vue';
@@ -55,8 +88,8 @@ import AuthorModule from '@/components/db/anime/AuthorModule.vue';
 import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
 import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 import TitleModule from '@/components/db/anime/TitleModule.vue';
-import DescriptionModule from "@/components/db/anime/DescriptionModule.vue";
-import RatingModule from "@/components/db/anime/RatingModule.vue";
+import DescriptionModule from '@/components/db/anime/DescriptionModule.vue';
+import RatingModule from '@/components/db/anime/RatingModule.vue';
 
 export default {
   name: 'AnimeView',
@@ -76,64 +109,158 @@ export default {
     createMode: {
       type: Boolean,
       default: false
+    },
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+    animeId: {
+      type: String,
+      default: null
     }
   },
   setup(props) {
-    const route = useRoute();
-    const animeId = route.params.id;
+    const router = useRouter();
     const anime = ref(null);
-    const editMode = ref(true);
+    const currentData = ref(null);
+    const internalEditMode = ref(props.editMode);
+    const loading = ref(true);
 
     const getAnime = async () => {
+      if (props.animeId) {
+        try {
+          loading.value = true;
+          anime.value = await fetchAnime(props.animeId);
+          currentData.value = { ...anime.value };
+        } catch (error) {
+          console.error('Error fetching anime:', error.message);
+          alert('Failed to load anime details');
+        } finally {
+          loading.value = false;
+        }
+      }
+    };
+
+    const saveChanges = async () => {
       try {
-        if (!props.createMode) {
-          anime.value = await fetchAnime(animeId);
+        loading.value = true;
+        if (props.createMode) {
+          await createAnime(currentData.value);
+          alert('Anime created successfully');
+          await router.push('/anime-list');
+        } else {
+          await requestAnimeChange(props.animeId, currentData.value);
+          alert('Changes requested successfully');
+          internalEditMode.value = false;
+          await router.push(`/anime/${props.animeId}`);
         }
       } catch (error) {
-        console.error('Error fetching anime:', error.message);
+        console.error('Error saving changes:', error.message);
+        alert('Failed to save changes');
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const enterEditMode = () => {
+      internalEditMode.value = true;
+    };
+
+    const cancelEdit = () => {
+      internalEditMode.value = false;
+      if (!props.createMode) {
+        getAnime();
       }
     };
 
     const updateTitle = (newTitle) => {
-      if (anime.value) {
-        anime.value.title = newTitle;
+      if (currentData.value) {
+        currentData.value.title = newTitle;
       }
     };
 
-    onMounted(() => {
-      if (!props.createMode) {
-        getAnime();
+    const updateGenres = (newGenres) => {
+      if (currentData.value) {
+        currentData.value.genre = newGenres;
       }
+    };
+
+    const updateDescription = (newDescription) => {
+      if (currentData.value) {
+        currentData.value.description = newDescription;
+      }
+    };
+
+    const updateReleaseDate = (newReleaseDate) => {
+      if (currentData.value) {
+        currentData.value.releaseDate = newReleaseDate;
+      }
+    };
+
+    const updateStatus = (newStatus) => {
+      if (currentData.value) {
+        currentData.value.status = newStatus;
+      }
+    };
+
+    const updateRating = (newRating) => {
+      if (currentData.value) {
+        currentData.value.averageRating = newRating;
+      }
+    };
+
+    const updateAuthor = (newAuthor) => {
+      if (currentData.value) {
+        currentData.value.author = newAuthor;
+      }
+    };
+
+    const updateStudio = (newStudio) => {
+      if (currentData.value) {
+        currentData.value.studio = newStudio;
+      }
+    };
+
+    const updateEpisodes = (newEpisodes) => {
+      if (currentData.value) {
+        currentData.value.episodes = newEpisodes;
+      }
+    };
+
+    watch(() => props.editMode, (newVal) => {
+      internalEditMode.value = newVal;
     });
 
-    watch(() => props.createMode, (newVal) => {
-      if (newVal) {
-        anime.value = {
-          title: '',
-          _id: null,
-          cover: { url: null },
-          genre: [],
-          description: '',
-          releaseDate: '',
-          status: '',
-          averageRating: 0,
-          ratingCount: 0,
-          author: '',
-          studio: '',
-          episodes: []
-        };
-        editMode.value = true;
+    onMounted(() => {
+      if (!props.createMode && props.animeId) {
+        getAnime();
       }
     });
 
     return {
       anime,
-      editMode,
-      updateTitle
+      currentData,
+      internalEditMode,
+      saveChanges,
+      enterEditMode,
+      cancelEdit,
+      loading,
+      updateTitle,
+      updateGenres,
+      updateDescription,
+      updateReleaseDate,
+      updateStatus,
+      updateRating,
+      updateAuthor,
+      updateStudio,
+      updateEpisodes
     };
   }
 };
 </script>
+
+
+
 
 <style scoped>
 .anime-view-container {
@@ -146,7 +273,7 @@ export default {
 .anime-view {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 20px;
   max-width: 1100px;
   width: 100%;
   margin: 100px 0 40px;
@@ -160,18 +287,18 @@ export default {
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
 .row {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
 }
 
@@ -180,8 +307,25 @@ export default {
   min-width: 150px;
 }
 
-.anime-details p {
-  margin: 5px 0;
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.action-buttons button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: var(--primary-100);
 }
 
 @media (max-width: 700px) {
@@ -198,6 +342,9 @@ export default {
     flex: auto;
     min-width: 0;
   }
-}
 
+  .action-buttons {
+    justify-content: center;
+  }
+}
 </style>
