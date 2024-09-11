@@ -31,6 +31,13 @@ export default {
   watch: {
     releaseDate(newVal) {
       this.editableReleaseDate = this.formatReleaseDateForInput(newVal);
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   },
   methods: {
@@ -40,6 +47,9 @@ export default {
     },
     formatReleaseDateForInput(dateString) {
       if (!dateString) return '';
+      if (!dateString || isNaN(new Date(dateString).getTime())) {
+        return '';
+      }
       const date = new Date(dateString);
       return date.toISOString().split('T')[0];
     }

@@ -52,6 +52,13 @@ export default defineComponent({
   watch: {
     description(newVal) {
       this.editableDescription = newVal;
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   },
   mounted() {

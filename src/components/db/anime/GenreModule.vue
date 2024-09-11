@@ -58,6 +58,13 @@ export default {
     genres(newGenres) {
       this.editedGenres = [...newGenres];
     },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
+    }
   },
 };
 </script>

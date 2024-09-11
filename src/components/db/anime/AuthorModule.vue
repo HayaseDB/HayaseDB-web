@@ -31,6 +31,13 @@ export default {
   watch: {
     author(newVal) {
       this.editableAuthor = newVal;
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   },
   methods: {

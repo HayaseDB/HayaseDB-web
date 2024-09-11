@@ -38,6 +38,13 @@ export default {
   watch: {
     status(newStatus) {
       this.editableStatus = newStatus;
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   }
 };

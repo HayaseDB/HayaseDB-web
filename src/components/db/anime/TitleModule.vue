@@ -44,6 +44,13 @@ export default {
   watch: {
     title(newTitle) {
       this.editableTitle = newTitle;
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   }
 };

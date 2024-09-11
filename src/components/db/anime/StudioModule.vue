@@ -38,6 +38,13 @@ export default {
   watch: {
     studio(newStudio) {
       this.editableStudio = newStudio;
+    },
+    editMode(newMode) {
+      if (!newMode) {
+        this.editableTitle = '';
+      } else {
+        this.editableTitle = this.title;
+      }
     }
   }
 };

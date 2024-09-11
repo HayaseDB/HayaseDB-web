@@ -7,32 +7,33 @@
       <div class="right-block" v-if="currentData || createMode">
         <div class="info-head">
           <TitleModule
-              :title="currentData?.title || 'New Anime'"
+              :title="currentData?.title"
               :id="currentData?._id || null"
               :edit-mode="internalEditMode"
               @update="updateField('title', $event)"
               :create-mode="createMode"
+              :required="createMode"
           />
         </div>
         <div class="card-body background-card-xs">
           <GenreModule
-              :genres="currentData?.genre || ['N/A']"
+              :genres="currentData?.genre || []"
               :edit-mode="internalEditMode"
               @update="updateField('genre', $event)"
           />
           <DescriptionModule
-              :description="currentData?.description || 'N/A'"
+              :description="currentData?.description || ''"
               :edit-mode="internalEditMode"
               @update="updateField('description', $event)"
           />
           <div class="row">
             <ReleaseDateModule
-                :release-date="currentData?.releaseDate || 'N/A'"
+                :release-date="currentData?.releaseDate || ''"
                 :edit-mode="internalEditMode"
                 @update="updateField('releaseDate', $event)"
             />
             <StatusModule
-                :status="currentData?.status || 'N/A'"
+                :status="currentData?.status || ''"
                 :edit-mode="internalEditMode"
                 @update="updateField('status', $event)"
             />
@@ -46,18 +47,18 @@
           </div>
           <div class="row">
             <AuthorModule
-                :author="currentData?.author || 'N/A'"
+                :author="currentData?.author || ''"
                 :edit-mode="internalEditMode"
                 @update="updateField('author', $event)"
             />
             <StudioModule
-                :studio="currentData?.studio || 'N/A'"
+                :studio="currentData?.studio || ''"
                 :edit-mode="internalEditMode"
                 @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
-              :episodes="currentData?.episodes || 'N/A'"
+              :episodes="currentData?.episodes || ''"
               :edit-mode="internalEditMode"
               @update="updateField('episodes', $event)"
           />
@@ -65,9 +66,9 @@
 
         <div class="action-buttons">
           <button v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
-          <button v-if="internalEditMode" @click="saveChanges">Save</button>
-          <button v-if="internalEditMode" @click="cancelEdit">Cancel</button>
-          <button v-if="createMode" @click="saveChanges">Create Anime</button>
+          <button v-if="internalEditMode && !createMode" @click="saveChanges">Save</button>
+          <button v-if="internalEditMode && !createMode" @click="cancelEdit">Cancel</button>
+          <button v-if="createMode" @click="createAnime">Create Anime</button>
         </div>
       </div>
       <div v-else>
@@ -78,9 +79,9 @@
 </template>
 
 <script>
-import { ref, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { fetchAnime, createAnime, requestAnimeChange } from '@/services/animeService';
+import {ref, onMounted, watch} from 'vue';
+import {useRouter} from 'vue-router';
+import {fetchAnime, createAnime as createAnimeService, requestAnimeChange} from '@/services/animeService';
 import CoverImage from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
 import StatusModule from '@/components/db/anime/StatusModule.vue';
@@ -123,34 +124,69 @@ export default {
   setup(props) {
     const router = useRouter();
     const currentData = ref(null);
-    const inputData = ref(null);
+    const inputData = ref({});
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
 
     const getAnime = async () => {
-      if (props.animeId) {
+      if (props.animeId && !props.createMode) {
         try {
           loading.value = true;
           currentData.value = await fetchAnime(props.animeId);
-          inputData.value = { ...currentData.value };
+          inputData.value = {...currentData.value};
         } catch (error) {
           console.error('Error fetching anime:', error.message);
           alert('Failed to load anime details');
         } finally {
           loading.value = false;
         }
+      } else {
+        inputData.value = {
+          title: '',
+          genre: [],
+          description: '',
+          releaseDate: '',
+          status: '',
+          averageRating: null,
+          ratingCount: null,
+          author: '',
+          studio: '',
+          episodes: ''
+        };
       }
     };
 
+    const prepareData = (data) => {
+      const preparedData = {...data};
+
+      if (!preparedData.releaseDate) {
+        delete preparedData.releaseDate;
+      }
+
+      return preparedData;
+    };
+
+    const validateFields = () => {
+      if (props.createMode && !inputData.value.title) {
+        alert('Title is required for creating a new anime.');
+        return false;
+      }
+      return true;
+    };
+
     const saveChanges = async () => {
+      if (!validateFields()) return;
+
       try {
         loading.value = true;
+        const dataToSend = prepareData(inputData.value);
+
         if (props.createMode) {
-          await createAnime(inputData.value);
+          await createAnimeService(dataToSend);
           alert('Anime created successfully');
-          await router.push('/anime-list');
+          await router.push('/explore');
         } else {
-          await requestAnimeChange(props.animeId, inputData.value);
+          await requestAnimeChange(props.animeId, dataToSend);
           alert('Changes requested successfully');
           internalEditMode.value = false;
           await router.push(`/anime/${props.animeId}`);
@@ -158,6 +194,23 @@ export default {
       } catch (error) {
         console.error('Error saving changes:', error.message);
         alert('Failed to save changes');
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    const createAnime = async () => {
+      if (!validateFields()) return;
+
+      try {
+        loading.value = true;
+        const dataToSend = prepareData(inputData.value);
+        await createAnimeService(dataToSend);
+        alert('Anime created successfully');
+        await router.push('/explore');
+      } catch (error) {
+        console.error('Error creating anime:', error.message);
+        alert('Failed to create anime');
       } finally {
         loading.value = false;
       }
@@ -188,9 +241,7 @@ export default {
     });
 
     onMounted(() => {
-      if (!props.createMode && props.animeId) {
-        getAnime();
-      }
+      getAnime();
     });
 
     return {
@@ -198,6 +249,7 @@ export default {
       inputData,
       internalEditMode,
       saveChanges,
+      createAnime,
       enterEditMode,
       cancelEdit,
       loading,
@@ -206,7 +258,8 @@ export default {
   }
 };
 </script>
-  <style scoped>
+
+<style scoped>
 .anime-view-container {
   display: flex;
   justify-content: center;
@@ -248,47 +301,23 @@ export default {
 
 .row > div {
   flex: 1;
-  min-width: 150px;
+  min-width: 200px;
 }
 
 .action-buttons {
   display: flex;
-  justify-content: flex-end;
   gap: 10px;
   margin-top: 20px;
 }
 
 .action-buttons button {
-  background-color: var(--primary);
-  color: white;
-  border: none;
   padding: 10px 20px;
-  cursor: pointer;
+  border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .action-buttons button:hover {
-  background-color: var(--primary-100);
-}
-
-@media (max-width: 700px) {
-  .anime-view {
-    flex-direction: column;
-  }
-
-  .anime-view-container {
-    padding: 10px;
-  }
-
-  .left-block,
-  .right-block {
-    flex: auto;
-    min-width: 0;
-  }
-
-  .action-buttons {
-    justify-content: center;
-  }
+  background-color: var(--primary-color-light);
 }
 </style>
