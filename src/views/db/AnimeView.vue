@@ -16,7 +16,7 @@
         </div>
         <div class="card-body background-card-xs">
           <GenreModule
-              :genres="currentData?.genres || []"
+              :genres="currentData?.genre || []"
               :edit-mode="internalEditMode"
               :create-mode="createMode"
               @update="updateField('genre', $event)"

@@ -11,7 +11,9 @@
               @keyup.enter="updateTags"
               type="text"
           />
-          <span class="remove-tag" @click="removeTag(index)"><fontAwesomeIcon :icon="['fa', 'xmark']" /></span>
+          <span class="remove-tag" @click="removeTag(index)">
+            <fontAwesomeIcon :icon="['fa', 'xmark']" />
+          </span>
         </div>
         <div class="add-tag" @click="addTag">+ Add Genre</div>
       </template>
@@ -64,14 +66,14 @@ export default {
     },
     editMode(newMode) {
       if (!newMode) {
-        this.editableTitle = '';
+        this.editedGenres = [...this.genres];
       } else {
-        this.editableTitle = this.title;
+        this.editedGenres = [...this.genres];
       }
     },
     createMode(newMode) {
       if (newMode) {
-        this.editableTitle = '';
+        this.editedGenres = [];
       }
     }
   },
@@ -79,7 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
 .tags-container {
   display: flex;
   flex-direction: row;
@@ -98,7 +99,6 @@ export default {
   font-size: 0.9em;
   text-transform: capitalize;
   white-space: nowrap;
-
 }
 
 .tag-input {
@@ -130,5 +130,4 @@ export default {
   border-radius: 5px;
   font-size: 0.9em;
 }
-
 </style>
