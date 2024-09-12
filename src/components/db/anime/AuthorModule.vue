@@ -58,7 +58,7 @@ export default {
 .input-field {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--accent-200);
   border-radius: 4px;
   box-sizing: border-box;
 }
