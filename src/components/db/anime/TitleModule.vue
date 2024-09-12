@@ -1,6 +1,6 @@
 <template>
   <div class="title-module background-card-sm">
-    <div v-if="editMode">
+    <div v-if="editMode || createMode">
       <input v-model="editableTitle" @input="emitUpdate" />
     </div>
     <div v-else>
@@ -13,6 +13,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'TitleModule',
@@ -28,6 +29,10 @@ export default {
     editMode: {
       type: Boolean,
       default: false
+    },
+    createMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -40,7 +45,6 @@ export default {
       this.$emit('update', this.editableTitle);
     }
   },
-
   watch: {
     title(newTitle) {
       this.editableTitle = newTitle;
@@ -51,11 +55,15 @@ export default {
       } else {
         this.editableTitle = this.title;
       }
+    },
+    createMode(newMode) {
+      if (newMode) {
+        this.editableTitle = '';
+      }
     }
   }
 };
 </script>
-
 
 <style scoped>
 .title-container {

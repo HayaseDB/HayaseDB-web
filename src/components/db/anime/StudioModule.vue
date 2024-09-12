@@ -41,9 +41,15 @@ export default {
     },
     editMode(newMode) {
       if (!newMode) {
-        this.editableTitle = '';
+        this.editableStudio = '';
       } else {
-        this.editableTitle = this.title;
+        this.editableStudio = this.studio;
+      }
+    },
+
+    createMode(newMode) {
+      if (newMode) {
+        this.editableStudio = '';
       }
     }
   }

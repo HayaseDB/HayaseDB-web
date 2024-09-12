@@ -36,6 +36,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    createMode: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -63,6 +67,11 @@ export default {
         this.editableTitle = '';
       } else {
         this.editableTitle = this.title;
+      }
+    },
+    createMode(newMode) {
+      if (newMode) {
+        this.editableTitle = '';
       }
     }
   },

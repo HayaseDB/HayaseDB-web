@@ -12,29 +12,32 @@
               :edit-mode="internalEditMode"
               @update="updateField('title', $event)"
               :create-mode="createMode"
-              :required="createMode"
           />
         </div>
         <div class="card-body background-card-xs">
           <GenreModule
-              :genres="currentData?.genre || []"
+              :genres="currentData?.genres || []"
               :edit-mode="internalEditMode"
+              :create-mode="createMode"
               @update="updateField('genre', $event)"
           />
           <DescriptionModule
               :description="currentData?.description || ''"
               :edit-mode="internalEditMode"
+              :create-mode="createMode"
               @update="updateField('description', $event)"
           />
           <div class="row">
             <ReleaseDateModule
                 :release-date="currentData?.releaseDate || ''"
                 :edit-mode="internalEditMode"
+                :create-mode="createMode"
                 @update="updateField('releaseDate', $event)"
             />
             <StatusModule
                 :status="currentData?.status || ''"
                 :edit-mode="internalEditMode"
+                :create-mode="createMode"
                 @update="updateField('status', $event)"
             />
             <RatingModule
@@ -42,6 +45,7 @@
                 :rating-count="currentData?.ratingCount"
                 :id="currentData?._id || null"
                 :edit-mode="internalEditMode"
+                :create-mode="createMode"
                 @update="updateField('averageRating', $event)"
             />
           </div>
@@ -49,17 +53,20 @@
             <AuthorModule
                 :author="currentData?.author || ''"
                 :edit-mode="internalEditMode"
+                :create-mode="createMode"
                 @update="updateField('author', $event)"
             />
             <StudioModule
                 :studio="currentData?.studio || ''"
                 :edit-mode="internalEditMode"
+                :create-mode="createMode"
                 @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
               :episodes="currentData?.episodes || ''"
               :edit-mode="internalEditMode"
+              :create-mode="createMode"
               @update="updateField('episodes', $event)"
           />
         </div>
@@ -237,6 +244,10 @@ export default {
     };
 
     watch(() => props.editMode, (newVal) => {
+      internalEditMode.value = newVal;
+    });
+
+    watch(() => props.createMode, (newVal) => {
       internalEditMode.value = newVal;
     });
 

@@ -21,6 +21,10 @@ export default {
     editMode: {
       type: Boolean,
       default: false
+    },
+    createMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -34,9 +38,14 @@ export default {
     },
     editMode(newMode) {
       if (!newMode) {
-        this.editableTitle = '';
+        this.editableReleaseDate = '';
       } else {
-        this.editableTitle = this.title;
+        this.editableReleaseDate = this.releaseDate;
+      }
+    },
+    createMode(newMode) {
+      if (newMode) {
+        this.editableReleaseDate = '';
       }
     }
   },

@@ -40,6 +40,10 @@ export default defineComponent({
     editMode: {
       type: Boolean,
       default: false
+    },
+    createMode: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -55,9 +59,14 @@ export default defineComponent({
     },
     editMode(newMode) {
       if (!newMode) {
-        this.editableTitle = '';
+        this.editableDescription = '';
       } else {
-        this.editableTitle = this.title;
+        this.editableDescription = this.description;
+      }
+    },
+    createMode(newMode) {
+      if (newMode) {
+        this.editableDescription = '';
       }
     }
   },
