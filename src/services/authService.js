@@ -47,7 +47,7 @@ export const checkToken = async () => {
     const token = getToken();
 
     if (!token) {
-        throw new Error('No token found');
+        return false;
     }
 
     try {
@@ -56,6 +56,6 @@ export const checkToken = async () => {
         });
         return response.data;
     } catch (error) {
-        throw new Error(handleAxiosError(error));
+        return false;
     }
 };

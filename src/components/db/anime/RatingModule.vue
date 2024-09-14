@@ -1,6 +1,8 @@
 <template>
   <div class="rating-module background-card-child">
-    <label class="card-title">Rating <span class="ratingsCount">({{ localRatingCount }})</span></label>
+    <label class="card-title">
+      Rating <span class="ratingsCount">({{ localRatingCount }})</span>
+    </label>
     <div v-if="isReadMode" class="rating-container">
       <span
         v-for="star in 5"
@@ -15,7 +17,7 @@
       </span>
     </div>
     <div v-else>
-      <p>Rating not avaliable.</p>
+      <p>Rating not available.</p>
     </div>
     <div v-if="errorMessage" class="error-message" @click="handleErrorClick">{{ errorMessage }}</div>
   </div>
@@ -33,11 +35,11 @@ export default {
     },
     rating: {
       type: Number,
-      required: true
+      default: 0
     },
     ratingCount: {
       type: Number,
-      required: true
+      default: 0
     },
     mode: {
       type: String,
@@ -50,8 +52,8 @@ export default {
   data() {
     return {
       hoveredRating: null,
-      currentRating: this.rating,
-      localRatingCount: this.ratingCount,
+      currentRating: this.rating || 0,
+      localRatingCount: this.ratingCount || 0,
       errorMessage: null,
       errorCode: null
     };
@@ -64,13 +66,13 @@ export default {
   methods: {
     async updateRating(newRating) {
       if (!this.isReadMode) return;
-      
+
       this.currentRating = newRating;
       this.errorMessage = null;
 
       try {
         const { data } = await updateRating(this.id, newRating);
-        this.localRatingCount = data.UpdatedAnime.ratingCount;
+        this.localRatingCount = data.UpdatedAnime.ratingCount || 0;
         console.log(`Rating for item ${this.id} updated to: ${newRating}`);
       } catch (error) {
         console.error('Error updating rating:', error.message);
@@ -82,17 +84,17 @@ export default {
           this.errorMessage = "An error occurred while updating the rating.";
         }
 
-        this.currentRating = this.rating;
+        this.currentRating = this.rating || 0;
       }
     },
     previewRating(star) {
       if (!this.isReadMode) return;
-      
+
       this.hoveredRating = star;
     },
     resetPreview() {
       if (!this.isReadMode) return;
-      
+
       this.hoveredRating = null;
     },
     handleErrorClick() {

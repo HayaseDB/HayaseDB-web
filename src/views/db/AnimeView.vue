@@ -72,7 +72,7 @@
         </div>
 
         <!-- Action Buttons -->
-        <div class="action-buttons">
+        <div class="action-buttons" v-if="isLoggedIn">
           <button class="btn-primary" v-if="mode === 'read' && !internalEditMode" @click="enterEditMode">Request Changes</button>
           <button class="btn-secondary" v-if="mode === 'edit' && internalEditMode" @click="saveChanges">Save</button>
           <button class="btn-danger" v-if="mode === 'edit' && internalEditMode" @click="cancelEdit">Cancel</button>
@@ -89,6 +89,7 @@
 <script>
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { checkToken } from '@/services/authService.js';
 import { fetchAnime, createAnime as createAnimeService, requestAnimeChange } from '@/services/animeService';
 import CoverModule from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
@@ -136,7 +137,7 @@ export default {
     });
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
-
+    const isLoggedIn = ref(false);
     const mode = computed(() => {
       if (props.createMode) return 'create';
       if (props.editMode) return 'edit';
@@ -158,6 +159,9 @@ export default {
       } else {
         resetInputData();
       }
+    };
+    const checkUserLoggedIn = async () => {
+      isLoggedIn.value = await checkToken();
     };
 
     const resetInputData = () => {
@@ -269,7 +273,9 @@ export default {
       internalEditMode.value = newVal;
     });
 
-    onMounted(() => {
+    onMounted(async () => {
+      await checkUserLoggedIn();
+
       getAnime();
     });
 
@@ -283,7 +289,8 @@ export default {
       cancelEdit,
       loading,
       updateField,
-      mode
+      mode,
+      isLoggedIn
     };
   }
 };
