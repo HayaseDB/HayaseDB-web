@@ -1,76 +1,81 @@
 <template>
   <div class="anime-view-container">
     <div class="anime-view">
-      <div class="left-block" v-if="currentData || createMode">
-        <CoverImage :url="currentData?.cover?.url || null" />
+      <!-- Left Block with Cover Image -->
+      <div class="left-block" v-if="currentData">
+        <CoverModule :url="currentData.cover?.url || null" :mode="mode" />
       </div>
-      <div class="right-block" v-if="currentData || createMode">
+      
+      <!-- Right Block with Anime Details -->
+      <div class="right-block" v-if="currentData">
         <div class="info-head">
           <TitleModule
-              :title="currentData?.title"
-              :id="currentData?._id || null"
-              :edit-mode="internalEditMode"
-              @update="updateField('title', $event)"
-              :create-mode="createMode"
+            :title="currentData.title"
+            :id="currentData._id || null"
+            :edit-mode="internalEditMode"
+            @update="updateField('title', $event)"
+            :create-mode="createMode"
           />
         </div>
         <div class="card-body background-card-xs">
           <GenreModule
-              :genres="currentData?.genre || []"
-              :edit-mode="internalEditMode"
-              :create-mode="createMode"
-              @update="updateField('genre', $event)"
+            :genres="currentData.genre || []"
+            :edit-mode="internalEditMode"
+            :create-mode="createMode"
+            @update="updateField('genre', $event)"
           />
-          <DescriptionModule
-              :description="currentData?.description || ''"
-              :edit-mode="internalEditMode"
-              :create-mode="createMode"
-              @update="updateField('description', $event)"
+          
+          <LongTextModule
+            :value="currentData.description || ''"
+            :mode="mode"
+            label="Description"
+            @update="updateField('description', $event)"
           />
+          
           <div class="row">
             <ReleaseDateModule
-                :release-date="currentData?.releaseDate || ''"
-                :edit-mode="internalEditMode"
-                :create-mode="createMode"
-                @update="updateField('releaseDate', $event)"
+              :release-date="currentData.releaseDate || ''"
+              :edit-mode="internalEditMode"
+              :create-mode="createMode"
+              @update="updateField('releaseDate', $event)"
             />
-            <StatusModule
-                :status="currentData?.status || ''"
-                :edit-mode="internalEditMode"
-                :create-mode="createMode"
-                @update="updateField('status', $event)"
+            <ShortTextModule
+              :value="currentData.status || ''"
+              :mode="mode"
+              label="Status"
+              @update="updateField('status', $event)"
             />
             <RatingModule
-                :rating="currentData?.averageRating"
-                :rating-count="currentData?.ratingCount"
-                :id="currentData?._id || null"
-                :edit-mode="internalEditMode"
-                :create-mode="createMode"
-                @update="updateField('averageRating', $event)"
+              :rating="currentData.averageRating"
+              :rating-count="currentData.ratingCount"
+              :mode="mode"
+              :id="currentData._id || null"
+              @update="updateField('averageRating', $event)"
             />
           </div>
           <div class="row">
-            <AuthorModule
-                :author="currentData?.author || ''"
-                :edit-mode="internalEditMode"
-                :create-mode="createMode"
-                @update="updateField('author', $event)"
+            <ShortTextModule
+              :value="currentData.author || ''"
+              :mode="mode"
+              label="Author"
+              @update="updateField('author', $event)"
             />
-            <StudioModule
-                :studio="currentData?.studio || ''"
-                :edit-mode="internalEditMode"
-                :create-mode="createMode"
-                @update="updateField('studio', $event)"
+            <ShortTextModule
+              :value="currentData.studio || ''"
+              :mode="mode"
+              label="Studio"
+              @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
-              :episodes="currentData?.episodes || ''"
-              :edit-mode="internalEditMode"
-              :create-mode="createMode"
-              @update="updateField('episodes', $event)"
+            :episodes="currentData.episodes || ''"
+            :edit-mode="internalEditMode"
+            :create-mode="createMode"
+            @update="updateField('episodes', $event)"
           />
         </div>
 
+        <!-- Action Buttons -->
         <div class="action-buttons">
           <button class="btn-primary" v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
           <button class="btn-secondary" v-if="internalEditMode && !createMode" @click="saveChanges">Save</button>
@@ -85,44 +90,35 @@
   </div>
 </template>
 
+
 <script>
-import {ref, onMounted, watch} from 'vue';
-import {useRouter} from 'vue-router';
-import {fetchAnime, createAnime as createAnimeService, requestAnimeChange} from '@/services/animeService';
-import CoverImage from '@/components/db/anime/CoverModule.vue';
+import { ref, onMounted, watch, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { fetchAnime, createAnime as createAnimeService, requestAnimeChange } from '@/services/animeService';
+import CoverModule from '@/components/db/anime/CoverModule.vue';
 import GenreModule from '@/components/db/anime/GenreModule.vue';
-import StatusModule from '@/components/db/anime/StatusModule.vue';
-import StudioModule from '@/components/db/anime/StudioModule.vue';
-import AuthorModule from '@/components/db/anime/AuthorModule.vue';
+import ShortTextModule from '@/components/db/anime/ShortTextModule.vue';
 import ReleaseDateModule from '@/components/db/anime/ReleaseDateModule.vue';
 import EpisodesModule from '@/components/db/anime/EpisodesModule.vue';
 import TitleModule from '@/components/db/anime/TitleModule.vue';
-import DescriptionModule from '@/components/db/anime/DescriptionModule.vue';
+import LongTextModule from '@/components/db/anime/LongTextModule.vue';
 import RatingModule from '@/components/db/anime/RatingModule.vue';
 
 export default {
   name: 'AnimeView',
   components: {
     RatingModule,
-    DescriptionModule,
-    CoverImage,
+    LongTextModule,
+    CoverModule,
     GenreModule,
     ReleaseDateModule,
-    StatusModule,
-    StudioModule,
-    AuthorModule,
+    ShortTextModule,
     EpisodesModule,
     TitleModule
   },
   props: {
-    createMode: {
-      type: Boolean,
-      default: false
-    },
-    editMode: {
-      type: Boolean,
-      default: false
-    },
+    createMode: Boolean,
+    editMode: Boolean,
     animeId: {
       type: String,
       default: null
@@ -131,16 +127,29 @@ export default {
   setup(props) {
     const router = useRouter();
     const currentData = ref(null);
-    const inputData = ref({});
+    const inputData = ref({
+      title: '',
+      genre: [],
+      description: '',
+      releaseDate: '',
+      status: '',
+      averageRating: null,
+      ratingCount: null,
+      author: '',
+      studio: '',
+      episodes: []
+    });
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
+
+    const mode = computed(() => props.createMode ? 'create' : (props.editMode ? 'edit' : 'read'));
 
     const getAnime = async () => {
       if (props.animeId && !props.createMode) {
         try {
           loading.value = true;
           currentData.value = await fetchAnime(props.animeId);
-          inputData.value = {...currentData.value};
+          resetInputData();
         } catch (error) {
           console.error('Error fetching anime:', error.message);
           alert('Failed to load anime details');
@@ -148,28 +157,30 @@ export default {
           loading.value = false;
         }
       } else {
-        inputData.value = {
-          title: '',
-          genre: [],
-          description: '',
-          releaseDate: '',
-          status: '',
-          averageRating: null,
-          ratingCount: null,
-          author: '',
-          studio: '',
-          episodes: ''
-        };
+        resetInputData();
       }
     };
 
-    const prepareData = (data) => {
-      const preparedData = {...data};
+    const resetInputData = () => {
+      inputData.value = {
+        title: currentData.value?.title || '',
+        genre: currentData.value?.genre || [],
+        description: currentData.value?.description || '',
+        releaseDate: currentData.value?.releaseDate || '',
+        status: currentData.value?.status || '',
+        averageRating: currentData.value?.averageRating || null,
+        ratingCount: currentData.value?.ratingCount || null,
+        author: currentData.value?.author || '',
+        studio: currentData.value?.studio || '',
+        episodes: currentData.value?.episodes || []
+      };
+    };
 
+    const prepareData = (data) => {
+      const preparedData = { ...data };
       if (!preparedData.releaseDate) {
         delete preparedData.releaseDate;
       }
-
       return preparedData;
     };
 
@@ -183,21 +194,13 @@ export default {
 
     const saveChanges = async () => {
       if (!validateFields()) return;
-
       try {
         loading.value = true;
         const dataToSend = prepareData(inputData.value);
-
-        if (props.createMode) {
-          await createAnimeService(dataToSend);
-          alert('Anime created successfully');
-          await router.push('/explore');
-        } else {
-          await requestAnimeChange(props.animeId, dataToSend);
-          alert('Changes requested successfully');
-          internalEditMode.value = false;
-          await router.push(`/anime/${props.animeId}`);
-        }
+        await requestAnimeChange(props.animeId, dataToSend);
+        alert('Changes requested successfully');
+        internalEditMode.value = false;
+        await router.push(`/anime/${props.animeId}`);
       } catch (error) {
         console.error('Error saving changes:', error.message);
         alert('Failed to save changes');
@@ -208,7 +211,6 @@ export default {
 
     const createAnime = async () => {
       if (!validateFields()) return;
-
       try {
         loading.value = true;
         const dataToSend = prepareData(inputData.value);
@@ -238,9 +240,7 @@ export default {
     };
 
     const updateField = (field, value) => {
-      if (inputData.value) {
-        inputData.value[field] = value;
-      }
+      inputData.value[field] = value;
     };
 
     watch(() => props.editMode, (newVal) => {
@@ -248,6 +248,7 @@ export default {
     });
 
     watch(() => props.createMode, (newVal) => {
+      if (newVal) resetInputData();
       internalEditMode.value = newVal;
     });
 
@@ -264,11 +265,13 @@ export default {
       enterEditMode,
       cancelEdit,
       loading,
-      updateField
+      updateField,
+      mode
     };
   }
 };
 </script>
+
 
 <style scoped>
 .anime-view-container {

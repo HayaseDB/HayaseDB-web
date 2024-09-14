@@ -1,22 +1,22 @@
 <template>
-  <div class="background-card-child">
-    <label class="card-title">Description</label>
-    <div v-if="editMode">
-      <textarea @input="emitUpdate" v-model="editableDescription" class="input-field" rows="5" />
+  <div class="long-text-module background-card-child">
+    <label class="card-title">{{ label }}</label>
+    <div v-if="isEditMode || isCreateMode">
+      <textarea @input="emitUpdate" v-model="editableText" class="input-field" rows="5"></textarea>
     </div>
     <div v-else>
-      <div class="description-container">
-        <div class="description-content" :class="{ 'collapsed': isCollapsed }">
-          {{ description }}
+      <div class="text-container">
+        <div class="text-content" :class="{ 'collapsed': isCollapsed }">
+          {{ value }}
         </div>
         <div class="fade-out" v-if="isCollapsed && isContentOverflowing"></div>
       </div>
       <div class="arrow-container" v-if="isContentOverflowing">
-        <fontAwesomeIcon
-            @click="toggleCollapse"
-            :icon="['fa', 'chevron-down']"
-            class="arrow"
-            :class="{ 'rotate': !isCollapsed }"
+        <font-awesome-icon
+          @click="toggleCollapse"
+          :icon="['fa', 'chevron-down']"
+          class="arrow"
+          :class="{ 'rotate': !isCollapsed }"
         />
       </div>
     </div>
@@ -28,45 +28,58 @@ import { defineComponent } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default defineComponent({
-  name: 'DescriptionModule',
+  name: 'LongTextModule',
   components: {
     FontAwesomeIcon
   },
   props: {
-    description: {
+    label: {
       type: String,
       required: true
     },
-    editMode: {
-      type: Boolean,
-      default: false
+    value: {
+      type: String,
+      default: ''
     },
-    createMode: {
-      type: Boolean,
-      default: false
+    mode: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['read', 'edit', 'create'].includes(value);
+      }
     }
   },
   data() {
     return {
       isCollapsed: true,
       isContentOverflowing: false,
-      editableDescription: this.description
+      editableText: this.value
     };
   },
-  watch: {
-    description(newVal) {
-      this.editableDescription = newVal;
+  computed: {
+    isEditMode() {
+      return this.mode === 'edit';
     },
-    editMode(newMode) {
-      if (!newMode) {
-        this.editableDescription = '';
-      } else {
-        this.editableDescription = this.description;
+    isCreateMode() {
+      return this.mode === 'create';
+    }
+  },
+  watch: {
+    value(newVal) {
+      if (!this.isEditMode && !this.isCreateMode) {
+        this.editableText = newVal;
+        this.checkContentOverflow();
       }
     },
-    createMode(newMode) {
-      if (newMode) {
-        this.editableDescription = '';
+    mode(newMode) {
+      if (newMode === 'read') {
+        this.editableText = this.value;
+        this.isCollapsed = true;
+        this.checkContentOverflow();
+      } else if (newMode === 'edit') {
+        this.editableText = this.value;
+      } else if (newMode === 'create') {
+        this.editableText = '';
       }
     }
   },
@@ -79,29 +92,26 @@ export default defineComponent({
   },
   methods: {
     emitUpdate() {
-      this.$emit('update', this.editableDescription);
+      this.$emit('update', this.editableText);
     },
     toggleCollapse() {
       this.isCollapsed = !this.isCollapsed;
     },
     handleResize() {
-      this.isCollapsed = true;
       this.checkContentOverflow();
     },
     checkContentOverflow() {
       this.$nextTick(() => {
-        const content = this.$el.querySelector('.description-content');
+        const content = this.$el.querySelector('.text-content');
         if (content) {
           this.isContentOverflowing = content.scrollHeight > content.clientHeight;
         }
       });
-    },
-    updateDescription() {
-      this.$emit('update-description', this.editableDescription);
     }
   }
 });
 </script>
+
 <style scoped>
 .card-title {
   font-size: 18px;
@@ -109,12 +119,12 @@ export default defineComponent({
   color: var(--text-800);
 }
 
-.description-container {
+.text-container {
   position: relative;
   overflow: hidden;
 }
 
-.description-content {
+.text-content {
   display: flex;
   flex-direction: row;
   gap: 6px;
@@ -125,12 +135,12 @@ export default defineComponent({
   transition: height 0.4s ease, opacity 0.3s ease;
 }
 
-.description-content.collapsed {
+.text-content.collapsed {
   height: 100px;
   overflow: hidden;
 }
 
-.description-content:not(.collapsed) {
+.text-content:not(.collapsed) {
   height: auto;
   opacity: 1;
 }
