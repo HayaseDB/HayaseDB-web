@@ -7,6 +7,9 @@
       @change="handleFileChange" 
       class="file-input"
     />
+    <div class="cover-image-overlay" v-if="isEditMode || isCreateMode">
+      <span class="overlay-text">Click to select image</span>
+    </div>
     <img v-if="currentImageUrl" :src="currentImageUrl" alt="Cover Image" class="cover-image" />
     <div v-else class="cover-placeholder">No Image</div>
   </div>
@@ -59,6 +62,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .cover-image-container {
   display: flex;
@@ -98,5 +102,29 @@ export default {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+  z-index: 1;
+}
+
+.cover-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: var(--text-lg);
+  font-weight: bold;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+
+.cover-image-container:hover .cover-image-overlay {
+  opacity: 1;
 }
 </style>

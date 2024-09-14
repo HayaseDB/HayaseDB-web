@@ -2,16 +2,16 @@
   <div class="anime-view-container">
     <div class="anime-view">
       <!-- Left Block with Cover Image -->
-      <div class="left-block" v-if="currentData">
-        <CoverModule :url="currentData.cover?.url || null" :mode="mode" />
+      <div class="left-block" v-if="currentData || createMode">
+        <CoverModule :url="currentData?.cover?.url || null" :mode="mode" />
       </div>
       
       <!-- Right Block with Anime Details -->
-      <div class="right-block" v-if="currentData">
+      <div class="right-block" v-if="currentData || createMode">
         <div class="info-head">
           <TitleModule
             :title="inputData.title"
-            :id="currentData._id || null"
+            :id="currentData?._id || null"
             :mode="mode"
             @update="updateField('title', $event)"
           />
@@ -46,7 +46,7 @@
               :rating="inputData.averageRating"
               :rating-count="inputData.ratingCount"
               :mode="mode"
-              :id="currentData._id || null"
+              :id="currentData?._id || null"
               @update="updateField('averageRating', $event)"
             />
           </div>
@@ -73,10 +73,10 @@
 
         <!-- Action Buttons -->
         <div class="action-buttons">
-          <button class="btn-primary" v-if="!createMode && !internalEditMode" @click="enterEditMode">Request Changes</button>
-          <button class="btn-secondary" v-if="internalEditMode && !createMode" @click="saveChanges">Save</button>
-          <button class="btn-danger" v-if="internalEditMode && !createMode" @click="cancelEdit">Cancel</button>
-          <button class="btn-warning" v-if="createMode" @click="createAnime">Create Anime</button>
+          <button class="btn-primary" v-if="mode === 'read' && !internalEditMode" @click="enterEditMode">Request Changes</button>
+          <button class="btn-secondary" v-if="mode === 'edit' && internalEditMode" @click="saveChanges">Save</button>
+          <button class="btn-danger" v-if="mode === 'edit' && internalEditMode" @click="cancelEdit">Cancel</button>
+          <button class="btn-warning" v-if="mode === 'create'" @click="createAnime">Create Anime</button>
         </div>
       </div>
       <div v-else>
@@ -137,7 +137,11 @@ export default {
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
 
-    const mode = computed(() => props.createMode ? 'create' : (props.editMode ? 'edit' : 'read'));
+    const mode = computed(() => {
+      if (props.createMode) return 'create';
+      if (props.editMode) return 'edit';
+      return 'read';
+    });
 
     const getAnime = async () => {
       if (props.animeId && !props.createMode) {
@@ -170,18 +174,18 @@ export default {
           studio: '',
           episodes: []
         };
-      } else {
+      } else if (currentData.value) {
         inputData.value = {
-          title: currentData.value?.title || '',
-          genre: currentData.value?.genre || [],
-          description: currentData.value?.description || '',
-          releaseDate: currentData.value?.releaseDate || '',
-          status: currentData.value?.status || '',
-          averageRating: currentData.value?.averageRating || null,
-          ratingCount: currentData.value?.ratingCount || null,
-          author: currentData.value?.author || '',
-          studio: currentData.value?.studio || '',
-          episodes: currentData.value?.episodes || []
+          title: currentData.value.title || '',
+          genre: currentData.value.genre || [],
+          description: currentData.value.description || '',
+          releaseDate: currentData.value.releaseDate || '',
+          status: currentData.value.status || '',
+          averageRating: currentData.value.averageRating || null,
+          ratingCount: currentData.value.ratingCount || null,
+          author: currentData.value.author || '',
+          studio: currentData.value.studio || '',
+          episodes: currentData.value.episodes || []
         };
       }
     };
