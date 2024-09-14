@@ -1,6 +1,6 @@
 <template>
   <div class="title-module background-card-sm">
-    <div v-if="editMode || createMode">
+    <div v-if="isEditMode || isCreateMode">
       <input v-model="editableTitle" @input="emitUpdate" />
     </div>
     <div v-else>
@@ -26,13 +26,12 @@ export default {
       type: String,
       default: null
     },
-    editMode: {
-      type: Boolean,
-      default: false
-    },
-    createMode: {
-      type: Boolean,
-      default: false
+    mode: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['read', 'edit', 'create'].includes(value);
+      }
     }
   },
   data() {
@@ -40,26 +39,40 @@ export default {
       editableTitle: this.title
     };
   },
+  computed: {
+    isEditMode() {
+      return this.mode === 'edit';
+    },
+    isCreateMode() {
+      return this.mode === 'create';
+    }
+  },
+  watch: {
+    title(newTitle) {
+      if (this.isEditMode) {
+        this.editableTitle = newTitle;
+      }
+    },
+    mode(newMode) {
+      if (newMode === 'read') {
+        this.editableTitle = '';
+      } else if (newMode === 'edit') {
+        this.editableTitle = this.title;
+      } else if (newMode === 'create') {
+        this.editableTitle = '';
+      }
+    }
+  },
   methods: {
     emitUpdate() {
       this.$emit('update', this.editableTitle);
     }
   },
-  watch: {
-    title(newTitle) {
-      this.editableTitle = newTitle;
-    },
-    editMode(newMode) {
-      if (!newMode) {
-        this.editableTitle = '';
-      } else {
-        this.editableTitle = this.title;
-      }
-    },
-    createMode(newMode) {
-      if (newMode) {
-        this.editableTitle = '';
-      }
+  mounted() {
+    if (this.isCreateMode) {
+      this.editableTitle = '';
+    } else if (this.isEditMode) {
+      this.editableTitle = this.title;
     }
   }
 };

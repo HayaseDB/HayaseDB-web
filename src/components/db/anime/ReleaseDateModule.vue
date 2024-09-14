@@ -1,11 +1,11 @@
 <template>
   <div class="releasedate-module background-card-child">
     <label class="card-title">Release</label>
-    <div v-if="editMode">
+    <div v-if="isEditMode || isCreateMode">
       <input type="date" v-model="editableReleaseDate" @change="emitUpdate" />
     </div>
     <div v-else class="releasedate-container">
-      {{ formattedReleaseDate || 'N/A' }}
+      {{ formattedReleaseDate }}
     </div>
   </div>
 </template>
@@ -18,13 +18,12 @@ export default {
       type: String,
       required: true
     },
-    editMode: {
-      type: Boolean,
-      default: false
-    },
-    createMode: {
-      type: Boolean,
-      default: false
+    mode: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['read', 'edit', 'create'].includes(value);
+      }
     }
   },
   data() {
@@ -32,19 +31,35 @@ export default {
       editableReleaseDate: this.formatReleaseDateForInput(this.releaseDate)
     };
   },
+  computed: {
+    isEditMode() {
+      return this.mode === 'edit';
+    },
+    isCreateMode() {
+      return this.mode === 'create';
+    },
+    formattedReleaseDate() {
+      if (!this.releaseDate) return '';
+      const date = new Date(this.releaseDate);
+      return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+  },
   watch: {
     releaseDate(newVal) {
-      this.editableReleaseDate = this.formatReleaseDateForInput(newVal);
-    },
-    editMode(newMode) {
-      if (!newMode) {
-        this.editableReleaseDate = '';
-      } else {
-        this.editableReleaseDate = this.releaseDate;
+      if (this.isEditMode) {
+        this.editableReleaseDate = this.formatReleaseDateForInput(newVal);
       }
     },
-    createMode(newMode) {
-      if (newMode) {
+    mode(newMode) {
+      if (newMode === 'read') {
+        this.editableReleaseDate = '';
+      } else if (newMode === 'edit') {
+        this.editableReleaseDate = this.formatReleaseDateForInput(this.releaseDate);
+      } else if (newMode === 'create') {
         this.editableReleaseDate = '';
       }
     }
@@ -55,28 +70,16 @@ export default {
       this.$emit('update', date.toISOString());
     },
     formatReleaseDateForInput(dateString) {
-      if (!dateString) return '';
       if (!dateString || isNaN(new Date(dateString).getTime())) {
         return '';
       }
       const date = new Date(dateString);
       return date.toISOString().split('T')[0];
     }
-  },
-  computed: {
-    formattedReleaseDate() {
-      if (!this.releaseDate) return '';
-
-      const date = new Date(this.releaseDate);
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    }
   }
 };
 </script>
+
 
 <style scoped>
 .releasedate-container {

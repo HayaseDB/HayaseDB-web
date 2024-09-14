@@ -99,6 +99,9 @@ export default defineComponent({
     },
     handleResize() {
       this.checkContentOverflow();
+      if (this.isContentOverflowing) {
+        this.isCollapsed = true;
+      }
     },
     checkContentOverflow() {
       this.$nextTick(() => {

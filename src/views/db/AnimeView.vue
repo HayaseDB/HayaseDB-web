@@ -10,23 +10,21 @@
       <div class="right-block" v-if="currentData">
         <div class="info-head">
           <TitleModule
-            :title="currentData.title"
+            :title="inputData.title"
             :id="currentData._id || null"
-            :edit-mode="internalEditMode"
+            :mode="mode"
             @update="updateField('title', $event)"
-            :create-mode="createMode"
           />
         </div>
         <div class="card-body background-card-xs">
           <GenreModule
-            :genres="currentData.genre || []"
-            :edit-mode="internalEditMode"
-            :create-mode="createMode"
+            :genres="inputData.genre"
+            :mode="mode"
             @update="updateField('genre', $event)"
           />
           
           <LongTextModule
-            :value="currentData.description || ''"
+            :value="inputData.description"
             :mode="mode"
             label="Description"
             @update="updateField('description', $event)"
@@ -34,20 +32,19 @@
           
           <div class="row">
             <ReleaseDateModule
-              :release-date="currentData.releaseDate || ''"
-              :edit-mode="internalEditMode"
-              :create-mode="createMode"
+              :release-date="inputData.releaseDate"
+              :mode="mode"
               @update="updateField('releaseDate', $event)"
             />
             <ShortTextModule
-              :value="currentData.status || ''"
+              :value="inputData.status"
               :mode="mode"
               label="Status"
               @update="updateField('status', $event)"
             />
             <RatingModule
-              :rating="currentData.averageRating"
-              :rating-count="currentData.ratingCount"
+              :rating="inputData.averageRating"
+              :rating-count="inputData.ratingCount"
               :mode="mode"
               :id="currentData._id || null"
               @update="updateField('averageRating', $event)"
@@ -55,22 +52,21 @@
           </div>
           <div class="row">
             <ShortTextModule
-              :value="currentData.author || ''"
+              :value="inputData.author"
               :mode="mode"
               label="Author"
               @update="updateField('author', $event)"
             />
             <ShortTextModule
-              :value="currentData.studio || ''"
+              :value="inputData.studio"
               :mode="mode"
               label="Studio"
               @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
-            :episodes="currentData.episodes || ''"
-            :edit-mode="internalEditMode"
-            :create-mode="createMode"
+            :episodes="inputData.episodes"
+            :mode="mode"
             @update="updateField('episodes', $event)"
           />
         </div>
@@ -89,7 +85,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 import { ref, onMounted, watch, computed } from 'vue';
@@ -162,18 +157,33 @@ export default {
     };
 
     const resetInputData = () => {
-      inputData.value = {
-        title: currentData.value?.title || '',
-        genre: currentData.value?.genre || [],
-        description: currentData.value?.description || '',
-        releaseDate: currentData.value?.releaseDate || '',
-        status: currentData.value?.status || '',
-        averageRating: currentData.value?.averageRating || null,
-        ratingCount: currentData.value?.ratingCount || null,
-        author: currentData.value?.author || '',
-        studio: currentData.value?.studio || '',
-        episodes: currentData.value?.episodes || []
-      };
+      if (props.createMode) {
+        inputData.value = {
+          title: '',
+          genre: [],
+          description: '',
+          releaseDate: '',
+          status: '',
+          averageRating: null,
+          ratingCount: null,
+          author: '',
+          studio: '',
+          episodes: []
+        };
+      } else {
+        inputData.value = {
+          title: currentData.value?.title || '',
+          genre: currentData.value?.genre || [],
+          description: currentData.value?.description || '',
+          releaseDate: currentData.value?.releaseDate || '',
+          status: currentData.value?.status || '',
+          averageRating: currentData.value?.averageRating || null,
+          ratingCount: currentData.value?.ratingCount || null,
+          author: currentData.value?.author || '',
+          studio: currentData.value?.studio || '',
+          episodes: currentData.value?.episodes || []
+        };
+      }
     };
 
     const prepareData = (data) => {
@@ -245,10 +255,13 @@ export default {
 
     watch(() => props.editMode, (newVal) => {
       internalEditMode.value = newVal;
+      resetInputData();
     });
 
     watch(() => props.createMode, (newVal) => {
-      if (newVal) resetInputData();
+      if (newVal) {
+        resetInputData();
+      }
       internalEditMode.value = newVal;
     });
 
