@@ -1,11 +1,11 @@
 <template>
   <div class="cover-image-container background-card-sm">
-    <input 
-      v-if="isEditMode || isCreateMode" 
-      type="file" 
-      accept="image/*" 
-      @change="handleFileChange" 
-      class="file-input"
+    <input
+        v-if="isEditMode || isCreateMode"
+        type="file"
+        accept="image/*"
+        @change="handleFileChange"
+        class="file-input"
     />
     <div class="cover-image-overlay" v-if="isEditMode || isCreateMode">
       <span class="overlay-text">Click to select image</span>
@@ -44,7 +44,16 @@ export default {
       return this.mode === 'create';
     },
     currentImageUrl() {
-      return this.localImageUrl;
+      return this.localImageUrl || this.url;
+    }
+  },
+  watch: {
+    mode(newMode) {
+      if (newMode === 'read') {
+        this.localImageUrl = this.url;
+      } else {
+        this.localImageUrl = null;
+      }
     }
   },
   methods: {
@@ -61,7 +70,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .cover-image-container {
