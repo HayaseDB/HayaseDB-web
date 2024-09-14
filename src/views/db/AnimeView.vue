@@ -321,4 +321,21 @@ export default {
   margin-top: 20px;
 }
 
+
+@media (max-width: 700px) {
+  .anime-view {
+    flex-direction: column;
+  }
+
+  .anime-view-container {
+    padding: 10px;
+  }
+
+  .left-block,
+  .right-block {
+    flex: auto;
+    min-width: 0;
+  }
+}
+
 </style>
