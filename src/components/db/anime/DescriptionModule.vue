@@ -120,6 +120,7 @@ export default defineComponent({
   gap: 6px;
   margin-top: 5px;
   line-height: 1.6;
+  word-break: break-word;
   font-size: 15px;
   transition: height 0.4s ease, opacity 0.3s ease;
 }
