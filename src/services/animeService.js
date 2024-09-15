@@ -81,10 +81,10 @@ export const createAnime = async (formData) => {
 export const fetchAnimes = async (filter, sort, page) => {
     try {
         const response = await apiClient.get('/api/fetch/list/anime', {
-            params: {
+            query: {
                 page,
                 filter,
-                sort,
+                sort
             },
         });
         return response.data;

@@ -7,6 +7,7 @@ import ProfileView from "@/views/account/ProfileView.vue";
 import ExploreView from "@/views/db/ExploreView.vue";
 import AnimeView from "@/views/db/AnimeView.vue";
 import ImprintView from "@/views/ImprintView.vue";
+import AnimeExploreView from "@/views/db/AnimeExploreView.vue";
 
 const routes = [
     {
@@ -83,6 +84,16 @@ const routes = [
             showFooter: true
         }
     },
+    {
+        path: '/anime',
+        name: 'AnimeExploreView',
+        component: AnimeExploreView,
+        meta: {
+            showNavBar: true,
+            showFooter: true
+        }
+    },
+
     {
         path: '/anime/create',
         name: 'CreateAnime',
