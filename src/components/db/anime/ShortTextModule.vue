@@ -1,30 +1,26 @@
 <template>
-  <div class="title-module background-card-sm">
+  <div class="short-text-module background-card-child">
+    <label class="card-title">{{ label }}</label>
     <div v-if="isEditMode || isCreateMode">
-      <input v-model="editableTitle" @input="emitUpdate" />
+      <input @input="emitUpdate" v-model="editableValue" class="input-field" />
     </div>
-    <div v-else>
-      <div class="title-container">
-        {{ title }}
-      </div>
-      <div class="id-container" v-if="id">
-        {{ id }}
-      </div>
+    <div v-else class="value-container">
+      {{ value }}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'TitleModule',
+  name: 'ShortTextModule',
   props: {
-    title: {
+    label: {
       type: String,
       required: true
     },
-    id: {
+    value: {
       type: String,
-      default: null
+      default: ''
     },
     mode: {
       type: String,
@@ -36,7 +32,7 @@ export default {
   },
   data() {
     return {
-      editableTitle: this.title
+      editableValue: this.value
     };
   },
   computed: {
@@ -48,59 +44,45 @@ export default {
     }
   },
   watch: {
-    title(newTitle) {
+    value(newVal) {
       if (this.isEditMode) {
-        this.editableTitle = newTitle;
+        this.editableValue = newVal;
       }
     },
     mode(newMode) {
       if (newMode === 'read') {
-        this.editableTitle = '';
+        this.editableValue = '';
       } else if (newMode === 'edit') {
-        this.editableTitle = this.title;
+        this.editableValue = this.value;
       } else if (newMode === 'create') {
-        this.editableTitle = '';
+        this.editableValue = '';
       }
     }
   },
   methods: {
     emitUpdate() {
-      this.$emit('update', this.editableTitle);
+      this.$emit('update', this.editableValue);
     }
   },
   mounted() {
     if (this.isCreateMode) {
-      this.editableTitle = '';
+      this.editableValue = '';
     } else if (this.isEditMode) {
-      this.editableTitle = this.title;
+      this.editableValue = this.value;
     }
   }
 };
 </script>
 
 <style scoped>
-.title-container {
-  font-size: 30px;
-  font-weight: bold;
+.value-container {
   display: flex;
   flex-direction: row;
+  gap: 6px;
+  margin-top: 5px;
 }
 
-.id-container {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--accent-300);
-  display: flex;
-  flex-direction: row;
-}
-
-.title-module {
-  padding: 27px;
-}
-
-input {
-  font-size: 30px;
-  font-weight: bold;
+.input-field {
   width: 100%;
   padding: 8px;
   border: 1px solid var(--accent-200);

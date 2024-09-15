@@ -2,14 +2,14 @@
   <div class="genre-module background-card-child">
     <label class="card-title">Genres</label>
     <div class="tags-container">
-      <template v-if="editMode">
+      <template v-if="isEditMode || isCreateMode">
         <div class="tag" v-for="(genre, index) in editedGenres" :key="index">
           <input
-              v-model="editedGenres[index]"
-              class="tag-input"
-              @input="updateTags"
-              @keyup.enter="updateTags"
-              type="text"
+            v-model="editedGenres[index]"
+            class="tag-input"
+            @input="updateTags"
+            @keyup.enter="updateTags"
+            type="text"
           />
           <span class="remove-tag" @click="removeTag(index)">
             <fontAwesomeIcon :icon="['fa', 'xmark']" />
@@ -34,19 +34,26 @@ export default {
       type: Array,
       required: true,
     },
-    editMode: {
-      type: Boolean,
-      default: false,
-    },
-    createMode: {
-      type: Boolean,
-      default: false
+    mode: {
+      type: String,
+      required: true,
+      validator(value) {
+        return ['read', 'edit', 'create'].includes(value);
+      }
     }
   },
   data() {
     return {
       editedGenres: [...this.genres],
     };
+  },
+  computed: {
+    isEditMode() {
+      return this.mode === 'edit';
+    },
+    isCreateMode() {
+      return this.mode === 'create';
+    }
   },
   methods: {
     updateTags() {
@@ -64,19 +71,23 @@ export default {
     genres(newGenres) {
       this.editedGenres = [...newGenres];
     },
-    editMode(newMode) {
-      if (!newMode) {
+    mode(newMode) {
+      if (newMode === 'read') {
         this.editedGenres = [...this.genres];
-      } else {
+      } else if (newMode === 'edit') {
         this.editedGenres = [...this.genres];
-      }
-    },
-    createMode(newMode) {
-      if (newMode) {
+      } else if (newMode === 'create') {
         this.editedGenres = [];
       }
     }
   },
+  mounted() {
+    if (this.isCreateMode) {
+      this.editedGenres = [];
+    } else if (this.isEditMode) {
+      this.editedGenres = [...this.genres];
+    }
+  }
 };
 </script>
 
