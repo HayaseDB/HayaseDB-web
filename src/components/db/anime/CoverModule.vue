@@ -33,7 +33,8 @@ export default {
   },
   data() {
     return {
-      localImageUrl: this.url
+      localImageUrl: this.url,
+      file: null
     };
   },
   computed: {
@@ -60,9 +61,11 @@ export default {
     handleFileChange(event) {
       const file = event.target.files[0];
       if (file) {
+        this.file = file;
         const reader = new FileReader();
         reader.onload = (e) => {
           this.localImageUrl = e.target.result;
+          this.$emit('update-cover', file);
         };
         reader.readAsDataURL(file);
       }
@@ -70,6 +73,7 @@ export default {
   }
 };
 </script>
+
 
 <style scoped>
 .cover-image-container {

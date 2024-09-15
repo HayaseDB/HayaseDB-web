@@ -3,7 +3,11 @@
     <div class="anime-view">
       <!-- Left Block with Cover Image -->
       <div class="left-block" v-if="currentData || createMode">
-        <CoverModule :url="currentData?.cover?.url || null" :mode="mode" />
+        <CoverModule
+            :url="currentData?.cover?.url || null"
+            :mode="mode"
+            @update-cover="handleCoverUpdate"
+        />
       </div>
       
       <!-- Right Block with Anime Details -->
@@ -24,7 +28,7 @@
           />
           
           <LongTextModule
-            :value="inputData.description"
+            :value="inputData.description || null"
             :mode="mode"
             label="Description"
             @update="updateField('description', $event)"
@@ -32,7 +36,7 @@
           
           <div class="row">
             <ReleaseDateModule
-              :release-date="inputData.releaseDate"
+              :release-date="inputData.releaseDate || null"
               :mode="mode"
               @update="updateField('releaseDate', $event)"
             />
@@ -43,8 +47,8 @@
               @update="updateField('status', $event)"
             />
             <RatingModule
-              :rating="inputData.averageRating"
-              :rating-count="inputData.ratingCount"
+              :rating="inputData.averageRating || null"
+              :rating-count="inputData.ratingCount || null"
               :mode="mode"
               :id="this.animeId || null"
               @update="updateField('averageRating', $event)"
@@ -52,20 +56,20 @@
           </div>
           <div class="row">
             <ShortTextModule
-              :value="inputData.author"
+              :value="inputData.author || null"
               :mode="mode"
               label="Author"
               @update="updateField('author', $event)"
             />
             <ShortTextModule
-              :value="inputData.studio"
+              :value="inputData.studio || null"
               :mode="mode"
               label="Studio"
               @update="updateField('studio', $event)"
             />
           </div>
           <EpisodesModule
-            :episodes="inputData.episodes"
+            :episodes="inputData.episodes || null"
             :mode="mode"
             @update="updateField('episodes', $event)"
           />
@@ -85,7 +89,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import { ref, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router';
@@ -135,6 +138,7 @@ export default {
       studio: '',
       episodes: []
     });
+    const coverFile = ref(null);
     const internalEditMode = ref(props.editMode);
     const loading = ref(true);
     const isLoggedIn = ref(false);
@@ -160,6 +164,7 @@ export default {
         resetInputData();
       }
     };
+
     const checkUserLoggedIn = async () => {
       isLoggedIn.value = await checkToken();
     };
@@ -196,11 +201,19 @@ export default {
 
     const prepareData = (data) => {
       const preparedData = { ...data };
+      for (const [key, value] of Object.entries(preparedData)) {
+        if (value === "" || value === '') {
+          preparedData[key] = null;
+        } else if (Array.isArray(value) && value.length === 0) {
+          preparedData[key] = null;
+        }
+      }
       if (!preparedData.releaseDate) {
         delete preparedData.releaseDate;
       }
       return preparedData;
     };
+
 
     const validateFields = () => {
       if (props.createMode && !inputData.value.title) {
@@ -229,10 +242,27 @@ export default {
 
     const createAnime = async () => {
       if (!validateFields()) return;
+
       try {
         loading.value = true;
-        const dataToSend = prepareData(inputData.value);
-        await createAnimeService(dataToSend);
+
+        const formData = new FormData();
+
+        for (const [key, value] of Object.entries(inputData.value)) {
+          if (value && !(Array.isArray(value) && value.length === 0)) {
+            if (Array.isArray(value)) {
+              formData.append(key, JSON.stringify(value));
+            } else {
+              formData.append(key, value);
+            }
+          }
+        }
+
+        if (coverFile.value) {
+          formData.append('cover', coverFile.value);
+        }
+
+        await createAnimeService(formData);
         alert('Anime created successfully');
         await router.push('/explore');
       } catch (error) {
@@ -243,12 +273,17 @@ export default {
       }
     };
 
+
+
+
     const enterEditMode = () => {
       internalEditMode.value = true;
       if (props.animeId) {
         router.push(`/anime/${props.animeId}/edit`);
       }
     };
+
+
 
     const cancelEdit = () => {
       internalEditMode.value = false;
@@ -259,6 +294,10 @@ export default {
 
     const updateField = (field, value) => {
       inputData.value[field] = value;
+    };
+
+    const handleCoverUpdate = (file) => {
+      coverFile.value = file;
     };
 
     watch(() => props.editMode, (newVal) => {
@@ -275,7 +314,6 @@ export default {
 
     onMounted(async () => {
       await checkUserLoggedIn();
-
       await getAnime();
     });
 
@@ -290,7 +328,8 @@ export default {
       loading,
       updateField,
       mode,
-      isLoggedIn
+      isLoggedIn,
+      handleCoverUpdate
     };
   }
 };
