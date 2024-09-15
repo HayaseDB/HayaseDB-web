@@ -3,7 +3,7 @@
     <div class="anime-grid">
       <div class="grid-item" v-for="anime in animes" :key="anime.id">
         <div class="image-wrapper">
-          <img :src="getImageSrc(anime.data.cover)" :alt="anime.data.title" />
+          <img :src="anime.data.cover?.url" :alt="anime.data.title" />
           <div v-if="!anime.data.cover" class="placeholder">No Image</div>
         </div>
         <div class="anime-info">
@@ -32,15 +32,15 @@ export default {
     },
     sort: {
       type: String,
-      default: 'asc',
+      default: 'desc',
     },
     initialCount: {
       type: Number,
-      default: 20,
+      default: 40,
     },
     pageSize: {
       type: Number,
-      default: 10,
+      default: 20,
     },
   },
   data() {
@@ -48,26 +48,38 @@ export default {
       animes: [],
       page: 1,
       loading: false,
-      hasMore: true,
+      totalCount: 0,
+      totalAvailable: Infinity,
     };
   },
   methods: {
-    async loadMore() {
-      if (!this.hasMore || this.loading) return;
+    async fetchAndAppendAnimes(page) {
+      if (this.totalCount >= this.totalAvailable) {
+        return;
+      }
 
       this.loading = true;
-      let fetchedItems = 0;
 
       try {
-        while (fetchedItems < this.initialCount && this.hasMore) {
-          const response = await fetchAnimes(this.filter, this.sort, this.page, this.pageSize);
-          this.animes.push(...response.animes);
-          fetchedItems += response.animes.length;
+        const response = await fetchAnimes(this.filter, this.sort, page, this.pageSize);
+        const newAnimes = response.animes;
+
+        if (newAnimes.length > 0) {
+          this.animes.push(...newAnimes);
+          this.totalCount += newAnimes.length;
+
+          if (typeof response.total !== 'undefined') {
+            this.totalAvailable = response.total;
+          }
+
           this.page += 1;
-          this.hasMore = response.animes.length === this.pageSize;
+
+          if (this.totalCount < this.initialCount && this.totalCount < this.totalAvailable) {
+            await this.fetchAndAppendAnimes(this.page);
+          }
         }
       } catch (error) {
-        console.error('Failed to load more animes:', error);
+        console.error('Failed to load animes:', error);
       } finally {
         this.loading = false;
       }
@@ -75,16 +87,13 @@ export default {
     handleScroll() {
       const { scrollTop, scrollHeight } = document.documentElement;
       const clientHeight = window.innerHeight;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
-        this.loadMore();
+      if (scrollHeight - scrollTop - clientHeight < 100 && !this.loading) {
+        this.fetchAndAppendAnimes(this.page);
       }
-    },
-    getImageSrc(cover) {
-      return cover?.url || '';
     },
   },
   mounted() {
-    this.loadMore();
+    this.fetchAndAppendAnimes(this.page);
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
@@ -93,7 +102,9 @@ export default {
 };
 </script>
 
-<style scoped>
+
+
+  <style scoped>
 .page-container {
   min-height: 100vh;
   padding: 16px;
@@ -155,48 +166,6 @@ export default {
   text-align: center;
 }
 
-.anime-info {
-  background-color: var(--anime-slider-card);
-  height: 20%;
-  padding: 6px;
-  filter: grayscale(50%);
-  transition: filter 0.3s ease;
-}
-
-.anime-info h4 {
-  color: var(--text-800);
-  font-size: 15px;
-  padding: 0;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.anime-info p {
-  color: var(--text-600);
-  font-size: 13px;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  word-break: break-word;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.genre-tags {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.genre-tag {
-  background-color: var(--background-card-slider-tag);
-  color: var(--text-600);
-  padding: 2px 5px;
-  border-radius: var(--border-radius-sm);
-  font-size: 10px;
-}
 
 .loading {
   text-align: center;
@@ -281,6 +250,11 @@ export default {
   border-radius: var(--border-radius-sm);
   font-size: 10px;
 }
+.grid-item:hover .anime-info {
+  filter: grayscale(0%);
+
+}
+
 
 .loading {
   text-align: center;

@@ -78,21 +78,23 @@ export const createAnime = async (formData) => {
     }
 };
 
-export const fetchAnimes = async (filter, sort, page) => {
+export const fetchAnimes = async (filter, sort, page, pageSize) => {
     try {
         const response = await apiClient.get('/api/fetch/list/anime', {
-            query: {
+            params: {
                 page,
                 filter,
-                sort
-            },
+                sort,
+                details: false,
+                pageSize
+            }
         });
         return response.data;
     } catch (error) {
-        throw new Error(handleAxiosError(error));
+        console.error('Error fetching animes:', error);
+        throw new Error('Failed to fetch animes');
     }
 };
-
 export const fetchAnime = async (id) => {
     try {
         const response = await apiClient.get(`/api/fetch/anime/${id}`);

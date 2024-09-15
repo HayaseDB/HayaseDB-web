@@ -85,7 +85,7 @@ const routes = [
         }
     },
     {
-        path: '/anime',
+        path: '/explore/anime',
         name: 'AnimeExploreView',
         component: AnimeExploreView,
         meta: {

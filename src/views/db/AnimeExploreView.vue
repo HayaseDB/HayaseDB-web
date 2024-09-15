@@ -8,13 +8,9 @@
         </div>
         <div class="newest">
           <h2>Newest Uploads</h2>
-          <AnimeGrid
-              filter="popular"
-              sort="desc"
-              limit="20"
-          />
+          <AnimeGrid/>
         </div>
-        
+
       </div>
 
     </div>
@@ -62,11 +58,7 @@ export default {
   width: 100%;
 }
 
-.right-block {
-  flex: 1;
-  min-width: min-content;
-  height: min-content;
-}
+
 
 @media (max-width: 700px) {
   .explore-view {
@@ -76,9 +68,7 @@ export default {
     padding: 10px;
   }
 
-  .right-block {
-    flex: auto;
-  }
+
 
   .left-block {
     flex: auto;
