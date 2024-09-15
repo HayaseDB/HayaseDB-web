@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { fetchAnimes } from '@/services/fetchService';
+import { fetchAnimes } from '@/services/animeService';
 
 export default {
   name: 'AnimeGrid',

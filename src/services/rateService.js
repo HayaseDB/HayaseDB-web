@@ -28,7 +28,7 @@ const handleAxiosError = (error) => {
 export const updateRating = async (animeId, rating) => {
     try {
         const token = Cookies.get('token');
-        const response = await apiClient.post('/api/modify/post/rate', null, {
+        return await apiClient.post('/api/modify/post/rate', null, {
             params: {
                 animeId,
                 rating
@@ -37,7 +37,6 @@ export const updateRating = async (animeId, rating) => {
                 Authorization: `Bearer ${token}`
             }
         });
-        return response;
     } catch (error) {
         const { message, code } = handleAxiosError(error);
         throw { message, code };

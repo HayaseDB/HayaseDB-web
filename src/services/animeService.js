@@ -8,8 +8,17 @@ const apiClient = axios.create({
     timeout: TIMEOUT,
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${Cookies.get('token')}`,
     },
+});
+
+apiClient.interceptors.request.use((config) => {
+    const token = Cookies.get('token');
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 const handleAxiosError = (error) => {
@@ -36,9 +45,45 @@ const handleAxiosError = (error) => {
     }
 };
 
-export const fetchStats = async () => {
+export const requestAnimeChange = async (animeId, changes) => {
     try {
-        const response = await apiClient.get('/api/fetch/stats');
+        const response = await apiClient.post('/api/modify/request/create', {
+            animeId,
+            changes,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const createAnime = async (animeData) => {
+    try {
+        const response = await apiClient.post('/api/modify/post/anime', animeData);
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const fetchAnimes = async (filter, sort, page) => {
+    try {
+        const response = await apiClient.get('/api/fetch/list/anime', {
+            params: {
+                page,
+                filter,
+                sort,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const fetchAnime = async (id) => {
+    try {
+        const response = await apiClient.get(`/api/fetch/anime/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(handleAxiosError(error));

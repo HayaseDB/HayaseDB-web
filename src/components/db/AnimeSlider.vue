@@ -6,16 +6,16 @@
       :modules="[Navigation]"
       class="mySwiper"
   >
-    <swiper-slide v-for="anime in displayedAnimes" :key="anime.id">
+    <swiper-slide v-for="anime in displayedAnimes" :key="anime.data.id">
       <div class="slide-item" @click="goToAnimeDetail(anime.id)">
         <div class="image-wrapper">
-          <img :src="getImageSrc(anime.cover)" :alt="anime.title" />
-          <div v-if="!anime.cover" class="placeholder">No Image</div>
+          <img :src="getImageSrc(anime.data.cover)" :alt="anime.data.title" />
+          <div v-if="!anime.data.cover" class="placeholder">No Image</div>
         </div>
         <div class="anime-info">
-          <h4>{{ anime.title }}</h4>
+          <h4>{{ anime.data.title }}</h4>
           <div class="genre-tags">
-            <span v-for="(genre, index) in anime.genre" :key="index" class="genre-tag">
+            <span v-for="(genre, index) in anime.data.genre" :key="index" class="genre-tag">
               {{ genre }}
             </span>
           </div>
@@ -33,7 +33,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css/navigation';
-import { fetchAnimes } from '@/services/fetchService';
+import { fetchAnimes } from '@/services/animeService';
 
 export default {
   name: 'AnimeSwiper',
