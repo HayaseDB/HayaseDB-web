@@ -43,7 +43,7 @@ export default {
       teamMembers: [
         {
           name: 'AIO',
-          role: 'Full Stack Developer',
+          role: 'Administrator',
           img: AIOImage,
           socials: {
             instagram: { url: '#' },
