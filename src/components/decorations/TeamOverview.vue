@@ -74,7 +74,7 @@ export default {
 <style scoped>
 .team-section {
   padding: 60px 20px;
-  background-color: var(--background-50);
+  background-color: var(--background-75);
 }
 
 .team-content {
