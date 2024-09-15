@@ -1,7 +1,12 @@
 <template>
   <div class="page-container">
     <div class="anime-grid">
-      <div class="grid-item" v-for="anime in animes" :key="anime.id">
+      <div
+          class="grid-item"
+          v-for="anime in animes"
+          :key="anime.id"
+          @click="goToAnimeDetail(anime.id)"
+      >
         <div class="image-wrapper">
           <img :src="anime.data.cover?.url" :alt="anime.data.title" />
           <div v-if="!anime.data.cover" class="placeholder">No Image</div>
@@ -91,6 +96,9 @@ export default {
         this.fetchAndAppendAnimes(this.page);
       }
     },
+    goToAnimeDetail(id) {
+      this.$router.push(`/anime/${id}`);
+    },
   },
   mounted() {
     this.fetchAndAppendAnimes(this.page);
@@ -101,10 +109,7 @@ export default {
   },
 };
 </script>
-
-
-
-  <style scoped>
+<style scoped>
 .page-container {
   min-height: 100vh;
   padding: 16px;
@@ -135,9 +140,9 @@ export default {
 
 .image-wrapper {
   height: 80%;
+  overflow: hidden;
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
 .grid-item img {
@@ -166,46 +171,9 @@ export default {
   text-align: center;
 }
 
-
-.loading {
-  text-align: center;
-  padding: 16px;
-  font-size: var(--text-lg);
-  color: var(--text-500);
-}
-
-
-.image-wrapper {
-  height: 80%;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-
-.slide-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--background-100);
-  color: var(--text-400);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-xl);
-  text-align: center;
-}
-
 .anime-info {
-  background-color: var(--anime-slider-card);
 
+  background-color: var(--anime-slider-card);
   height: 20%;
   padding: 6px;
   filter: grayscale(50%);
@@ -243,18 +211,16 @@ export default {
 }
 
 .genre-tag {
-
   background-color: var(--background-card-slider-tag);
   color: var(--text-600);
   padding: 2px 5px;
   border-radius: var(--border-radius-sm);
   font-size: 10px;
 }
+
 .grid-item:hover .anime-info {
   filter: grayscale(0%);
-
 }
-
 
 .loading {
   text-align: center;
