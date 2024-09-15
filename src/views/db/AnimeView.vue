@@ -14,7 +14,7 @@
         <div class="info-head">
           <TitleModule
               :title="mode === 'read' ? currentData?.title : inputData.title"
-              :id="mode === 'read' ? currentData?._id : null"
+              :id="mode === 'read' ? this.animeId : null"
               :mode="mode"
               @update="updateField('title', $event)"
           />
