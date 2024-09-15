@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      localImageUrl: this.url,
+      localImageUrl: null,
       file: null
     };
   },
@@ -45,13 +45,16 @@ export default {
       return this.mode === 'create';
     },
     currentImageUrl() {
+      if (this.isCreateMode) {
+        return this.localImageUrl;
+      }
       return this.localImageUrl || this.url;
     }
   },
   watch: {
     mode(newMode) {
       if (newMode === 'read') {
-        this.localImageUrl = this.url;
+        this.localImageUrl = null;
       } else {
         this.localImageUrl = null;
       }
