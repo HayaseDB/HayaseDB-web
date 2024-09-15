@@ -3,11 +3,11 @@
     <div class="anime-view">
       <!-- Left Block with Cover Image -->
       <div class="left-block" v-if="currentData || createMode">
-          <CoverModule
-              :url="getCoverUrl()"
-              :mode="mode"
-              @update-cover="handleCoverUpdate"
-          />
+        <CoverModule
+            :url="getCoverUrl()"
+            :mode="mode"
+            @update-cover="handleCoverUpdate"
+        />
       </div>
 
       <div class="right-block" v-if="currentData || createMode">
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import {ref, onMounted, computed, isReadonly, watch} from 'vue';
+import {ref, onMounted, computed, watch} from 'vue';
 import { useRouter } from 'vue-router';
 import { checkToken } from '@/services/authService.js';
 import { fetchAnime, createAnime as createAnimeService, requestAnimeChange } from '@/services/animeService';
@@ -107,7 +107,6 @@ import RatingModule from '@/components/db/anime/RatingModule.vue';
 
 export default {
   name: 'AnimeView',
-  methods: {isReadonly},
   components: {
     RatingModule,
     LongTextModule,
@@ -147,7 +146,6 @@ export default {
 
     const mode = computed(() => props.createMode ? 'create' : props.editMode ? 'edit' : 'read');
 
-
     const getAnime = async () => {
       if (props.animeId && !props.createMode) {
         try {
@@ -174,27 +172,35 @@ export default {
       }
 
       const formData = new FormData();
+
       Object.entries(inputData.value).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          value.forEach((item) => {
-            if (item) formData.append(key, item);
-          });
-        } else if (value) {
-          formData.append(key, value);
+        if (key !== 'cover' && value) {
+          if (Array.isArray(value)) {
+            value.forEach((item) => {
+              if (item) formData.append(key, item);
+            });
+          } else {
+            formData.append(key, value);
+          }
         }
       });
 
-      if (coverFile.value) formData.append('cover', coverFile.value);
+      if (coverFile.value) {
+        formData.append('cover', coverFile.value);
+      }
 
       try {
         await requestAnimeChange(props.animeId, formData);
-        alert('Changes saved successfully');
+        alert('Anime updated successfully');
         await router.push(`/anime/${props.animeId}`);
       } catch (error) {
-        console.error('Error saving changes:', error.message);
-        alert('Failed to save changes');
+        console.error('Error updating anime:', error.message);
+        alert('Failed to update anime');
       }
     };
+
+
+
 
     const createAnime = async () => {
       if (!inputData.value.title) {
@@ -225,13 +231,14 @@ export default {
       }
     };
 
-
     const cancelEdit = () => {
       router.push(`/anime/${props.animeId}`);
     };
 
     const updateField = (field, value) => {
+
       inputData.value[field] = value;
+      console.log(inputData)
     };
 
     const handleCoverUpdate = (file) => {
@@ -265,31 +272,46 @@ export default {
     };
 
     watch(mode, (newMode) => {
-      if (newMode === 'read') {
+      if (newMode === 'read' || newMode === 'edit') {
         inputData.value = { ...currentData.value };
-
-      } else if (newMode === 'edit') {
-        inputData.value = { ...currentData.value };
+        coverFile.value = null;
+      } else if (newMode === 'create') {
+        inputData.value = {
+          title: '',
+          genre: [],
+          description: '',
+          releaseDate: '',
+          status: '',
+          averageRating: null,
+          ratingCount: null,
+          author: '',
+          studio: '',
+          episodes: []
+        };
+        coverFile.value = null;
       }
     });
+
     return {
       currentData,
       inputData,
       coverFile,
-      mode,
-      isLoggedIn,
       loading,
+      isLoggedIn,
+      mode,
       saveChanges,
       createAnime,
       cancelEdit,
+      enterEditMode,
       updateField,
       handleCoverUpdate,
-      enterEditMode,
       getCoverUrl
     };
   }
 };
 </script>
+
+
 
 <style scoped>
 
