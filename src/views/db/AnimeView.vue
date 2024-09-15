@@ -46,7 +46,7 @@
               :rating="inputData.averageRating"
               :rating-count="inputData.ratingCount"
               :mode="mode"
-              :id="currentData?._id || null"
+              :id="this.animeId || null"
               @update="updateField('averageRating', $event)"
             />
           </div>
@@ -276,7 +276,7 @@ export default {
     onMounted(async () => {
       await checkUserLoggedIn();
 
-      getAnime();
+      await getAnime();
     });
 
     return {
