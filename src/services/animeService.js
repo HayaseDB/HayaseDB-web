@@ -45,17 +45,29 @@ const handleAxiosError = (error) => {
     }
 };
 
+
+
 export const requestAnimeChange = async (animeId, changes) => {
     try {
-        const response = await apiClient.post('/api/modify/request/create', {
-            animeId,
-            changes,
+        const formData = new FormData();
+
+        formData.append('animeId', animeId);
+
+        Object.keys(changes).forEach(key => {
+            formData.append(key, changes[key]);
+        });
+
+        const response = await apiClient.post('/api/modify/request/create', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
         return response.data;
     } catch (error) {
         throw new Error(handleAxiosError(error));
     }
 };
+
 
 
 export const createAnime = async (formData) => {

@@ -3,84 +3,85 @@
     <div class="anime-view">
       <!-- Left Block with Cover Image -->
       <div class="left-block" v-if="currentData || createMode">
-        <CoverModule
-            :url="currentData?.cover?.url || null"
-            :mode="mode"
-            @update-cover="handleCoverUpdate"
-        />
+          <CoverModule
+              :url="getCoverUrl()"
+              :mode="mode"
+              @update-cover="handleCoverUpdate"
+          />
       </div>
-      
-      <!-- Right Block with Anime Details -->
+
       <div class="right-block" v-if="currentData || createMode">
         <div class="info-head">
           <TitleModule
-            :title="inputData.title"
-            :id="currentData?._id || null"
-            :mode="mode"
-            @update="updateField('title', $event)"
-          />
-        </div>
-        <div class="card-body background-card-xs">
-          <GenreModule
-            :genres="inputData.genre"
-            :mode="mode"
-            @update="updateField('genre', $event)"
-          />
-          
-          <LongTextModule
-            :value="inputData.description || null"
-            :mode="mode"
-            label="Description"
-            @update="updateField('description', $event)"
-          />
-          
-          <div class="row">
-            <ReleaseDateModule
-              :release-date="inputData.releaseDate || null"
+              :title="mode === 'read' ? currentData?.title : inputData.title"
+              :id="mode === 'read' ? currentData?._id : null"
               :mode="mode"
-              @update="updateField('releaseDate', $event)"
-            />
-            <ShortTextModule
-              :value="inputData.status"
-              :mode="mode"
-              label="Status"
-              @update="updateField('status', $event)"
-            />
-            <RatingModule
-              :rating="inputData.averageRating || null"
-              :rating-count="inputData.ratingCount || null"
-              :mode="mode"
-              :id="this.animeId || null"
-              @update="updateField('averageRating', $event)"
-            />
-          </div>
-          <div class="row">
-            <ShortTextModule
-              :value="inputData.author || null"
-              :mode="mode"
-              label="Author"
-              @update="updateField('author', $event)"
-            />
-            <ShortTextModule
-              :value="inputData.studio || null"
-              :mode="mode"
-              label="Studio"
-              @update="updateField('studio', $event)"
-            />
-          </div>
-          <EpisodesModule
-            :episodes="inputData.episodes || null"
-            :mode="mode"
-            @update="updateField('episodes', $event)"
+              @update="updateField('title', $event)"
           />
         </div>
 
-        <!-- Action Buttons -->
+        <div class="card-body background-card-xs">
+          <GenreModule
+              :genres="mode === 'read' ? currentData?.genre : inputData.genre"
+              :mode="mode"
+              @update="updateField('genre', $event)"
+          />
+
+          <LongTextModule
+              :value="mode === 'read' ? currentData?.description : inputData.description"
+              :mode="mode"
+              label="Description"
+              @update="updateField('description', $event)"
+          />
+
+          <div class="row">
+            <ReleaseDateModule
+                :release-date="mode === 'read' ? currentData?.releaseDate : inputData.releaseDate"
+                :mode="mode"
+                @update="updateField('releaseDate', $event)"
+            />
+            <ShortTextModule
+                :value="mode === 'read' ? currentData?.status : inputData.status"
+                :mode="mode"
+                label="Status"
+                @update="updateField('status', $event)"
+            />
+            <RatingModule
+                :rating="mode === 'read' ? currentData?.averageRating : inputData.averageRating"
+                :rating-count="mode === 'read' ? currentData?.ratingCount : inputData.ratingCount"
+                :mode="mode"
+                :id="animeId || null"
+                @update="updateField('averageRating', $event)"
+            />
+          </div>
+
+          <div class="row">
+            <ShortTextModule
+                :value="mode === 'read' ? currentData?.author : inputData.author"
+                :mode="mode"
+                label="Author"
+                @update="updateField('author', $event)"
+            />
+            <ShortTextModule
+                :value="mode === 'read' ? currentData?.studio : inputData.studio"
+                :mode="mode"
+                label="Studio"
+                @update="updateField('studio', $event)"
+            />
+          </div>
+
+          <EpisodesModule
+              :episodes="mode === 'read' ? currentData?.episodes : inputData.episodes"
+              :mode="mode"
+              @update="updateField('episodes', $event)"
+          />
+        </div>
+
         <div class="action-buttons" v-if="isLoggedIn">
-          <button class="btn-primary" v-if="mode === 'read' && !internalEditMode" @click="enterEditMode">Request Changes</button>
-          <button class="btn-secondary" v-if="mode === 'edit' && internalEditMode" @click="saveChanges">Save</button>
-          <button class="btn-danger" v-if="mode === 'edit' && internalEditMode" @click="cancelEdit">Cancel</button>
-          <button class="btn-warning" v-if="mode === 'create'" @click="createAnime">Create Anime</button>
+          <button class="btn-primary" v-if="!createMode && !editMode" @click="enterEditMode">Request Changes</button>
+          <button class="btn-secondary" v-if="!createMode && editMode" @click="saveChanges">Save</button>
+          <button class="btn-danger" v-if="!createMode && editMode" @click="cancelEdit">Cancel</button>
+          <button class="btn-warning" v-if="createMode" @click="createAnime">Create Anime</button>
         </div>
       </div>
       <div v-else>
@@ -89,8 +90,9 @@
     </div>
   </div>
 </template>
+
 <script>
-import { ref, onMounted, watch, computed } from 'vue';
+import {ref, onMounted, computed, isReadonly, watch} from 'vue';
 import { useRouter } from 'vue-router';
 import { checkToken } from '@/services/authService.js';
 import { fetchAnime, createAnime as createAnimeService, requestAnimeChange } from '@/services/animeService';
@@ -105,6 +107,7 @@ import RatingModule from '@/components/db/anime/RatingModule.vue';
 
 export default {
   name: 'AnimeView',
+  methods: {isReadonly},
   components: {
     RatingModule,
     LongTextModule,
@@ -139,29 +142,24 @@ export default {
       episodes: []
     });
     const coverFile = ref(null);
-    const internalEditMode = ref(props.editMode);
     const loading = ref(true);
     const isLoggedIn = ref(false);
-    const mode = computed(() => {
-      if (props.createMode) return 'create';
-      if (props.editMode) return 'edit';
-      return 'read';
-    });
+
+    const mode = computed(() => props.createMode ? 'create' : props.editMode ? 'edit' : 'read');
+
 
     const getAnime = async () => {
       if (props.animeId && !props.createMode) {
         try {
-          loading.value = true;
           currentData.value = await fetchAnime(props.animeId);
-          resetInputData();
+          inputData.value = { ...currentData.value };
         } catch (error) {
           console.error('Error fetching anime:', error.message);
-          alert('Failed to load anime details');
         } finally {
           loading.value = false;
         }
       } else {
-        resetInputData();
+        loading.value = false;
       }
     };
 
@@ -169,127 +167,67 @@ export default {
       isLoggedIn.value = await checkToken();
     };
 
-    const resetInputData = () => {
-      if (props.createMode) {
-        inputData.value = {
-          title: '',
-          genre: [],
-          description: '',
-          releaseDate: '',
-          status: '',
-          averageRating: null,
-          ratingCount: null,
-          author: '',
-          studio: '',
-          episodes: []
-        };
-      } else if (currentData.value) {
-        inputData.value = {
-          title: currentData.value.title || '',
-          genre: currentData.value.genre || [],
-          description: currentData.value.description || '',
-          releaseDate: currentData.value.releaseDate || '',
-          status: currentData.value.status || '',
-          averageRating: currentData.value.averageRating || null,
-          ratingCount: currentData.value.ratingCount || null,
-          author: currentData.value.author || '',
-          studio: currentData.value.studio || '',
-          episodes: currentData.value.episodes || []
-        };
-      }
-    };
-
-    const prepareData = (data) => {
-      const preparedData = { ...data };
-      for (const [key, value] of Object.entries(preparedData)) {
-        if (value === "" || value === '') {
-          preparedData[key] = null;
-        } else if (Array.isArray(value) && value.length === 0) {
-          preparedData[key] = null;
-        }
-      }
-      if (!preparedData.releaseDate) {
-        delete preparedData.releaseDate;
-      }
-      return preparedData;
-    };
-
-
-    const validateFields = () => {
-      if (props.createMode && !inputData.value.title) {
-        alert('Title is required for creating a new anime.');
-        return false;
-      }
-      return true;
-    };
-
     const saveChanges = async () => {
-      if (!validateFields()) return;
+      if (!inputData.value.title) {
+        alert('Title is required.');
+        return;
+      }
+
+      const formData = new FormData();
+      Object.entries(inputData.value).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            if (item) formData.append(key, item);
+          });
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      if (coverFile.value) formData.append('cover', coverFile.value);
+
       try {
-        loading.value = true;
-        const dataToSend = prepareData(inputData.value);
-        await requestAnimeChange(props.animeId, dataToSend);
-        alert('Changes requested successfully');
-        internalEditMode.value = false;
+        await requestAnimeChange(props.animeId, formData);
+        alert('Changes saved successfully');
         await router.push(`/anime/${props.animeId}`);
       } catch (error) {
         console.error('Error saving changes:', error.message);
         alert('Failed to save changes');
-      } finally {
-        loading.value = false;
       }
     };
 
     const createAnime = async () => {
-      if (!validateFields()) return;
+      if (!inputData.value.title) {
+        alert('Title is required.');
+        return;
+      }
+
+      const formData = new FormData();
+      Object.entries(inputData.value).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            if (item) formData.append(key, item);
+          });
+        } else if (value) {
+          formData.append(key, value);
+        }
+      });
+
+      if (coverFile.value) formData.append('cover', coverFile.value);
 
       try {
-        loading.value = true;
-
-        const formData = new FormData();
-
-        for (const [key, value] of Object.entries(inputData.value)) {
-          if (value && !(Array.isArray(value) && value.length === 0)) {
-            if (Array.isArray(value)) {
-              formData.append(key, JSON.stringify(value));
-            } else {
-              formData.append(key, value);
-            }
-          }
-        }
-
-        if (coverFile.value) {
-          formData.append('cover', coverFile.value);
-        }
-
         await createAnimeService(formData);
         alert('Anime created successfully');
         await router.push('/explore');
       } catch (error) {
         console.error('Error creating anime:', error.message);
         alert('Failed to create anime');
-      } finally {
-        loading.value = false;
       }
     };
-
-
-
-
-    const enterEditMode = () => {
-      internalEditMode.value = true;
-      if (props.animeId) {
-        router.push(`/anime/${props.animeId}/edit`);
-      }
-    };
-
 
 
     const cancelEdit = () => {
-      internalEditMode.value = false;
-      if (props.animeId) {
-        router.push(`/anime/${props.animeId}`);
-      }
+      router.push(`/anime/${props.animeId}`);
     };
 
     const updateField = (field, value) => {
@@ -300,43 +238,61 @@ export default {
       coverFile.value = file;
     };
 
-    watch(() => props.editMode, (newVal) => {
-      internalEditMode.value = newVal;
-      resetInputData();
-    });
-
-    watch(() => props.createMode, (newVal) => {
-      if (newVal) {
-        resetInputData();
+    const enterEditMode = () => {
+      if (props.animeId) {
+        router.push(`/anime/${props.animeId}/edit`);
       }
-      internalEditMode.value = newVal;
-    });
+    };
 
     onMounted(async () => {
       await checkUserLoggedIn();
       await getAnime();
     });
 
+    const getCoverUrl = () => {
+      if (mode.value === 'read' || mode.value === 'edit') {
+        return currentData.value?.cover?.url || null;
+      }
+      if (coverFile.value) {
+        if (window.URL && window.URL.createObjectURL) {
+          return URL.createObjectURL(coverFile.value);
+        } else {
+          console.error('URL.createObjectURL is not available.');
+          return null;
+        }
+      }
+      return null;
+    };
+
+    watch(mode, (newMode) => {
+      if (newMode === 'read') {
+        inputData.value = { ...currentData.value };
+
+      } else if (newMode === 'edit') {
+        inputData.value = { ...currentData.value };
+      }
+    });
     return {
       currentData,
       inputData,
-      internalEditMode,
-      saveChanges,
-      createAnime,
-      enterEditMode,
-      cancelEdit,
-      loading,
-      updateField,
+      coverFile,
       mode,
       isLoggedIn,
-      handleCoverUpdate
+      loading,
+      saveChanges,
+      createAnime,
+      cancelEdit,
+      updateField,
+      handleCoverUpdate,
+      enterEditMode,
+      getCoverUrl
     };
   }
 };
 </script>
 
-
 <style scoped>
+
 .anime-view-container {
   display: flex;
   justify-content: center;
