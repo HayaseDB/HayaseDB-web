@@ -32,6 +32,7 @@
 
 <script>
 import AIOImage from '@/assets/AIO.png';
+import GarfieldTV from '@/assets/GarfieldTV.gif';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 export default {
@@ -44,6 +45,17 @@ export default {
           name: 'AIO',
           role: 'Full Stack Developer',
           img: AIOImage,
+          socials: {
+            instagram: { url: '#' },
+            discord: { url: '#' },
+            twitter: { url: '#' },
+            github: { url: '#' }
+          }
+        },
+        {
+          name: 'GarfieldTV',
+          role: 'Moderator',
+          img: GarfieldTV,
           socials: {
             instagram: { url: '#' },
             discord: { url: '#' },
@@ -131,7 +143,6 @@ export default {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border: 1px solid var(--background-300);
   margin-right: 20px;
 }
 
