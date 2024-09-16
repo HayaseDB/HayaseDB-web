@@ -13,10 +13,10 @@
         </div>
         <div class="plan-features">
           <ul>
-            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Basic Features</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
             <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Priority Support</li>
-            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Advanced Analytics</li>
-          </ul>
+            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Increased Rate Limits</li>
+        </ul>
         </div>
         <div class="plan-card-bottom">
           <span class="plan-price">FREE</span>
@@ -31,9 +31,9 @@
         </div>
         <div class="plan-features">
           <ul>
-            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Basic Features</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
             <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Priority Support</li>
-            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Advanced Analytics</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Increased Rate Limits</li>
           </ul>
         </div>
         <div class="plan-card-bottom">
@@ -49,9 +49,9 @@
         </div>
         <div class="plan-features">
           <ul>
-            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Basic Features</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
             <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Priority Support</li>
-            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Advanced Analytics</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Increased Rate Limits</li>
           </ul>
         </div>
         <div class="plan-card-bottom">
@@ -92,6 +92,7 @@ export default {
   padding-bottom: 0;
 }
 
+
 .section-head {
   margin-bottom: 4em;
 }
@@ -102,6 +103,8 @@ export default {
   gap: 3em;
   flex-wrap: wrap;
 }
+
+
 
 .plan-card {
   background-color: var(--background-50);
@@ -136,14 +139,14 @@ export default {
 }
 
 .plan-card-highlight {
-  background-color: var(--primary-100);
+  background-color: var(--primary-75);
   border-color: var(--primary);
   box-shadow: var(--shadow-lg);
 }
 
 .plan-title {
   font-size: var(--text-lg);
-  color: var(--text-800);
+  color: var(--text);
   margin-bottom: 0.5em;
   padding-top: 5px;
 }
@@ -181,6 +184,7 @@ export default {
 
 .plan-features {
   margin-bottom: 3.5em;
+  color: var(--text-800);
 }
 
 .plan-features ul {
