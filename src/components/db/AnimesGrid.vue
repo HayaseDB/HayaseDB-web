@@ -115,8 +115,7 @@ export default {
   padding: 16px;
   margin: 0;
   overflow-y: auto;
-  background-color: var(--background);
-}
+ }
 
 .anime-grid {
   display: grid;
