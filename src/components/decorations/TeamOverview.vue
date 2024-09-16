@@ -114,7 +114,7 @@ export default {
 }
 
 .team-card-horizontal {
-  background-color: var(--background-100);
+  background-color: var(--background-card);
   color: var(--text);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
