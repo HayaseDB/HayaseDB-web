@@ -129,17 +129,17 @@ export default {
 }
 
 .plan-card-free {
-  background-color: var(--background-75);
+  background-color: var(--background-50);
   border-color: var(--background-400);
 }
 
 .plan-card-basic {
-  background-color: var(--background-75);
+  background-color: var(--background-50);
   border-color: var(--background-300);
 }
 
 .plan-card-highlight {
-  background-color: var(--primary-75);
+  background-color: var(--primary-50);
   border-color: var(--primary);
   box-shadow: var(--shadow-lg);
 }
