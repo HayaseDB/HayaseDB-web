@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   web:
-    container_name: HayaseDB-WEB
+    container_name: HayaseDB-web
     build:
       context: .
       dockerfile: Dockerfile

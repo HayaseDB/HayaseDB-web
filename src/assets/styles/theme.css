@@ -18,6 +18,7 @@
     --accent: #39446a;
 
     --danger: red;
+    --danger-50: rgb(255, 83, 83);
     --success:green;
 
     --anime-slider-card: #d1ddf3;
@@ -61,6 +62,8 @@
 
     /* Primary Colors */
     --primary-50: #eaedfa;
+    --primary-75: #d3daf0;
+
     --primary-100: #d5dbf6;
     --primary-200: #abb7ed;
     --primary-300: #8293e3;
@@ -168,6 +171,8 @@
 
     /* Dark Mode Primary Colors */
     --primary-50: #050815;
+    --primary-75: #0f1324;
+
     --primary-100: #090f2a;
     --primary-200: #121e54;
     --primary-300: #1c2d7d;

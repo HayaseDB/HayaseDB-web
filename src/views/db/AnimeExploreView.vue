@@ -8,61 +8,20 @@
         </div>
         <div class="newest">
           <h2>Newest Uploads</h2>
-          <AnimeSlider
-              filter="date"
-              sort="desc"
-              limit="20"
-          />
+          <AnimeGrid/>
         </div>
-        <div class="popular">
-          <h2>Currently Popular</h2>
-          <AnimeSlider
-              filter="popular"
-              sort="desc"
-              limit="20"
-          />
-        </div>
+
       </div>
-      <div class="right-block background-card">
-        <h2>Database Stats</h2>
-        <div class="table-container">
-          <div v-if="loading" class="loading-indicator">Loading...</div>
-          <div v-if="error" class="error-message">{{ error }}</div>
-          <table v-if="!loading && !error" class="key-table">
-            <thead>
-            <tr>
-              <th>Statistic</th>
-              <th>Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>Animes</td>
-              <td>{{ stats.AnimeEntries }}</td>
-            </tr>
-            <tr>
-              <td>Characters</td>
-              <td>{{ stats.CharacterEntries }}</td>
-            </tr>
-            <tr>
-              <td>Media</td>
-              <td>{{ stats.MediaEntries }}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
 
 <script>
-import AnimeSlider from "@/components/db/AnimeSlider.vue";
-import { fetchStats } from "@/services/fetchService";
-
+import AnimeGrid from "@/components/db/AnimesGrid.vue";
 export default {
   components: {
-    AnimeSlider,
+    AnimeGrid,
   },
   data() {
     return {
@@ -71,16 +30,7 @@ export default {
       error: null,
     };
   },
-  async created() {
-    try {
-      this.stats = await fetchStats();
-    } catch (err) {
-      this.error = "Failed to load database statistics. Please try again later.";
-      console.error("Error fetching stats:", err);
-    } finally {
-      this.loading = false;
-    }
-  }
+
 };
 </script>
 
@@ -90,8 +40,6 @@ export default {
   justify-content: center;
   padding: 20px;
   height: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
   background-color: var(--background-75);
 }
 
@@ -110,11 +58,7 @@ export default {
   width: 100%;
 }
 
-.right-block {
-  flex: 1;
-  min-width: min-content;
-  height: min-content;
-}
+
 
 @media (max-width: 700px) {
   .explore-view {
@@ -124,9 +68,7 @@ export default {
     padding: 10px;
   }
 
-  .right-block {
-    flex: auto;
-  }
+
 
   .left-block {
     flex: auto;

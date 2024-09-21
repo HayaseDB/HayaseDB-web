@@ -1,14 +1,23 @@
 <template>
   <div class="page-container">
     <div class="anime-grid">
-      <div class="grid-item" v-for="anime in animes" :key="anime.id">
+      <div
+          class="grid-item"
+          v-for="anime in animes"
+          :key="anime.id"
+          @click="goToAnimeDetail(anime.id)"
+      >
         <div class="image-wrapper">
-          <img :src="getImageSrc(anime.cover)" :alt="anime.title" />
-          <div v-if="!anime.cover" class="placeholder">No Image</div>
+          <img :src="anime.data.cover?.url" :alt="anime.data.title" />
+          <div v-if="!anime.data.cover" class="placeholder">No Image</div>
         </div>
         <div class="anime-info">
-          <h4>{{ anime.title }}</h4>
-          <p>{{ anime.genre || 'Unknown' }}</p>
+          <h4>{{ anime.data.title }}</h4>
+          <div class="genre-tags">
+            <span v-for="(genre, index) in anime.data.genre" :key="index" class="genre-tag">
+              {{ genre }}
+            </span>
+          </div>
         </div>
       </div>
       <div v-if="loading" class="loading">Loading...</div>
@@ -28,15 +37,15 @@ export default {
     },
     sort: {
       type: String,
-      default: 'asc',
+      default: 'desc',
     },
     initialCount: {
       type: Number,
-      default: 20,
+      default: 40,
     },
     pageSize: {
       type: Number,
-      default: 10,
+      default: 20,
     },
   },
   data() {
@@ -44,26 +53,38 @@ export default {
       animes: [],
       page: 1,
       loading: false,
-      hasMore: true,
+      totalCount: 0,
+      totalAvailable: Infinity,
     };
   },
   methods: {
-    async loadMore() {
-      if (!this.hasMore || this.loading) return;
+    async fetchAndAppendAnimes(page) {
+      if (this.totalCount >= this.totalAvailable) {
+        return;
+      }
 
       this.loading = true;
-      let fetchedItems = 0;
 
       try {
-        while (fetchedItems < this.initialCount && this.hasMore) {
-          const response = await fetchAnimes(this.filter, this.sort, this.page, this.pageSize);
-          this.animes.push(...response.animes);
-          fetchedItems += response.animes.length;
+        const response = await fetchAnimes(this.filter, this.sort, page, this.pageSize);
+        const newAnimes = response.animes;
+
+        if (newAnimes.length > 0) {
+          this.animes.push(...newAnimes);
+          this.totalCount += newAnimes.length;
+
+          if (typeof response.total !== 'undefined') {
+            this.totalAvailable = response.total;
+          }
+
           this.page += 1;
-          this.hasMore = response.animes.length === this.pageSize;
+
+          if (this.totalCount < this.initialCount && this.totalCount < this.totalAvailable) {
+            await this.fetchAndAppendAnimes(this.page);
+          }
         }
       } catch (error) {
-        console.error('Failed to load more animes:', error);
+        console.error('Failed to load animes:', error);
       } finally {
         this.loading = false;
       }
@@ -71,16 +92,16 @@ export default {
     handleScroll() {
       const { scrollTop, scrollHeight } = document.documentElement;
       const clientHeight = window.innerHeight;
-      if (scrollHeight - scrollTop - clientHeight < 100) {
-        this.loadMore();
+      if (scrollHeight - scrollTop - clientHeight < 100 && !this.loading) {
+        this.fetchAndAppendAnimes(this.page);
       }
     },
-    getImageSrc(cover) {
-      return cover && cover.url ? cover.url : '';
+    goToAnimeDetail(id) {
+      this.$router.push(`/anime/${id}`);
     },
   },
   mounted() {
-    this.loadMore();
+    this.fetchAndAppendAnimes(this.page);
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeUnmount() {
@@ -88,28 +109,24 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .page-container {
   min-height: 100vh;
   padding: 16px;
   margin: 0;
   overflow-y: auto;
-  background-color: var(--background);
-}
+ }
 
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 16px;
 }
 
 .grid-item {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--background-300);
   border-radius: var(--border-radius-lg);
-  background: var(--background-50);
   overflow: hidden;
   height: 270px;
   cursor: pointer;
@@ -122,6 +139,7 @@ export default {
 
 .image-wrapper {
   height: 80%;
+  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -130,6 +148,11 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.grid-item:hover img {
+  transform: scale(1.05);
 }
 
 .placeholder {
@@ -148,8 +171,13 @@ export default {
 }
 
 .anime-info {
-  background: var(--background-50);
-  padding: 7px;
+
+  background-color: var(--anime-slider-card);
+  height: 20%;
+  padding: 6px;
+  filter: grayscale(50%);
+  transition: filter 0.3s ease;
+  box-sizing: border-box;
 }
 
 .anime-info h4 {
@@ -161,6 +189,7 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .anime-info p {
   color: var(--text-600);
   font-size: 13px;
@@ -170,6 +199,26 @@ export default {
   word-break: break-word;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.genre-tags {
+  display: flex;
+  gap: 4px;
+  word-break: break-word;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.genre-tag {
+  background-color: var(--background-card-slider-tag);
+  color: var(--text-600);
+  padding: 2px 5px;
+  border-radius: var(--border-radius-sm);
+  font-size: 10px;
+}
+
+.grid-item:hover .anime-info {
+  filter: grayscale(0%);
 }
 
 .loading {

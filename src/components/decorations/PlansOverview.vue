@@ -11,41 +11,56 @@
           <h3 class="plan-title">Free Plan</h3>
           <p class="plan-description">Perfect for getting started at no cost. Includes basic features and limited support.</p>
         </div>
+        <div class="plan-features">
+          <ul>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Priority Support</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Increased Rate Limits</li>
+        </ul>
+        </div>
         <div class="plan-card-bottom">
           <span class="plan-price">FREE</span>
           <button class="btn-primary">Register</button>
         </div>
-
-
       </div>
-
-
 
       <div class="plan-card plan-card-highlight smooth-slide-in-top">
         <div class="plan-card-top">
           <h3 class="plan-title">Basic Plan</h3>
           <p class="plan-description">Ideal for individuals looking for more features. Includes standard support.</p>
         </div>
+        <div class="plan-features">
+          <ul>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Priority Support</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-xmark']" class="cross" /> Increased Rate Limits</li>
+          </ul>
+        </div>
         <div class="plan-card-bottom">
           <span class="plan-price">€1/month</span>
           <button class="btn-primary">Select</button>
         </div>
       </div>
-      <div class="plan-card plan-card-basic smooth-slide-in-bottom">
 
+      <div class="plan-card plan-card-basic smooth-slide-in-bottom">
         <div class="plan-card-top">
           <h3 class="plan-title">Pro Plan</h3>
           <p class="plan-description">For professionals who need advanced features and priority support.</p>
+        </div>
+        <div class="plan-features">
+          <ul>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Full Database Access</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Priority Support</li>
+            <li><font-awesome-icon :icon="['fa', 'circle-check']" class="checkmark" /> Increased Rate Limits</li>
+          </ul>
         </div>
         <div class="plan-card-bottom">
           <span class="plan-price">€5/month</span>
           <button class="btn-primary">Select</button>
         </div>
-
       </div>
     </div>
     <img src="../../assets/nagatoro_presents.png" alt="" class="section-image">
-
   </section>
 </template>
 
@@ -62,14 +77,11 @@ export default {
   margin: 0 auto;
   padding: 5em 2em 7em;
   position: relative;
-
 }
-
 
 .section-subtitle {
   font-size: var(--text-lg);
   color: var(--text-800);
-
   font-weight: 300;
 }
 
@@ -80,7 +92,8 @@ export default {
   padding-bottom: 0;
 }
 
-.section-head{
+
+.section-head {
   margin-bottom: 4em;
 }
 
@@ -90,6 +103,8 @@ export default {
   gap: 3em;
   flex-wrap: wrap;
 }
+
+
 
 .plan-card {
   background-color: var(--background-50);
@@ -114,28 +129,24 @@ export default {
 }
 
 .plan-card-free {
-  background-color: var(--background-50);
+  background-color: var(--background-75);
   border-color: var(--background-400);
 }
 
 .plan-card-basic {
-  background-color: var(--background-50);
+  background-color: var(--background-75);
   border-color: var(--background-300);
 }
 
-
-
 .plan-card-highlight {
-  background-color: var(--primary-50);
+  background-color: var(--primary-75);
   border-color: var(--primary);
   box-shadow: var(--shadow-lg);
 }
 
-
-
 .plan-title {
   font-size: var(--text-lg);
-  color: var(--text-800);
+  color: var(--text);
   margin-bottom: 0.5em;
   padding-top: 5px;
 }
@@ -149,8 +160,10 @@ export default {
 }
 
 .plan-description {
+  min-height: 90px;
   color: var(--text-600);
   margin-bottom: 1em;
+  overflow: hidden;
 }
 
 .plan-price {
@@ -169,6 +182,34 @@ export default {
   background-color: var(--primary-500);
 }
 
+.plan-features {
+  margin-bottom: 3.5em;
+  color: var(--text-800);
+}
+
+.plan-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.checkmark {
+  color: var(--primary);
+  font-size: 1.2em;
+  margin-right: 0.5em;
+}
+
+.cross {
+  color: var(--danger-50);
+  font-size: 1.2em;
+  margin-right: 0.5em;
+}
 
 @media (max-width: 1500px) {
   .section-image {
@@ -176,7 +217,6 @@ export default {
     width: 240px;
   }
 }
-
 
 @media (max-width: 1110px) {
   .plans-container {
@@ -191,6 +231,12 @@ export default {
 @media (max-width: 480px) {
   .plan-card {
     margin: 0.5em 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .plan-card {
+    min-width: auto;
   }
 }
 </style>

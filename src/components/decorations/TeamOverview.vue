@@ -43,7 +43,7 @@ export default {
       teamMembers: [
         {
           name: 'AIO',
-          role: 'Full Stack Developer',
+          role: 'Administrator',
           img: AIOImage,
           socials: {
             instagram: { url: '#' },
@@ -114,7 +114,7 @@ export default {
 }
 
 .team-card-horizontal {
-  background-color: var(--background-100);
+  background-color: var(--background-card);
   color: var(--text);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
