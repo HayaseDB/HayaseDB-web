@@ -13,10 +13,19 @@
 
           <p>HayaseDB is a free, open-source anime database providing comprehensive details through a user-friendly web platform and a powerful API for developers.</p>
           <div class="social-icons">
-            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
-            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
-            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
-            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+            <a href="https://instagram.HayaseDB.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'instagram']" />
+            </a>
+            <a href="https://discord.HayaseDB.com" class="social-icon discord" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'discord']" />
+            </a>
+            <a href="https://x.HayaseDB.com" class="social-icon twitter" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'x-twitter']" />
+            </a>
+            <a href="https://github.HayaseDB.com" class="social-icon github" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'github']" />
+            </a>
+
           </div>
         </div>
 
