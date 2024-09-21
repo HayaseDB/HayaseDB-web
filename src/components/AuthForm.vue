@@ -102,6 +102,8 @@ watch(
 );
 const redirectTimeout = ref(null);
 const toggleAuthMode = () => {
+  clearTimeout(redirectTimeout.value);
+
   const newPath = isLogin.value ? '/register' : '/login';
   router.push(newPath);
 };
