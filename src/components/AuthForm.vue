@@ -128,10 +128,21 @@ const handleSubmit = async () => {
   try {
     if (isLogin.value) {
       await login(form.value.email, form.value.password);
+      form.value = {
+        confirmPassword: '',
+        password: '',
+        email: ''
+      };
       successMessage.value = 'Login successful! Redirecting...';
+
       window.location.href = '/explore';
     } else {
       await register(form.value.email, form.value.password);
+      form.value = {
+        confirmPassword: '',
+        password: '',
+        email: ''
+      };
       successMessage.value = 'Registration successful!';
       redirectTimeout.value = setTimeout(() => {
         window.location.href = '/login';
