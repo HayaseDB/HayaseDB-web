@@ -68,7 +68,7 @@
 
 
 <script setup>
-import { ref, watch } from 'vue';
+import {onBeforeUnmount, ref, watch} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { register, login } from '@/services/authService';
 
@@ -100,12 +100,18 @@ watch(
       errorMessage.value = '';
     }
 );
-
+const redirectTimeout = ref(null);
 const toggleAuthMode = () => {
   const newPath = isLogin.value ? '/register' : '/login';
   router.push(newPath);
 };
 
+
+onBeforeUnmount(() => {
+  if (redirectTimeout.value) {
+    clearTimeout(redirectTimeout.value);
+  }
+});
 const handleSubmit = async () => {
   successMessage.value = '';
   errorMessage.value = '';
@@ -121,13 +127,11 @@ const handleSubmit = async () => {
     if (isLogin.value) {
       await login(form.value.email, form.value.password);
       successMessage.value = 'Login successful! Redirecting...';
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 2000);
+      window.location.href = '/explore';
     } else {
       await register(form.value.email, form.value.password);
       successMessage.value = 'Registration successful!';
-      setTimeout(() => {
+      redirectTimeout.value = setTimeout(() => {
         window.location.href = '/login';
       }, 2000);
     }
