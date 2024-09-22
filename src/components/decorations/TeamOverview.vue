@@ -133,10 +133,7 @@ export default {
   color: var(--secondary-500);
 }
 
-.team-card-horizontal:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-lg);
-}
+
 
 .team-card-horizontal img {
   border-radius: 10px;
