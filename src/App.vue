@@ -10,6 +10,8 @@
   <footer v-if="showFooter">
     <FooterSection />
   </footer>
+
+  <CookieBanner />
 </template>
 
 <script>
@@ -17,12 +19,14 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import NavBar from './components/NavBar.vue';
 import FooterSection from './components/FooterSection.vue';
+import CookieBanner from './components/CookieBanner.vue';
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    FooterSection
+    FooterSection,
+    CookieBanner,
   },
   setup() {
     const route = useRoute();
