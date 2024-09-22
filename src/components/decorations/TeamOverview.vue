@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import AIOImage from '@/assets/AIO.png';
+import AIOImage from '@/assets/AIO.gif';
 import GarfieldTV from '@/assets/GarfieldTV.gif';
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
@@ -46,10 +46,10 @@ export default {
           role: 'Administrator',
           img: AIOImage,
           socials: {
-            instagram: { url: '#' },
-            discord: { url: '#' },
-            twitter: { url: '#' },
-            github: { url: '#' }
+            "instagram": { url: '#' },
+            "discord": { url: '#' },
+            "x-twitter": { url: '#' },
+            "github": { url: '#' }
           }
         },
         {
@@ -57,10 +57,10 @@ export default {
           role: 'Moderator',
           img: GarfieldTV,
           socials: {
-            instagram: { url: '#' },
-            discord: { url: '#' },
-            twitter: { url: '#' },
-            github: { url: '#' }
+            "instagram": { url: '#' },
+            "discord": { url: '#' },
+            "x-twitter": { url: '#' },
+            "github": { url: '#' }
           }
         },
 

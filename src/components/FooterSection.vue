@@ -12,7 +12,7 @@
             <a href="https://discord.HayaseDB.com" class="social-icon discord" target="_blank" rel="noopener noreferrer">
               <fontAwesomeIcon :icon="['fab', 'discord']" />
             </a>
-            <a href="https://x.HayaseDB.com" class="social-icon twitter" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.HayaseDB.com" class="social-icon x-twitter" target="_blank" rel="noopener noreferrer">
               <fontAwesomeIcon :icon="['fab', 'x-twitter']" />
             </a>
             <a href="https://github.HayaseDB.com" class="social-icon github" target="_blank" rel="noopener noreferrer">
