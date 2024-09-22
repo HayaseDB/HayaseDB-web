@@ -133,9 +133,7 @@ export default {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.grid-item:hover {
-  box-shadow: var(--shadow-md);
-}
+
 
 .image-wrapper {
   height: 80%;
