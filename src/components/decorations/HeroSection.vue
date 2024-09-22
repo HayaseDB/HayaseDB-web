@@ -34,7 +34,7 @@
         </div>
 
         <div class="hero-buttons">
-          <button class="btn-primary hover-rotate">Get Started</button>
+          <button @click="redirectToExplore" class="btn-primary hover-rotate">Get Started</button>
           <button class="btn-accent">Learn More</button>
         </div>
       </div>
@@ -49,7 +49,12 @@
 </template>
 <script>
 export default {
-  name: 'HeroSection'
+  name: 'HeroSection',
+  methods: {
+    redirectToExplore() {
+      this.$router.push('/explore');
+    }
+  }
 };
 </script>
 
