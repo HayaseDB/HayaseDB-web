@@ -14,16 +14,19 @@
     <img v-if="showSlide" src="@/assets/nagatoro_thumb_up.png" alt="Sliding Image" class="slide-image" />
   </transition>
 </template>
+
 <script>
 export default {
   data() {
     return {
       visible: true,
       showSlide: false,
+      preloadedImage: null,
     };
   },
   created() {
     this.checkCookieConsent();
+    this.preloadSlideImage();
   },
   methods: {
     checkCookieConsent() {
@@ -31,6 +34,10 @@ export default {
       if (consent === 'accepted') {
         this.visible = false;
       }
+    },
+    preloadSlideImage() {
+      this.preloadedImage = new Image();
+      this.preloadedImage.src = require('@/assets/nagatoro_thumb_up.png');
     },
     acceptCookies() {
       localStorage.setItem('cookieConsent', 'accepted');
@@ -123,4 +130,3 @@ export default {
   }
 }
 </style>
-
