@@ -18,9 +18,11 @@
 <div class="card-content-bottom">
   <div class="social-icons">
     <a v-for="(icon, name) in member.socials" :key="name" :href="icon.url" class="social-icon" :class="name" aria-label="Follow on {{ name }}">
-      <font-awesome-icon :icon="['fab', name]" role="img" />
+      <font-awesome-icon v-if="name === 'website'" :icon="['fas', 'globe']" role="img" />
+      <font-awesome-icon v-else :icon="['fab', name]" role="img" />
     </a>
   </div>
+
 </div>
 
           </div>
@@ -46,10 +48,9 @@ export default {
           role: 'Administrator',
           img: AIOImage,
           socials: {
-            "instagram": { url: '#' },
-            "discord": { url: '#' },
-            "x-twitter": { url: '#' },
-            "github": { url: '#' }
+            "website": { url: 'https://aio-web.xyz' },
+            "instagram": { url: 'https://www.instagram.com/aio_dev' },
+            "github": { url: 'https://github.com/AIO-Develope' },
           }
         },
         {
@@ -57,15 +58,12 @@ export default {
           role: 'Moderator',
           img: GarfieldTV,
           socials: {
-            "instagram": { url: '#' },
-            "discord": { url: '#' },
-            "x-twitter": { url: '#' },
-            "github": { url: '#' }
+            "website": { url: 'https://chromamc.net' },
+            "github": { url: 'https://github.com/GarfieldTV' },
           }
-        },
+        }
 
-
-      ]
+  ]
     };
   }
 };
