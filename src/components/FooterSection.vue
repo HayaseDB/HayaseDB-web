@@ -6,17 +6,23 @@
         <div class="footer-section footer-social">
           <h2 class="footer-heading">Follow Us</h2>
           <div class="social-icons">
-            <a href="#" class="social-icon instagram"><fontAwesomeIcon :icon="['fab', 'instagram']" /></a>
-            <a href="#" class="social-icon discord"><fontAwesomeIcon :icon="['fab', 'discord']" /></a>
-            <a href="#" class="social-icon twitter"><fontAwesomeIcon :icon="['fab', 'twitter']" /></a>
-            <a href="#" class="social-icon github"><fontAwesomeIcon :icon="['fab', 'github']" /></a>
+            <a href="https://instagram.HayaseDB.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'instagram']" />
+            </a>
+            <a href="https://discord.HayaseDB.com" class="social-icon discord" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'discord']" />
+            </a>
+            <a href="https://x.HayaseDB.com" class="social-icon twitter" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'x-twitter']" />
+            </a>
+            <a href="https://github.HayaseDB.com" class="social-icon github" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'github']" />
+            </a>
           </div>
         </div>
         <div class="footer-section footer-links">
           <h2 class="footer-heading">Quick Links</h2>
           <ul class="footer-link-list">
-            <li><a href="/about" class="footer-link">About Us</a></li>
-            <li><a href="/contact" class="footer-link">Contact</a></li>
             <li><a href="/imprint" class="footer-link">Imprint</a></li>
             <li><a href="/imprint" class="footer-link">Privacy Policy</a></li>
           </ul>
