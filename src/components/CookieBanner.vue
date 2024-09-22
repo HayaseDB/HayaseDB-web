@@ -67,7 +67,7 @@ export default {
   align-items: center;
   width: 90%;
   max-width: 1000px;
-  background: var(--background-200);
+  background: var(--background-150);
   backdrop-filter: blur(10px);
 }
 .cookie-icon {
