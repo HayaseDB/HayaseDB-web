@@ -270,6 +270,10 @@ a {
     color: #E1306C;
 }
 
+.social-icon.tiktok:hover {
+    color: #ff0050;
+}
+
 .social-icon.website:hover {
     color: #ffae00;
 }

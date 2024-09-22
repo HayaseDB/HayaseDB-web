@@ -13,18 +13,22 @@
 
           <p>HayaseDB is a free, open-source anime database providing comprehensive details through a user-friendly web platform and a powerful API for developers.</p>
           <div class="social-icons">
-            <a href="https://instagram.HayaseDB.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
-              <fontAwesomeIcon :icon="['fab', 'instagram']" />
-            </a>
             <a href="https://discord.HayaseDB.com" class="social-icon discord" target="_blank" rel="noopener noreferrer">
               <fontAwesomeIcon :icon="['fab', 'discord']" />
-            </a>
-            <a href="https://x.HayaseDB.com" class="social-icon x-twitter" target="_blank" rel="noopener noreferrer">
-              <fontAwesomeIcon :icon="['fab', 'x-twitter']" />
             </a>
             <a href="https://github.HayaseDB.com" class="social-icon github" target="_blank" rel="noopener noreferrer">
               <fontAwesomeIcon :icon="['fab', 'github']" />
             </a>
+            <a href="https://instagram.HayaseDB.com" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'instagram']" />
+            </a>
+            <a href="https://x.HayaseDB.com" class="social-icon x-twitter" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'x-twitter']" />
+            </a>
+            <a href="https://tiktok.HayaseDB.com" class="social-icon tiktok" target="_blank" rel="noopener noreferrer">
+              <fontAwesomeIcon :icon="['fab', 'tiktok']" />
+            </a>
+
 
           </div>
         </div>
@@ -90,6 +94,10 @@ export default {
 }
 .social-icon:nth-child(4) {
   animation-delay: 0.8s;
+}
+
+.social-icon:nth-child(5) {
+  animation-delay: 1.0s;
 }
 
 
