@@ -12,17 +12,15 @@
   </footer>
 
   <MessageBox
-      v-if="isMessageVisible"
       message="Be careful! This project is still in early development, visit <a class='messagelink' style='color: #fff; text-decoration: underline;' href='https://hayasedb.com' target='_blank' rel='noopener noreferrer'>HayaseDB.com</a> for more details."
       variant="danger"
-      @close="handleCloseMessageBox"
   />
 
   <CookieBanner />
 </template>
 
 <script>
-import { computed, ref, onMounted } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import NavBar from './components/NavBar.vue';
 import FooterSection from './components/FooterSection.vue';
@@ -43,26 +41,10 @@ export default {
     const showNavBar = computed(() => route.meta.showNavBar !== false);
     const showFooter = computed(() => route.meta.showFooter !== false);
 
-    const isMessageVisible = ref(false);
-
-    onMounted(() => {
-      const messageShown = localStorage.getItem('messageShown');
-
-      if (!messageShown) {
-        isMessageVisible.value = true;
-      }
-    });
-
-    const handleCloseMessageBox = () => {
-      isMessageVisible.value = false;
-      localStorage.setItem('messageShown', 'true');
-    };
 
     return {
       showNavBar,
       showFooter,
-      isMessageVisible,
-      handleCloseMessageBox,
     };
   }
 }
