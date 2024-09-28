@@ -13,7 +13,7 @@
 
   <MessageBox
       v-if="isMessageVisible"
-      message="Be careful! This project is still in early development, visit <a href='https://hayasedb.com' target='_blank' rel='noopener noreferrer'>HayaseDB.com</a> for more details."
+      message="Be careful! This project is still in early development, visit <a class='messagelink' style='color: #fff; text-decoration: underline;' href='https://hayasedb.com' target='_blank' rel='noopener noreferrer'>HayaseDB.com</a> for more details."
       variant="danger"
       @close="handleCloseMessageBox"
   />

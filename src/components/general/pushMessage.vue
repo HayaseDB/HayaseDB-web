@@ -1,7 +1,7 @@
 <template>
   <transition name="slide-fade">
     <div v-if="visible" class="message-box" :class="variant" @click="close">
-      <div v-html="message"></div>
+      <div class="message" v-html="message"></div>
       <button class="close-button" @click.stop="close">✖</button>
     </div>
   </transition>
@@ -79,6 +79,9 @@ export default {
   cursor: pointer;
   font-size: 16px;
 }
+
+
+
 
 @media (max-width: 700px) {
   .message-box{
