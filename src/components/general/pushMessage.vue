@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-fade">
-    <div v-if="visible" class="message-box" :class="variant" @click="close">
+    <div v-if="visible" class="message-box" :class="variant">
       <div class="message" v-html="message"></div>
       <button class="close-button" @click.stop="close">✖</button>
     </div>
