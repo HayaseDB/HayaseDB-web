@@ -1,4 +1,4 @@
-# hayasedb-frontend
+# hayasedb-web
 
 ## Project setup
 ```
