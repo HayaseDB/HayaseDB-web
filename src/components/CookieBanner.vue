@@ -1,5 +1,5 @@
 <template>
-  <div v-if="visible" class="cookie-banner background-card">
+  <div v-if="visible" class="cookie-banner background-card-borderless">
     <img src="@/assets/Cookie.png" alt="Cookie Icon" class="cookie-icon" />
     <p class="text">
       We use cookies to keep the website running smoothly, <b>no secret ingredient here!</b> We promise, we only use cookies for the user experience, not to collect your personal information. By continuing to visit this site, you agree to our use of cookies.
