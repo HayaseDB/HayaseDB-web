@@ -2,7 +2,7 @@
   <div class="background-card api-key-manager">
 
     <div v-if="loading" class="loading-overlay">
-      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
+      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.webp" alt="Loading" />
     </div>
 
 

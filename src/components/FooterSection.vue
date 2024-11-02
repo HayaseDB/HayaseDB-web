@@ -39,7 +39,7 @@
     <div class="footer-bottom">
       <p class="footer-text">© 2024 HayaseDB. All rights reserved.</p>
     </div>
-    <img src="../assets/sleepy_nagatoro.png" alt="" class="footer-image">
+    <img src="../assets/sleepy_nagatoro.webp" alt="" class="footer-image">
 
   </footer>
 </template>

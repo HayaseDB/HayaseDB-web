@@ -40,7 +40,7 @@
       </div>
       <div class="hero-right">
         <div class="hero-image-wrapper">
-          <img src="../../assets/mascot.png" alt="Mascot" class="mascot-image">
+          <img src="../../assets/mascot.webp" alt="Mascot" class="mascot-image">
 
         </div>
       </div>
