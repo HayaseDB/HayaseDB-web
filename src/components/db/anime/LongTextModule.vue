@@ -7,7 +7,7 @@
     <div v-else>
       <div class="text-container">
         <div class="text-content" :class="{ 'collapsed': isCollapsed }">
-          {{ value }}
+          {{ value.value }}
         </div>
         <div class="fade-out" v-if="isCollapsed && isContentOverflowing"></div>
       </div>

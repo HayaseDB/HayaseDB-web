@@ -5,7 +5,7 @@
       <input @input="emitUpdate" v-model="editableValue" class="input-field" />
     </div>
     <div v-else class="value-container">
-      {{ value }}
+      {{ value.value }}
     </div>
   </div>
 </template>

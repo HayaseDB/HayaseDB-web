@@ -45,27 +45,11 @@ const handleAxiosError = (error) => {
     }
 };
 
-
-
-export const requestAnimeChange = async (animeId, formData) => {
-    try {
-
-        const response = await apiClient.post(`/api/modify/request/create/${animeId}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error(handleAxiosError(error));
-    }
-};
-
-
+// Updated route to match backend endpoints
 
 export const createAnime = async (formData) => {
     try {
-        const response = await apiClient.post('/api/modify/post/anime', formData, {
+        const response = await apiClient.post('/anime/create', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -78,15 +62,25 @@ export const createAnime = async (formData) => {
     }
 };
 
-export const fetchAnimes = async (filter, sort, page, pageSize) => {
+export const deleteAnime = async (animeId) => {
     try {
-        const response = await apiClient.get('/api/fetch/list/anime', {
+        const response = await apiClient.delete(`/anime/delete/${animeId}`);
+        return response.data;
+    } catch (error) {
+        const errorMessage = handleAxiosError(error);
+        console.error('Error deleting anime:', errorMessage);
+        throw new Error(errorMessage);
+    }
+};
+
+export const fetchAnimes = async (page, limit, order = 'DESC', detailed = false) => {
+    try {
+        const response = await apiClient.get('/anime/list', {
             params: {
                 page,
-                filter,
-                sort,
-                details: false,
-                pageSize
+                limit,
+                order,
+                detailed
             }
         });
         return response.data;
@@ -95,9 +89,25 @@ export const fetchAnimes = async (filter, sort, page, pageSize) => {
         throw new Error('Failed to fetch animes');
     }
 };
-export const fetchAnime = async (id) => {
+
+export const fetchAnime = async (id, detailed = false) => {
     try {
-        const response = await apiClient.get(`/api/fetch/anime/${id}`);
+        const response = await apiClient.get(`/anime/${id}`, {
+            params: { detailed }
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const requestAnimeChange = async (animeId, formData) => {
+    try {
+        const response = await apiClient.post(`/anime/modify/request/create/${animeId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data;
     } catch (error) {
         throw new Error(handleAxiosError(error));

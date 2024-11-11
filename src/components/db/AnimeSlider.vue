@@ -6,16 +6,16 @@
       :modules="[Navigation]"
       class="mySwiper"
   >
-    <swiper-slide v-for="anime in displayedAnimes" :key="anime.data.id">
-      <div class="slide-item" @click="goToAnimeDetail(anime.id)">
+    <swiper-slide v-for="animeItem in displayedAnimes" :key="animeItem.meta.id">
+      <div class="slide-item" @click="goToAnimeDetail(animeItem.meta.id)">
         <div class="image-wrapper">
-          <img :src="getImageSrc(anime.data.cover)" :alt="anime.data.title" />
-          <div v-if="!anime.data.cover" class="placeholder">No Image</div>
+          <img :src="getImageSrc(animeItem.anime.media.coverImage)" :alt="animeItem.anime.details.title.value" />
+          <div v-if="!animeItem.anime.media.coverImage" class="placeholder">No Image</div>
         </div>
         <div class="anime-info">
-          <h4>{{ anime.data.title }}</h4>
+          <h4>{{ animeItem.anime.details.title.value }}</h4>
           <div class="genre-tags">
-            <span v-for="(genre, index) in anime.data.genre" :key="index" class="genre-tag">
+            <span v-for="(genre, index) in animeItem.anime.details.genre.value" :key="index" class="genre-tag">
               {{ genre }}
             </span>
           </div>
@@ -44,27 +44,31 @@ export default {
   props: {
     filter: {
       type: String,
-      default: 'date',
+      default: 'date',  // e.g., 'date', 'popularity'
     },
     sort: {
       type: String,
-      default: 'asc',
+      default: 'asc',  // 'asc' or 'desc'
     },
     limit: {
       type: Number,
-      default: 20,
+      default: 20,  // number of items per page
+    },
+    detailed: {
+      type: Boolean,
+      default: false,  // whether to fetch detailed information or not
     },
   },
   data() {
     return {
-      animes: [],
+      animes: [],  // Store the full list of fetched animes
       page: 1,
       loading: false,
     };
   },
   computed: {
     displayedAnimes() {
-      return this.animes.slice(0, this.limit);
+      return this.animes.slice(0, this.limit);  // Limit the number of displayed animes
     },
   },
   methods: {
@@ -77,12 +81,18 @@ export default {
 
       try {
         while (fetchedItems < this.limit) {
-          const response = await fetchAnimes(this.filter, this.sort, this.page);
-          this.animes.push(...response.animes);
-          fetchedItems += response.animes.length;
-          this.page += 1;
+          // Fetch animes based on filter, sort, and limit
+          const response = await fetchAnimes(this.page, this.limit, this.sort, this.detailed);
 
-          if (response.animes.length === 0) break;
+          // Ensure response structure is handled correctly (array of anime data)
+          if (response && response.data && response.data.animes) {
+            this.animes.push(...response.data.animes);
+            fetchedItems += response.data.animes.length;
+            this.page += 1;
+          }
+
+          // Stop fetching if no more animes are returned
+          if (!response || !response.data || !response.data.animes || response.data.animes.length === 0) break;
         }
       } catch (error) {
         console.error('Failed to fetch animes:', error);
@@ -90,15 +100,16 @@ export default {
         this.loading = false;
       }
     },
-    getImageSrc(cover) {
-      return cover?.url || '';
+    getImageSrc(coverImage) {
+      // Safely return the image URL or a fallback value
+      return coverImage?.url || '';
     },
     goToAnimeDetail(id) {
-      this.$router.push(`/anime/${id}`);
+      this.$router.push(`/anime/${id}`);  // Navigate to anime detail page
     },
   },
   mounted() {
-    this.fetchAnimesData();
+    this.fetchAnimesData();  // Fetch anime data when the component mounts
   },
 };
 </script>
@@ -122,15 +133,15 @@ export default {
   cursor: pointer;
 }
 
-.slide-item:hover img{
+.slide-item:hover img {
   transform: scale(1.05);
 }
+
 .slide-item:hover .anime-info {
   filter: grayscale(0%);
-
 }
 
-.slide-item img{
+.slide-item img {
   overflow: hidden;
   transition: transform 0.3s ease;
 }
@@ -165,7 +176,6 @@ export default {
 
 .anime-info {
   background-color: var(--anime-slider-card);
-
   height: 20%;
   padding: 6px;
   filter: grayscale(50%);
@@ -203,7 +213,6 @@ export default {
 }
 
 .genre-tag {
-
   background-color: var(--background-card-slider-tag);
   color: var(--text-600);
   padding: 2px 5px;

@@ -4,17 +4,17 @@
       <div
           class="grid-item"
           v-for="anime in animes"
-          :key="anime.id"
-          @click="goToAnimeDetail(anime.id)"
+          :key="anime.meta.id"
+          @click="goToAnimeDetail(anime.meta.id)"
       >
         <div class="image-wrapper">
-          <img :src="anime.data.cover?.url" :alt="anime.data.title" />
-          <div v-if="!anime.data.cover" class="placeholder">No Image</div>
+          <img :src="anime.anime.media.coverImage?.url" :alt="anime.anime.details.title.value" />
+          <div v-if="!anime.anime.media.coverImage" class="placeholder">No Image</div>
         </div>
         <div class="anime-info">
-          <h4>{{ anime.data.title }}</h4>
+          <h4>{{ anime.anime.details.title.value }}</h4>
           <div class="genre-tags">
-            <span v-for="(genre, index) in anime.data.genre" :key="index" class="genre-tag">
+            <span v-for="(genre, index) in anime.anime.details.genre.value" :key="index" class="genre-tag">
               {{ genre }}
             </span>
           </div>
@@ -66,15 +66,17 @@ export default {
       this.loading = true;
 
       try {
-        const response = await fetchAnimes(this.filter, this.sort, page, this.pageSize);
-        const newAnimes = response.animes;
+        // Pass filter (which corresponds to page), sort (limit), order, and detailed as params
+        const response = await fetchAnimes(page, this.pageSize, this.sort, true);  // true for 'detailed'
+
+        const newAnimes = response.data.animes;
 
         if (newAnimes.length > 0) {
           this.animes.push(...newAnimes);
           this.totalCount += newAnimes.length;
 
-          if (typeof response.total !== 'undefined') {
-            this.totalAvailable = response.total;
+          if (typeof response.data.total !== 'undefined') {
+            this.totalAvailable = response.data.total;
           }
 
           this.page += 1;
@@ -90,7 +92,7 @@ export default {
       }
     },
     handleScroll() {
-      const { scrollTop, scrollHeight } = document.documentElement;
+      const {scrollTop, scrollHeight} = document.documentElement;
       const clientHeight = window.innerHeight;
       if (scrollHeight - scrollTop - clientHeight < 100 && !this.loading) {
         this.fetchAndAppendAnimes(this.page);
@@ -109,13 +111,14 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 .page-container {
   min-height: 100vh;
   padding: 16px;
   margin: 0;
   overflow-y: auto;
- }
+}
 
 .anime-grid {
   display: grid;
@@ -132,8 +135,6 @@ export default {
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-
-
 
 .image-wrapper {
   height: 80%;
@@ -169,7 +170,6 @@ export default {
 }
 
 .anime-info {
-
   background-color: var(--anime-slider-card);
   height: 20%;
   padding: 6px;

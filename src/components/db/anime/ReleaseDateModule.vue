@@ -40,7 +40,7 @@ export default {
     },
     formattedReleaseDate() {
       if (!this.releaseDate) return '';
-      const date = new Date(this.releaseDate);
+      const date = new Date(this.releaseDate.value);
       return date.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',

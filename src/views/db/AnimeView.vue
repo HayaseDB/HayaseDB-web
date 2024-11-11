@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import {ref, onMounted, computed, watch} from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import { useRouter } from 'vue-router';
 import { checkToken } from '@/services/authService.js';
 import { fetchAnime, createAnime as createAnimeService, requestAnimeChange } from '@/services/animeService';
@@ -130,7 +130,7 @@ export default {
     const currentData = ref(null);
     const inputData = ref({
       title: '',
-      genre: [],
+      genre: {},
       description: '',
       releaseDate: '',
       status: '',
@@ -149,8 +149,14 @@ export default {
     const getAnime = async () => {
       if (props.animeId && !props.createMode) {
         try {
-          currentData.value = await fetchAnime(props.animeId);
-          inputData.value = { ...currentData.value };
+          const response = await fetchAnime(props.animeId);
+          if (response.success) {
+            currentData.value = response.data.anime.details;
+            currentData.value.cover = response.data.anime.media.coverImage;
+            inputData.value = { ...currentData.value }; // Initialize input data with fetched values
+          } else {
+            console.error('Error fetching anime:', response.message);
+          }
         } catch (error) {
           console.error('Error fetching anime:', error.message);
         } finally {
@@ -199,9 +205,6 @@ export default {
       }
     };
 
-
-
-
     const createAnime = async () => {
       if (!inputData.value.title) {
         alert('Title is required.');
@@ -236,9 +239,7 @@ export default {
     };
 
     const updateField = (field, value) => {
-
       inputData.value[field] = value;
-      console.log(inputData)
     };
 
     const handleCoverUpdate = (file) => {
@@ -261,55 +262,33 @@ export default {
         return currentData.value?.cover?.url || null;
       }
       if (coverFile.value) {
-        if (window.URL && window.URL.createObjectURL) {
-          return URL.createObjectURL(coverFile.value);
-        } else {
-          console.error('URL.createObjectURL is not available.');
-          return null;
+        if (window.URL.createObjectURL) {
+          return window.URL.createObjectURL(coverFile.value);
         }
+        return null;
       }
       return null;
     };
 
-    watch(mode, (newMode) => {
-      if (newMode === 'read' || newMode === 'edit') {
-        inputData.value = { ...currentData.value };
-        coverFile.value = null;
-      } else if (newMode === 'create') {
-        inputData.value = {
-          title: '',
-          genre: [],
-          description: '',
-          releaseDate: '',
-          status: '',
-          averageRating: null,
-          ratingCount: null,
-          author: '',
-          studio: '',
-          episodes: []
-        };
-        coverFile.value = null;
-      }
-    });
-
     return {
       currentData,
       inputData,
-      coverFile,
-      loading,
-      isLoggedIn,
       mode,
+      loading,
+      coverFile,
+      isLoggedIn,
+      getCoverUrl,
       saveChanges,
       createAnime,
       cancelEdit,
-      enterEditMode,
       updateField,
-      handleCoverUpdate,
-      getCoverUrl
+      enterEditMode,
+      handleCoverUpdate
     };
   }
 };
 </script>
+
 
 
 

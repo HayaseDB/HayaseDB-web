@@ -5,7 +5,7 @@
     </div>
     <div v-else>
       <div class="title-container">
-        {{ title }}
+        {{ title.value }}
       </div>
       <div class="id-container" v-if="id">
         {{ id }}
