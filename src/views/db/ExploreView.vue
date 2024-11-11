@@ -38,15 +38,24 @@
             <tbody>
             <tr>
               <td>Animes</td>
-              <td>{{ stats.AnimeEntries }}</td>
+              <td>{{ stats.totalAnime }}</td>
             </tr>
-            <tr>
-              <td>Characters</td>
-              <td>{{ stats.CharacterEntries }}</td>
-            </tr>
+
             <tr>
               <td>Media</td>
-              <td>{{ stats.MediaEntries }}</td>
+              <td>{{ stats.totalMedia }}</td>
+            </tr>
+            <tr>
+              <td>Database Size</td>
+              <td>{{ stats.totalDatabaseSize }}</td>
+            </tr>
+            <tr>
+              <td>Total Media Size</td>
+              <td>{{ stats.mediaSize }}</td>
+            </tr>
+            <tr>
+              <td>Total Anime Size</td>
+              <td>{{ stats.animeSize }}</td>
             </tr>
             </tbody>
           </table>
@@ -58,7 +67,7 @@
 
 <script>
 import AnimeSlider from "@/components/db/AnimeSlider.vue";
-import { fetchStats } from "@/services/fetchService";
+import { fetchDatabaseStats } from "@/services/fetchService";
 
 export default {
   components: {
@@ -73,7 +82,8 @@ export default {
   },
   async created() {
     try {
-      this.stats = await fetchStats();
+      const response = await fetchDatabaseStats();
+      this.stats = response.data.databaseInfo;
     } catch (err) {
       this.error = "Failed to load database statistics. Please try again later.";
       console.error("Error fetching stats:", err);

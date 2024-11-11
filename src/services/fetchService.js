@@ -36,9 +36,28 @@ const handleAxiosError = (error) => {
     }
 };
 
-export const fetchStats = async () => {
+
+export const fetchDatabaseStats = async () => {
     try {
-        const response = await apiClient.get('/api/fetch/stats');
+        const response = await apiClient.get('/metrics/database');
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const fetchInstanceInfo = async () => {
+    try {
+        const response = await apiClient.get('/metrics/instance');
+        return response.data;
+    } catch (error) {
+        throw new Error(handleAxiosError(error));
+    }
+};
+
+export const fetchHayaseDBMetrics = async () => {
+    try {
+        const response = await apiClient.get('/metrics/hayasedb');
         return response.data;
     } catch (error) {
         throw new Error(handleAxiosError(error));

@@ -3,22 +3,22 @@
     <div class="metrics-container">
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Users</h3>
-        <p class="metric-value">{{ animatedValues.userCount }}</p>
+        <p class="metric-value">{{ animatedValues.totalUsers }}</p>
         <p class="metric-description">Number of active users registered on the platform.</p>
       </div>
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Animes</h3>
-        <p class="metric-value">{{ animatedValues.AnimeEntries }}</p>
+        <p class="metric-value">{{ animatedValues.totalAnime }}</p>
         <p class="metric-description">Total number of Anime entries in the database.</p>
       </div>
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Characters</h3>
-        <p class="metric-value">{{ animatedValues.CharacterEntries }}</p>
+        <p class="metric-value">{{ animatedValues.totalCharacters || 'N/A' }}</p>
         <p class="metric-description">Total number of Character entries in the database.</p>
       </div>
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">API Requests</h3>
-        <p class="metric-value">{{ animatedValues.RequestsLast30Days }}</p>
+        <p class="metric-value">{{ animatedValues.requestsLast30Days || 'N/A' }}</p>
         <p class="metric-description">Number of API requests made in the past month.</p>
       </div>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { fetchStats } from "@/services/fetchService";
+import { fetchDatabaseStats } from "@/services/fetchService";
 
 export default {
   name: 'ProjectOverview',
@@ -36,17 +36,21 @@ export default {
       stats: null,
       error: null,
       animatedValues: {
-        userCount: 0,
-        AnimeEntries: 0,
-        CharacterEntries: 0,
-        RequestsLast30Days: 0,
+        totalUsers: 0,
+        totalAnime: 0,
+        totalCharacters: 0,
+        requestsLast30Days: 0,
+        totalDatabaseSize: '0 MB',
+        mediaSize: '0 kB',
+        uptime: '0s',
       },
     };
   },
   methods: {
     async updateStats() {
       try {
-        const newStats = await fetchStats();
+        const response = await fetchDatabaseStats();
+        const newStats = response.data;
         this.stats = newStats;
         this.error = null;
         this.animateValues(newStats);
@@ -61,14 +65,18 @@ export default {
 
       Object.keys(this.animatedValues).forEach((key) => {
         const startValue = this.animatedValues[key];
-        const endValue = newStats[key] || startValue;
-        const increment = (endValue - startValue) / steps;
+        const endValue = newStats.databaseInfo[key] || startValue;
+        const increment = (typeof endValue === 'number' ? endValue - startValue : 0) / steps;
 
         let currentStep = 0;
 
         const updateValue = () => {
-          currentStep += 1;
-          this.animatedValues[key] = Math.round(startValue + increment * currentStep);
+          if (typeof endValue === 'number') {
+            currentStep += 1;
+            this.animatedValues[key] = Math.round(startValue + increment * currentStep);
+          } else {
+            this.animatedValues[key] = endValue;
+          }
 
           if (currentStep < steps) {
             setTimeout(updateValue, stepTime);
