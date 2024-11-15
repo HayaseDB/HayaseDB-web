@@ -159,7 +159,7 @@ const handleSubmit = async () => {
 
 <style scoped>
 .auth-form {
-  background: var(--background);
+  background: var(--background-card);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
   padding: 30px;
