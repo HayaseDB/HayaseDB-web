@@ -60,7 +60,7 @@
         </div>
       </div>
     </div>
-    <img src="../../assets/nagatoro_presents.png" alt="" class="section-image">
+    <img src="../../assets/nagatoro_presents.webp" alt="" class="section-image">
   </section>
 </template>
 

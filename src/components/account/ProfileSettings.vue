@@ -1,7 +1,7 @@
 <template>
   <div class="profile-settings background-card">
     <div v-if="loading" class="loading-overlay">
-      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.png" alt="Loading" />
+      <img class="loading-icon rotate-scale" src="../../assets/nagatoro_loading.webp" alt="Loading" />
     </div>
 
     <h1>Profile Settings</h1>

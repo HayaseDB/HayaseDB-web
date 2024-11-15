@@ -2,7 +2,7 @@
   <div class="auth-form">
 
     <div v-if="loading" class="loading-overlay">
-      <img class="loading-icon rotate-scale" src="../assets/nagatoro_loading.png" alt="Loading" />
+      <img class="loading-icon rotate-scale" src="../assets/nagatoro_loading.webp" alt="Loading" />
     </div>
 
 
@@ -62,7 +62,7 @@
         </p>
       </div>
     </form>
-    <img class="form-image" src="../assets/nagatoro_inspect.png" alt="">
+    <img class="form-image" src="../assets/nagatoro_inspect.webp" alt="">
   </div>
 </template>
 

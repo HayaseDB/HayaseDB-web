@@ -52,7 +52,7 @@
 
     <div class="imprint-section">
       <h2 class="imprint-subtitle">Privacy Policy</h2>
-      <p>Data collected through HayaseDB is stored on a private server located in Germany. This server is not publicly accessible, and HayaseDB retains sole control over it. Although passwords are securely hashed, other data is not encrypted. Users have the right to access, correct, or delete their personal data upon request. HayaseDB is not responsible for any potential data breaches or related issues. For further information on how we handle personal data, please contact us directly at <a href="mailto:info@hayasedb.com">Sebastian-Stepper@gmx.de</a>.</p>
+      <p>Data collected through HayaseDB is stored on a private server located in Germany. This server is not publicly accessible, and HayaseDB retains sole control over it. Although passwords are securely hashed, other data is not encrypted. Users have the right to access, correct, or delete their personal data upon request. HayaseDB is not responsible for any potential data breaches or related issues. For further information on how we handle personal data, please contact us directly at <a href="mailto:info@hayasedb.com">info@HayaseDB.com</a>.</p>
     </div>
 
     <div class="imprint-section">

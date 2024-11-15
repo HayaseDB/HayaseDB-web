@@ -1,6 +1,6 @@
 <template>
   <div v-if="visible" class="cookie-banner background-card-borderless">
-    <img src="@/assets/Cookie.png" alt="Cookie Icon" class="cookie-icon" />
+    <img src="@/assets/Cookie.webp" alt="Cookie Icon" class="cookie-icon" />
     <p class="text">
       We use cookies to keep the website running smoothly, <b>no secret ingredient here!</b> We promise, we only use cookies for the user experience, not to collect your personal information. By continuing to visit this site, you agree to our use of cookies.
     </p>
@@ -11,7 +11,7 @@
   </div>
 
   <transition name="slide">
-    <img v-if="showSlide" src="@/assets/nagatoro_thumb_up.png" alt="Sliding Image" class="slide-image" />
+    <img v-if="showSlide" src="@/assets/nagatoro_thumb_up.webp" alt="Sliding Image" class="slide-image" />
   </transition>
 </template>
 
@@ -37,7 +37,7 @@ export default {
     },
     preloadSlideImage() {
       this.preloadedImage = new Image();
-      this.preloadedImage.src = require('@/assets/nagatoro_thumb_up.png');
+      this.preloadedImage.src = require('@/assets/nagatoro_thumb_up.webp');
     },
     acceptCookies() {
       localStorage.setItem('cookieConsent', 'accepted');
