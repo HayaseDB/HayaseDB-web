@@ -20,7 +20,7 @@ const handleAxiosError = (error) => {
 
 export const register = async (email, password) => {
     try {
-        const response = await apiClient.post('/user/register', { email, password });
+        const response = await apiClient.post('/auth/register', { email, password });
         return response.data;
     } catch (error) {
         throw new Error(handleAxiosError(error));

@@ -13,12 +13,12 @@
       </div>
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">Total Characters</h3>
-        <p class="metric-value">{{ animatedValues.totalCharacters || 'N/A' }}</p>
+        <p class="metric-value">{{ animatedValues.totalCharacter}}</p>
         <p class="metric-description">Total number of Character entries in the database.</p>
       </div>
       <div class="metric-card smooth-fade-in">
         <h3 class="metric-title">API Requests</h3>
-        <p class="metric-value">{{ animatedValues.requestsLast30Days || 'N/A' }}</p>
+        <p class="metric-value">{{ animatedValues.requestsLast30Days }}</p>
         <p class="metric-description">Number of API requests made in the past month.</p>
       </div>
     </div>
@@ -38,7 +38,7 @@ export default {
       animatedValues: {
         totalUsers: 0,
         totalAnime: 0,
-        totalCharacters: 0,
+        totalCharacter: 0,
         requestsLast30Days: 0,
         totalDatabaseSize: '0 MB',
         mediaSize: '0 kB',
