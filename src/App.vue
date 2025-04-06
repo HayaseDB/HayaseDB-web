@@ -1,62 +1,30 @@
-<template>
-  <header v-if="showNavBar">
-    <NavBar />
-  </header>
-
-  <main class="main-content">
-    <router-view />
-  </main>
-
-  <footer v-if="showFooter">
-    <FooterSection />
-  </footer>
-
-  <MessageBox
-      message="Be careful! This project is still in early development, visit <a class='messagelink' style='color: #fff; text-decoration: underline;' href='https://hayasedb.com' target='_blank' rel='noopener noreferrer'>HayaseDB.com</a> for more details."
-      variant="danger"
-  />
-
-  <CookieBanner />
-</template>
-
-<script>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-import NavBar from './components/NavBar.vue';
-import FooterSection from './components/FooterSection.vue';
-import CookieBanner from './components/CookieBanner.vue';
-import MessageBox from "@/components/general/pushMessage.vue";
-
-export default {
-  name: 'App',
-  components: {
-    MessageBox,
-    NavBar,
-    FooterSection,
-    CookieBanner,
-  },
-  setup() {
-    const route = useRoute();
-
-    const showNavBar = computed(() => route.meta.showNavBar !== false);
-    const showFooter = computed(() => route.meta.showFooter !== false);
-
-
-    return {
-      showNavBar,
-      showFooter,
-    };
-  }
-}
+<script setup lang="ts">
+import HelloWorld from './components/HelloWorld.vue'
 </script>
 
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-}
+<template>
+  <div>
+    <a href="https://vite.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
+    </a>
+  </div>
+  <HelloWorld msg="Vite + Vue" />
+</template>
 
-main.main-content {
-  flex: 1;
+<style scoped>
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vue:hover {
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
