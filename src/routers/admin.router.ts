@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import {AuthService} from "@/services";
 
 const adminRoutes: RouteRecordRaw[] = [
   {
@@ -6,6 +7,14 @@ const adminRoutes: RouteRecordRaw[] = [
     name: "Admin",
     component: () => import("@/layouts/DashboardLayout.vue"),
     redirect: "/dashboard/admin/contributions",
+      beforeEnter: async (to, from, next) => {
+          const isAuth = await AuthService.isAuthenticated();
+          if (isAuth) {
+              next();
+          } else {
+              next("/login");
+          }
+      },
     children: [
       {
         path: "contributions",

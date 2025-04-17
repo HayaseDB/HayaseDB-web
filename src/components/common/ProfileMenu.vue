@@ -9,14 +9,14 @@
       <span class="sr-only">Profile</span>
       <span class="flex items-center">
         <span
-          v-if="!user.pfp"
+          v-if="!user?.pfp"
           class="h-8 w-8 rounded-md bg-indigo-600 flex items-center justify-center text-white font-semibold"
         >
-          {{ user.username.charAt(0).toUpperCase() || "U" }}
+          {{ user?.username.charAt(0).toUpperCase() || "U" }}
         </span>
         <img
           v-else
-          :src="user.pfp.url"
+          :src="user?.pfp.url"
           alt="User profile picture"
           class="h-8 w-8 rounded-md object-cover bg-indigo-600"
         />
@@ -108,7 +108,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { useAuthStore } from "@/stores/auth.store.js";
 import {

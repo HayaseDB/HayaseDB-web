@@ -8,7 +8,6 @@
       Contribution Moderation
     </h2>
 
-    <!-- Filters -->
     <div class="flex flex-wrap gap-4 mb-6">
       <select
         v-model="filters.status"
@@ -117,7 +116,6 @@
         </tbody>
       </table>
 
-      <!-- Pagination -->
       <div
         class="flex justify-between items-center mt-6 pt-4 border-t border-gray-200"
       >
@@ -149,6 +147,7 @@ import { useRouter } from "vue-router";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { ContributionService } from "@/services/endpoints/contribution.service";
 import isUUID from "validator/lib/isUUID";
+import {useLocalStorage} from "@vueuse/core";
 
 const router = useRouter();
 
@@ -157,8 +156,7 @@ const page = ref(1);
 const total = ref(0);
 const limit = 20;
 const loading = ref(false);
-
-const filters = ref({
+const filters = useLocalStorage("contribution-filters", {
   status: "",
   userId: "",
   animeId: "",
