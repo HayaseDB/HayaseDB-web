@@ -8,12 +8,12 @@
     "composite": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-
+    "allowJs": true,
     "jsx": "preserve",
     "jsxImportSource": "vue",
 

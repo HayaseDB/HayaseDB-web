@@ -1,28 +1,37 @@
-import {defineStore} from 'pinia';
-import type {User} from '@/services/auth.service';
-import {AuthService} from '@/services/auth.service';
+import { defineStore } from "pinia";
+import { AuthService } from "@/services/endpoints/auth.service.ts";
+import Cookies from "js-cookie";
+import { User } from "@/services/types/user.type.ts";
 
-export const useAuthStore = defineStore('auth', {
-    state: () => ({
-        user: null as User | null,
-    }),
-    getters: {
-        getUser: (state) => state.user,
+export const useAuthStore = defineStore("auth", {
+  state: () => ({
+    user: null as User | null,
+  }),
+  getters: {
+    getUser: (state) => state.user,
+  },
+
+  actions: {
+    async hydrateUser(force?: boolean) {
+      const token = Cookies.get("token");
+      if (!token) {
+        await this.logout();
+        return;
+      }
+      if (this.user && !force) {
+        return;
+      }
+
+      try {
+        this.user = await AuthService.getMe();
+      } catch {
+        await this.logout();
+      }
     },
 
-
-    actions: {
-        async hydrateUser() {
-            try {
-                this.user = await AuthService.getMe();
-            } catch (err) {
-                console.error('Failed to hydrate user:', err);
-                this.clearUser();
-            }
-        },
-
-        clearUser() {
-            this.user = null;
-        },
+    async logout() {
+      this.user = null;
+      Cookies.remove("token");
     },
+  },
 });
