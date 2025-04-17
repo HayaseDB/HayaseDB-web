@@ -3,19 +3,46 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "composite": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "allowJs": true,
     "jsx": "preserve",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
+    "jsxImportSource": "vue",
+
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
-    "types": ["vite/client"]
+
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["vite/client", "vue"],
+
+    "isolatedModules": true,
+    "skipLibCheck": true,
+
+    "noEmit": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "public"
+  ],
 }
