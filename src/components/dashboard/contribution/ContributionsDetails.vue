@@ -34,13 +34,13 @@
       <div
         class="border-t border-gray-200 px-6 py-4 flex justify-between items-center bg-white"
       >
-        <router-link
-          to="/dashboard/contributions"
-          class="text-gray-600 hover:text-gray-800 flex items-center"
+        <button
+            @click="$router.go(-1)"
+            class="text-gray-600 hover:text-gray-800 flex items-center"
         >
           <ChevronLeft />
           Back to List
-        </router-link>
+        </button>
         <button
           class="flex hover:cursor-pointer items-center px-3 py-2 text-sm text-red-600 hover:text-red-800"
           @click="confirmDelete"

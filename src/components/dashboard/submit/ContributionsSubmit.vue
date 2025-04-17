@@ -5,7 +5,9 @@
     <LoadingOverlay :is-loading="loading" />
 
     <div class="p-4 sm:p-8">
-      <h2 class="text-2xl sm:text-4xl font-semibold text-gray-800 mb-6">Submit Contribution</h2>
+      <h2 class="text-2xl sm:text-4xl font-semibold text-gray-800 mb-6">
+        Submit Contribution
+      </h2>
 
       <form
         class="grid grid-cols-1 md:grid-cols-2 gap-6"

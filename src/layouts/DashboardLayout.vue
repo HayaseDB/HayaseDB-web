@@ -82,7 +82,46 @@
             </a>
           </RouterLink>
         </div>
+        <div v-if="authStore?.user?.role === 'admin' || authStore?.user?.role === 'moderator'">
+          <hr class="my-7 w-2/3 mx-auto border-t border-gray-400/50" />
+          <div v-for="item in navigationItemsModeration" :key="item.path">
+            <RouterLink v-slot="{ isActive, href }" :to="item.path">
+              <a
+                  :href="href"
+                  :aria-current="isActive ? 'page' : undefined"
+                  :title="
+                !isMobile && !sidebarStore.isSidebarExpanded ? item.title : ''
+              "
+                  :class="[
+                isActive
+                  ? 'bg-gray-200 text-gray-900'
+                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                'group mb-2 flex items-center rounded-md h-12 text-sm font-medium transition-colors duration-150',
+                !isMobile && !sidebarStore.isSidebarExpanded
+                  ? 'justify-center px-3 h-12 aspect-square'
+                  : 'px-3',
+              ]"
+              >
+                <template v-if="item.icon">
+                  <component
+                      :is="item.icon"
+                      class="h-5 w-5 text-gray-500 transition-colors duration-150 group-hover:text-gray-600"
+                      aria-hidden="true"
+                  />
+                </template>
+                <span
+                    v-if="isMobile || sidebarStore.isSidebarExpanded"
+                    class="truncate ml-3"
+                >{{ item.title }}</span
+                >
+              </a>
+            </RouterLink>
+          </div>
+        </div>
       </nav>
+
+
+
 
       <div
         v-if="$slots.bottom"
@@ -135,7 +174,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted, onBeforeUnmount, computed, ref } from "vue";
 import { useSidebarStore } from "@/stores/sidebar.store";
 import {
@@ -149,11 +188,14 @@ import {
   SettingsIcon,
   KeyIcon,
   SquarePen,
+  List,
 } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
+import { useAuthStore } from "@/stores/auth.js";
 const router = useRouter();
 const sidebarStore = useSidebarStore();
+const authStore = useAuthStore();
 
 const isMobile = ref(false);
 let mediaQuery;
@@ -219,5 +261,13 @@ const navigationItems = [
   { title: "API Keys", path: "/dashboard/key", icon: KeyIcon },
   { title: "Profile", path: "/dashboard/profile", icon: User },
   { title: "Settings", path: "/dashboard/settings", icon: SettingsIcon },
+];
+
+const navigationItemsModeration = [
+  {
+    title: "Submissions",
+    path: "/dashboard/admin/contributions",
+    icon: List,
+  },
 ];
 </script>
