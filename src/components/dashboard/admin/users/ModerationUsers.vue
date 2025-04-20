@@ -176,7 +176,9 @@
               {{ user.username || "Untitled" }}
             </td>
             <td class="px-4 py-4 text-sm text-gray-600">{{ user.email }}</td>
-            <td class="px-4 py-4 text-sm text-gray-600">{{ user.role }}</td>
+            <td :class="roleTagClasses(user.role)" class="px-4 py-4">
+              {{ user.role }}
+            </td>
             <td class="px-4 py-4 text-sm text-gray-600">
               <span
                 :class="[
@@ -291,6 +293,18 @@ const nextPage = () => {
 
 const prevPage = () => {
   if (page.value > 1) page.value--;
+};
+
+const roleTagClasses = (role: any) => {
+  const roleClasses: { [key: string]: string } = {
+    admin:
+        "bg-red-100 text-red-800 text-sm px-2 py-1 rounded-lg border border-red-300",
+    moderator:
+        "bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-lg border border-blue-300",
+    user: "bg-gray-100 text-gray-800 text-sm px-2 py-1 rounded-lg border border-gray-300",
+  };
+
+  return roleClasses[role.toLowerCase()] || "bg-gray-500 text-white";
 };
 
 const formatDate = (date: string) =>
