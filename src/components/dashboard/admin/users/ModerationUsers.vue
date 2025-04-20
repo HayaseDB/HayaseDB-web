@@ -11,9 +11,9 @@
         class="border px-3 py-2 rounded-md text-sm"
       >
         <option value="">All Roles</option>
-        <option value="User">User</option>
-        <option value="Admin">Admin</option>
-        <option value="Moderator">Moderator</option>
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+        <option value="moderator">Moderator</option>
       </select>
       <select
         v-model="filters.verified"
@@ -176,11 +176,8 @@
               {{ user.username || "Untitled" }}
             </td>
             <td class="px-4 py-4 text-sm text-gray-600">{{ user.email }}</td>
+            <td class="px-4 py-4 text-sm text-gray-600">{{ user.role }}</td>
             <td class="px-4 py-4 text-sm text-gray-600">
-  <span :class="roleTagClasses(user.role)">
-    {{ user.role }}
-  </span>
-            </td>            <td class="px-4 py-4 text-sm text-gray-600">
               <span
                 :class="[
                   'text-xs font-medium px-2 py-1 rounded-md inline-block',
@@ -285,17 +282,7 @@ const fetchUsers = async () => {
     loading.value = false;
   }
 };
-const roleTagClasses = (role: any) => {
-  const roleClasses: { [key: string]: string } = {
-    admin:
-        "bg-red-100 text-red-800 text-sm px-2 py-1 rounded-lg border border-red-300",
-    moderator:
-        "bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-lg border border-blue-300",
-    user: "bg-gray-100 text-gray-800 text-sm px-2 py-1 rounded-lg border border-gray-300",
-  };
 
-  return roleClasses[role.toLowerCase()] || "bg-gray-500 text-white";
-};
 const totalPages = computed(() => Math.max(1, Math.ceil(total.value / limit)));
 
 const nextPage = () => {
