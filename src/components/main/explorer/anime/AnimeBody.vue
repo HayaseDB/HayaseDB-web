@@ -9,7 +9,7 @@
       <GenericFieldCard card class="flex-1" :field="anime.genres" />
     </div>
 
-    <GenericFieldCard card :field="anime.trailerUrl" type="Embed" />
+    <GenericFieldCard card :field="anime.trailer" type="Embed" />
   </div>
 </template>
 
