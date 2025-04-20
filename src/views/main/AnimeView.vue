@@ -18,11 +18,11 @@
       </div>
     </div>
     <div
-      v-if="!loading && anime?.value?.id?.value && !error"
+      v-if="!loading && anime.id.value"
       class="text-right mt-5"
     >
       <router-link
-        :to="`/dashboard/submit/${anime?.value?.id?.value}`"
+        :to="`/dashboard/submit/${anime?.id?.value}`"
         class="underline text-md"
       >
         Something incorrect? Change That!

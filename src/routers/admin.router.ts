@@ -35,6 +35,17 @@ const adminRoutes: RouteRecordRaw[] = [
         ],
       },
       {
+        path: "animes",
+        children: [
+          {
+            path: "",
+            name: "AnimeList",
+            component: () =>
+                import("@/views/dashboard/admin/animes/AdminAnimeListView.vue"),
+          },
+        ],
+      },
+      {
         path: "contributions",
         children: [
           {

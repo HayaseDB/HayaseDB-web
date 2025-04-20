@@ -207,6 +207,7 @@ import {
   SquarePen,
   List,
   Users,
+  Database
 } from "lucide-vue-next";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
@@ -298,6 +299,11 @@ const navigationItemsModeration = [
     title: "Users",
     path: "/dashboard/admin/users",
     icon: Users,
+  },
+  {
+    title: "Animes",
+    path: "/dashboard/admin/animes",
+    icon: Database,
   },
 ];
 

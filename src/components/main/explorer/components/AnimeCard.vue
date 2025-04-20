@@ -1,7 +1,7 @@
 <template>
   <router-link :to="`/explorer/anime/${anime.id}`">
     <div
-      class="flex flex-col w-50 h-88 bg-white rounded-xl overflow-hidden border border-gray-200 transition-colors group"
+      class="flex flex-col w-45 h-82 bg-white rounded-xl overflow-hidden border border-gray-200 transition-colors group"
     >
       <div class="relative pb-[130%] bg-gray-100 overflow-hidden">
         <img
