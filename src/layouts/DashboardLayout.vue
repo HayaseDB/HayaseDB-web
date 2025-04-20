@@ -304,7 +304,6 @@ const navigationItemsModeration = [
 const navigationItemsHeader = [
   { title: "Home", path: "/" },
   { title: "Explorer", path: "/explorer" },
-  { title: "Docs", path: "/docs" },
   { title: "Dashboard", path: "/dashboard" },
 ];
 </script>
