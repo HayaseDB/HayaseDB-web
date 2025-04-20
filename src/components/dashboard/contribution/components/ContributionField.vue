@@ -25,18 +25,7 @@
       </span>
     </div>
 
-    <div v-else-if="isId && anime" class="mt-2">
-      <a
-        :href="animeUrl"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-xs bg-gray-100 text-gray-800 px-3 py-2 rounded-sm block shadow-inner hover:bg-gray-200"
-      >
-        {{ fieldValue.value }}
-      </a>
-    </div>
-
-    <div v-else-if="isId && !anime" class="mt-2">
+    <div v-else-if="isId" class="mt-2">
       <code
         class="text-xs bg-gray-100 text-gray-800 px-3 py-2 rounded-sm block shadow-inner"
       >
@@ -83,10 +72,6 @@ const props = defineProps({
     type: Function,
     required: true,
   },
-  anime: {
-    type: Object,
-    required: false,
-  },
 });
 
 const isImage = computed(
@@ -100,10 +85,6 @@ const isArray = computed(() => Array.isArray(props.fieldValue?.value));
 const isId = computed(() => props.fieldValue.label === "Id");
 
 const isUrl = computed(() => props.fieldValue.type === "Url");
-
-const animeUrl = computed(() => {
-  return props.anime ? props.anime.url : "";
-});
 
 const statusClasses = computed(() => {
   switch (props.fieldStatus) {
