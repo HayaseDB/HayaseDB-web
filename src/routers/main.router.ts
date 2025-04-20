@@ -32,6 +32,21 @@ const mainRoutes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: 'imprint',
+        name: 'Imprint',
+        component: () => import("@/views/Imprint.vue"),
+      },
+      {
+        path: 'privacy-policy',
+        name: 'PrivacyPolicy',
+        component: () => import("@/views/PrivacyPolicy.vue"),
+      },
+      {
+        path: 'terms',
+        name: 'Terms',
+        component: () => import("@/views/Terms.vue"),
+      }
     ],
   },
 ];

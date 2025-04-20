@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-screen w-screen flex-col bg-gray-50 overflow-hidden">
+  <div class="flex min-h-screen w-full flex-col bg-gray-50 overflow-hidden">
     <header
       class="flex border-b h-16 border-gray-200 items-center justify-center bg-white px-4"
     >
@@ -115,14 +115,14 @@
           >
         </div>
         <div class="flex items-center space-x-6">
-          <a href="#" class="text-sm text-gray-500 hover:text-gray-700"
+          <a href="/terms" class="text-sm text-gray-500 hover:text-gray-700"
             >Terms</a
           >
-          <a href="#" class="text-sm text-gray-500 hover:text-gray-700"
+          <a href="/privacy-policy" class="text-sm text-gray-500 hover:text-gray-700"
             >Privacy</a
           >
-          <a href="#" class="text-sm text-gray-500 hover:text-gray-700"
-            >Contact</a
+          <a href="/imprint" class="text-sm text-gray-500 hover:text-gray-700"
+            >Imprint</a
           >
         </div>
       </div>
