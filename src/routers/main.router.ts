@@ -5,9 +5,9 @@ import HomeView from "@/views/main/HomeView.vue";
 import DocsView from "@/views/main/DocsView.vue";
 import ExplorerView from "@/views/main/ExplorerView.vue";
 import AnimeView from "@/views/main/AnimeView.vue";
-import Imprint from "@/views/Imprint.vue";
-import PrivacyPolicy from "@/views/PrivacyPolicy.vue";
-import Terms from "@/views/Terms.vue";
+import Imprint from "@/views/ImprintView.vue";
+import PrivacyPolicy from "@/views/PrivacyPolicyView.vue";
+import Terms from "@/views/TermsView.vue";
 
 const mainRoutes: RouteRecordRaw[] = [
   {
