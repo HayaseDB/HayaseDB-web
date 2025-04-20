@@ -5,9 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "docker:up": "docker-compose --env-file stack.env -p hayasedb-web -f ./docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose --env-file stack.env -p hayasedb-web -f ./docker/docker-compose.yml down",
+    "docker:destroy": "docker-compose --env-file stack.env -p hayasedb-web -f ./docker/docker-compose.yml down -v",
+    "docker:build": "docker-compose --env-file stack.env -p hayasedb-web -f ./docker/docker-compose.yml build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.3",
