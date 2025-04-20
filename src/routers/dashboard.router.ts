@@ -1,10 +1,19 @@
 import { RouteRecordRaw } from "vue-router";
 import { AuthService } from "@/services/endpoints/auth.service.ts";
 
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import HomeView from "@/views/dashboard/HomeView.vue";
+import KeyView from "@/views/dashboard/KeyView.vue";
+import ContributionsManagerView from "@/views/dashboard/contributions/ContributionsManagerView.vue";
+import ContributionsDetailsView from "@/views/dashboard/contributions/ContributionsDetailsView.vue";
+import ContributionsSubmitView from "@/views/dashboard/submit/ContributionsSubmitView.vue";
+import ProfileView from "@/views/dashboard/ProfileView.vue";
+import SettingsView from "@/views/dashboard/SettingsView.vue";
+
 const dashboardRoutes: RouteRecordRaw[] = [
   {
     path: "/dashboard",
-    component: () => import("@/layouts/DashboardLayout.vue"),
+    component: DashboardLayout,
     beforeEnter: async (to, from, next) => {
       const isAuth = await AuthService.isAuthenticated();
       if (isAuth) {
@@ -18,12 +27,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
       {
         path: "home",
         name: "Dashboard",
-        component: () => import("@/views/dashboard/HomeView.vue"),
+        component: HomeView,
       },
       {
         path: "key",
         name: "Key",
-        component: () => import("@/views/dashboard/KeyView.vue"),
+        component: KeyView,
       },
       {
         path: "contributions",
@@ -31,18 +40,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
           {
             path: "",
             name: "Contributions",
-            component: () =>
-              import(
-                "@/views/dashboard/contributions/ContributionsManagerView.vue"
-              ),
+            component: ContributionsManagerView,
           },
           {
             path: ":id",
             name: "ContributionDetails",
-            component: () =>
-              import(
-                "@/views/dashboard/contributions/ContributionsDetailsView.vue"
-              ),
+            component: ContributionsDetailsView,
             props: true,
           },
         ],
@@ -53,14 +56,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
           {
             path: "",
             name: "Submit",
-            component: () =>
-              import("@/views/dashboard/submit/ContributionsSubmitView.vue"),
+            component: ContributionsSubmitView,
           },
           {
             path: ":id",
             name: "Submit Changes",
-            component: () =>
-              import("@/views/dashboard/submit/ContributionsSubmitView.vue"),
+            component: ContributionsSubmitView,
             props: true,
           },
         ],
@@ -68,12 +69,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
       {
         path: "profile",
         name: "DashboardProfile",
-        component: () => import("@/views/dashboard/ProfileView.vue"),
+        component: ProfileView,
       },
       {
         path: "settings",
         name: "DashboardSettings",
-        component: () => import("@/views/dashboard/SettingsView.vue"),
+        component: SettingsView,
       },
     ],
   },

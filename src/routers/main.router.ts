@@ -1,20 +1,29 @@
 import { RouteRecordRaw } from "vue-router";
 
+import MainLayout from "@/layouts/MainLayout.vue";
+import HomeView from "@/views/main/HomeView.vue";
+import DocsView from "@/views/main/DocsView.vue";
+import ExplorerView from "@/views/main/ExplorerView.vue";
+import AnimeView from "@/views/main/AnimeView.vue";
+import Imprint from "@/views/Imprint.vue";
+import PrivacyPolicy from "@/views/PrivacyPolicy.vue";
+import Terms from "@/views/Terms.vue";
+
 const mainRoutes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "Main",
-    component: () => import("@/layouts/MainLayout.vue"),
+    component: MainLayout,
     children: [
       {
         path: "",
         name: "Home",
-        component: () => import("@/views/main/HomeView.vue"),
+        component: HomeView,
       },
       {
         path: "docs",
         name: "Docs",
-        component: () => import("@/views/main/DocsView.vue"),
+        component: DocsView,
       },
       {
         path: "explorer",
@@ -22,31 +31,31 @@ const mainRoutes: RouteRecordRaw[] = [
         children: [
           {
             path: "",
-            component: () => import("@/views/main/ExplorerView.vue"),
+            component: ExplorerView,
             props: true,
           },
           {
             path: "/explorer/anime/:id",
-            component: () => import("@/views/main/AnimeView.vue"),
+            component: AnimeView,
             props: true,
           },
         ],
       },
       {
-        path: 'imprint',
-        name: 'Imprint',
-        component: () => import("@/views/Imprint.vue"),
+        path: "imprint",
+        name: "Imprint",
+        component: Imprint,
       },
       {
-        path: 'privacy-policy',
-        name: 'PrivacyPolicy',
-        component: () => import("@/views/PrivacyPolicy.vue"),
+        path: "privacy-policy",
+        name: "PrivacyPolicy",
+        component: PrivacyPolicy,
       },
       {
-        path: 'terms',
-        name: 'Terms',
-        component: () => import("@/views/Terms.vue"),
-      }
+        path: "terms",
+        name: "Terms",
+        component: Terms,
+      },
     ],
   },
 ];

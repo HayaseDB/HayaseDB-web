@@ -1,11 +1,17 @@
 import { RouteRecordRaw } from "vue-router";
 import { AuthService } from "@/services";
 
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
+import UsersListView from "@/views/dashboard/admin/users/UsersListView.vue";
+import UsersDetailsView from "@/views/dashboard/admin/users/UsersDetailsView.vue";
+import AdminAnimeListView from "@/views/dashboard/admin/animes/AdminAnimeListView.vue";
+import AdminContributionsListView from "@/views/dashboard/admin/contributions/AdminContributionsListView.vue";
+
 const adminRoutes: RouteRecordRaw[] = [
   {
     path: "/dashboard/admin",
     name: "Admin",
-    component: () => import("@/layouts/DashboardLayout.vue"),
+    component: DashboardLayout,
     redirect: "/dashboard/admin/contributions",
     beforeEnter: async (to, from, next) => {
       const isAuth = await AuthService.isAuthenticated();
@@ -22,14 +28,12 @@ const adminRoutes: RouteRecordRaw[] = [
           {
             path: "",
             name: "UsersList",
-            component: () =>
-              import("@/views/dashboard/admin/users/UsersListView.vue"),
+            component: UsersListView,
           },
           {
             path: ":id",
             name: "UsersDetail",
-            component: () =>
-              import("@/views/dashboard/admin/users/UsersDetailsView.vue"),
+            component: UsersDetailsView,
             props: true,
           },
         ],
@@ -40,8 +44,7 @@ const adminRoutes: RouteRecordRaw[] = [
           {
             path: "",
             name: "AnimeList",
-            component: () =>
-                import("@/views/dashboard/admin/animes/AdminAnimeListView.vue"),
+            component: AdminAnimeListView,
           },
         ],
       },
@@ -51,10 +54,7 @@ const adminRoutes: RouteRecordRaw[] = [
           {
             path: "",
             name: "AdminContributions",
-            component: () =>
-              import(
-                "@/views/dashboard/admin/contributions/AdminContributionsListView.vue"
-              ),
+            component: AdminContributionsListView,
           },
         ],
       },
