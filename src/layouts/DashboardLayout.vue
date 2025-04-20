@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-screen w-screen overflow-hidden bg-gray-50">
+  <div class="flex min-h-screen max-w-full overflow-hidden bg-gray-50">
     <div
       v-if="isSidebarExpandedOnMobile"
       class="fixed inset-0 z-20 bg-opacity-75 md:hidden"
@@ -82,46 +82,48 @@
             </a>
           </RouterLink>
         </div>
-        <div v-if="authStore?.user?.role === 'admin' || authStore?.user?.role === 'moderator'">
+        <div
+          v-if="
+            authStore?.user?.role === 'admin' ||
+            authStore?.user?.role === 'moderator'
+          "
+        >
           <hr class="my-7 w-2/3 mx-auto border-t border-gray-400/50" />
           <div v-for="item in navigationItemsModeration" :key="item.path">
             <RouterLink v-slot="{ isActive, href }" :to="item.path">
               <a
-                  :href="href"
-                  :aria-current="isActive ? 'page' : undefined"
-                  :title="
-                !isMobile && !sidebarStore.isSidebarExpanded ? item.title : ''
-              "
-                  :class="[
-                isActive
-                  ? 'bg-gray-200 text-gray-900'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                'group mb-2 flex items-center rounded-md h-12 text-sm font-medium transition-colors duration-150',
-                !isMobile && !sidebarStore.isSidebarExpanded
-                  ? 'justify-center px-3 h-12 aspect-square'
-                  : 'px-3',
-              ]"
+                :href="href"
+                :aria-current="isActive ? 'page' : undefined"
+                :title="
+                  !isMobile && !sidebarStore.isSidebarExpanded ? item.title : ''
+                "
+                :class="[
+                  isActive
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                  'group mb-2 flex items-center rounded-md h-12 text-sm font-medium transition-colors duration-150',
+                  !isMobile && !sidebarStore.isSidebarExpanded
+                    ? 'justify-center px-3 h-12 aspect-square'
+                    : 'px-3',
+                ]"
               >
                 <template v-if="item.icon">
                   <component
-                      :is="item.icon"
-                      class="h-5 w-5 text-gray-500 transition-colors duration-150 group-hover:text-gray-600"
-                      aria-hidden="true"
+                    :is="item.icon"
+                    class="h-5 w-5 text-gray-500 transition-colors duration-150 group-hover:text-gray-600"
+                    aria-hidden="true"
                   />
                 </template>
                 <span
-                    v-if="isMobile || sidebarStore.isSidebarExpanded"
-                    class="truncate ml-3"
-                >{{ item.title }}</span
+                  v-if="isMobile || sidebarStore.isSidebarExpanded"
+                  class="truncate ml-3"
+                  >{{ item.title }}</span
                 >
               </a>
             </RouterLink>
           </div>
         </div>
       </nav>
-
-
-
 
       <div
         v-if="$slots.bottom"
@@ -139,6 +141,7 @@
       <header
         class="flex border-b h-16 border-gray-200 items-center justify-between bg-white p-4"
       >
+
         <div class="flex items-center space-x-4">
           <button
             v-if="isMobile"
@@ -161,12 +164,27 @@
         </div>
 
         <div class="flex items-center space-x-4">
+          <nav class="hidden md:flex items-center space-x-3">
+            <RouterLink
+                v-for="item in navigationItemsHeader"
+                :key="item.path"
+                :to="item.path"
+                class="px-4 py-2 border border-transparent text-sm font-medium text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors"
+                :class="{
+                'bg-blue-50 text-blue-700 border-blue-200': isActiveRoute(
+                  item.path,
+                ),
+              }"
+            >
+              {{ item.title }}
+            </RouterLink>
+          </nav>
           <ProfileMenu />
         </div>
       </header>
 
       <main class="relative flex-1 overflow-auto">
-        <div class="max-w-full px-4 py-6 sm:px-6 lg:px-8">
+        <div class="max-w-full w-full px-4 py-6 sm:px-6 lg:px-8">
           <router-view />
         </div>
       </main>
@@ -189,14 +207,15 @@ import {
   KeyIcon,
   SquarePen,
   List,
+  Users,
 } from "lucide-vue-next";
-import { useRouter } from "vue-router";
+import {RouterLink, useRouter, useRoute} from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
 import { useAuthStore } from "@/stores/auth.js";
 const router = useRouter();
+const route = useRoute();
 const sidebarStore = useSidebarStore();
 const authStore = useAuthStore();
-
 const isMobile = ref(false);
 let mediaQuery;
 
@@ -232,6 +251,13 @@ router.afterEach(() => {
 const isSidebarExpandedOnMobile = computed(
   () => isMobile.value && sidebarStore.isSidebarExpanded,
 );
+
+const isActiveRoute = (path) => {
+  if (path === "/") {
+    return route.path === "/";
+  }
+  return route.path.startsWith(path);
+};
 
 const sidebarClasses = computed(() => [
   "fixed inset-y-0 left-0 z-30 flex flex-col bg-white shadow-md transition-all duration-200",
@@ -269,5 +295,17 @@ const navigationItemsModeration = [
     path: "/dashboard/admin/contributions",
     icon: List,
   },
+  {
+    title: "Users",
+    path: "/dashboard/admin/users",
+    icon: Users,
+  },
+];
+
+const navigationItemsHeader = [
+  { title: "Home", path: "/" },
+  { title: "Explorer", path: "/explorer" },
+  { title: "Docs", path: "/docs" },
+  { title: "Dashboard", path: "/dashboard" },
 ];
 </script>

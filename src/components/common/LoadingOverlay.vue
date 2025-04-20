@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="isLoading"
-    class="absolute inset-0 flex items-center justify-center bg-gray-400/30 backdrop-blur-sm z-10"
+    class="absolute inset-0 m-0 flex items-center justify-center bg-gray-400/30 backdrop-blur-sm z-10"
   >
     <div class="flex flex-col items-center space-y-2">
       <img

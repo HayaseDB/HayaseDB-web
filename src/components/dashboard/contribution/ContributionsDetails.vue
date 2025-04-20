@@ -35,8 +35,8 @@
         class="border-t border-gray-200 px-6 py-4 flex justify-between items-center bg-white"
       >
         <button
-            @click="$router.go(-1)"
-            class="text-gray-600 hover:text-gray-800 flex items-center"
+          @click="$router.go(-1)"
+          class="text-gray-600 hover:text-gray-800 flex items-center"
         >
           <ChevronLeft />
           Back to List
@@ -100,7 +100,7 @@ const fieldStatus = ref<{
   [key: string]: "created" | "changed" | "deleted" | "default";
 }>({});
 
-const isAdmin = computed(() => authStore.user?.role === "admin");
+const isAdmin = computed(() => authStore.user?.role === "admin" || authStore.user?.role === "moderator");
 
 const filteredFields = computed(() => {
   if (!contribution.value) return {};

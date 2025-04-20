@@ -130,7 +130,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter, RouterLink, useRoute } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
@@ -194,7 +194,8 @@ const checkAuth = async () => {
 
 const navigationItems = [
   { title: "Home", path: "/" },
+  { title: "Explorer", path: "/explorer" },
   { title: "Docs", path: "/docs" },
-  { title: "Pricing", path: "/pricing" },
+  { title: "Dashboard", path: "/dashboard" },
 ];
 </script>

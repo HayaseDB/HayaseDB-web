@@ -1,8 +1,12 @@
 export interface User {
-  userId: string;
+  id: string;
   username: string;
   email?: string;
+  verified?: boolean;
   role?: string;
+  banned?: boolean;
+  createdAt?: any;
+  updatedAt?: any;
   pfp?: {
     url: string;
     createdAt: string;

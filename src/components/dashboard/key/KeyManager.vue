@@ -109,7 +109,7 @@ import { ref, onMounted } from "vue";
 import { KeyService } from "@/services/endpoints/key.service.ts";
 import { RefreshCcw, Trash2 } from "lucide-vue-next";
 
-import ConfirmModal from "@/components/dashboard/key/modals/ConfirmModal.vue";
+import ConfirmModal from "@/components/common/modals/ConfirmModal.vue";
 import RegenerateModal from "@/components/dashboard/key/modals/RegenerateModal.vue";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import { toast } from "vue3-toastify";

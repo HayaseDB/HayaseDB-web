@@ -1,12 +1,12 @@
 <template>
   <div
-    class="bg-white mt-12 relative rounded-xl border border-gray-200 overflow-hidden"
+    class="bg-white mt-12 relative rounded-2xl border border-gray-200 overflow-hidden"
   >
     <LoadingOverlay :is-loading="loading" />
 
     <div class="p-4 sm:p-8">
       <h2 class="text-2xl sm:text-4xl font-semibold text-gray-800 mb-6">
-        Submit Contribution
+        Submit Form
       </h2>
 
       <form
@@ -86,7 +86,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
@@ -130,28 +130,23 @@ function resetForm() {
   } else {
     Object.keys(form).forEach((key) => delete form[key]);
   }
+
+  localStorage.removeItem("formData");
 }
 
 function processInitialValues(values) {
   if (!values) return;
 
-  if (values.data) {
-    id.value = values.data.id?.value;
+  const extractedData = {};
+  Object.entries(values).forEach(([key, fieldData]) => {
+    extractedData[key] = fieldData?.value ?? null;
+  });
 
-    const extractedData = {};
-    Object.entries(values.data).forEach(([key, fieldData]) => {
-      extractedData[key] = fieldData.value;
-    });
+  id.value = extractedData.id;
+  initialData.value = deepClone(extractedData);
 
-    initialData.value = deepClone(extractedData);
-    Object.keys(form).forEach((key) => delete form[key]);
-    Object.assign(form, deepClone(initialData.value));
-  } else {
-    id.value = values.id;
-    initialData.value = deepClone(values);
-    Object.keys(form).forEach((key) => delete form[key]);
-    Object.assign(form, deepClone(initialData.value));
-  }
+  Object.keys(form).forEach((key) => delete form[key]);
+  Object.assign(form, deepClone(initialData.value));
 
   modifiedFields.clear();
 }
@@ -162,6 +157,37 @@ watch(
     processInitialValues(values);
   },
   { immediate: true },
+);
+
+onMounted(async () => {
+  const savedFormData = localStorage.getItem("formData");
+  if (savedFormData) {
+    const parsedFormData = JSON.parse(savedFormData);
+    Object.assign(form, parsedFormData);
+  }
+
+  try {
+    loading.value = true;
+    formSchema.value = await ContributionService.getSchema();
+    if (props.initialValues) {
+      processInitialValues(props.initialValues);
+    }
+  } catch (error) {
+    toast.error("Failed to load form schema. Please try again later.");
+    console.error("Schema load error:", error);
+  } finally {
+    loading.value = false;
+  }
+});
+
+watch(
+  form,
+  (newForm) => {
+    if (newForm) {
+      localStorage.setItem("formData", JSON.stringify(newForm));
+    }
+  },
+  { deep: true },
 );
 
 function trackFieldChange(fieldName) {
@@ -308,11 +334,9 @@ async function submitForm() {
     }
   } catch (err) {
     console.error("Submission error:", err);
-    toast.error(
-      err.response?.data?.message || "Something went wrong. Please try again.",
-    );
   } finally {
     loading.value = false;
+    localStorage.removeItem("formData");
   }
 }
 

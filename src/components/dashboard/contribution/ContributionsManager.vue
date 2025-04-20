@@ -45,7 +45,7 @@
           <tr
             v-for="contribution in contributions"
             :key="contribution.id"
-            class="hover:bg-gray-50 transition"
+            class="hover:bg-gray-50 hover:cursor-pointer transition"
             @click="router.push(`/dashboard/contributions/${contribution.id}`)"
           >
             <td class="px-3 sm:px-6 py-4">

@@ -167,7 +167,7 @@ const updateProfile = async () => {
     toast.success("Profile updated Successfully.");
     form.value = { username: "", email: "", password: "", repeatPassword: "" };
   } catch (error) {
-    console.log(error);
+    console.error(error);
   } finally {
     await authStore.hydrateUser(true);
     isSubmitting.value = false;

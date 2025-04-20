@@ -5,5 +5,5 @@
 </template>
 
 <script setup lang="ts">
-import ModerationContributions from "@/components/dashboard/admin/ModerationContributions.vue";
+import ModerationContributions from "@/components/dashboard/admin/contributions/ModerationContributions.vue";
 </script>

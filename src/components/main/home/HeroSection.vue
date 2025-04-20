@@ -49,11 +49,11 @@
         </div>
 
         <div class="flex sm:justify-start mb-20 space-x-6">
-          <router-link to="/login">
+          <router-link to="/explorer">
             <button
               class="bg-indigo-600 hover:cursor-pointer hover:bg-indigo-700 text-white px-6 py-3 rounded-md text-md font-semibold transition duration-300"
             >
-              Get Started
+              Explorer
             </button>
           </router-link>
           <router-link to="/docs">

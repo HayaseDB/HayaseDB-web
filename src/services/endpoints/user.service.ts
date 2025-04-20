@@ -8,6 +8,30 @@ export const UserService = {
     return res.data;
   },
 
+  async verifyUser(userId: string): Promise<any> {
+    const res = await api.patch(`/users/${userId}/verify`);
+    return res.data;
+
+  },
+
+  async unverifyUser(userId: string): Promise<any> {
+    const res = await api.patch(`/users/${userId}/unverify`);
+    return res.data;
+
+  },
+
+  async banUser(userId: string): Promise<any> {
+    const res = await api.patch(`/users/${userId}/ban`);
+    return res.data;
+  },
+
+  async unbanUser(userId: string): Promise<any> {
+    const res = await api.patch(`/users/${userId}/unban`);
+    return res.data;
+
+  },
+
+
   async updateUserProfile(
     updateUserDto: userTypes.UpdateUserDto,
   ): Promise<userTypes.User> {
@@ -16,6 +40,46 @@ export const UserService = {
     await useAuthStore().hydrateUser();
 
     return res.data;
+  },
+  async getUsers({
+    page = 1,
+    limit = 20,
+    role,
+    verified,
+    search,
+    sortColumn = "createdAt",
+    sortDirection = "DESC",
+  }: {
+    page?: number;
+    limit?: number;
+    role?: string;
+    verified?: boolean;
+    search?: string;
+    sortColumn?: string;
+    sortDirection?: "ASC" | "DESC";
+  }): Promise<{ items: userTypes.User[]; total: number; totalPages: number }> {
+    try {
+      const response = await api.get("/users", {
+        params: {
+          page,
+          limit,
+          role,
+          verified,
+          search,
+          sortColumn,
+          sortDirection,
+        },
+      });
+
+      return {
+        items: response.data.users,
+        total: response.data.total,
+        totalPages: response.data.totalPages,
+      };
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
   },
 
   async uploadProfilePicture(file: File): Promise<userTypes.User> {
