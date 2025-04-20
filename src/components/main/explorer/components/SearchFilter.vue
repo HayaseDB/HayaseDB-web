@@ -1,27 +1,31 @@
 <template>
-  <div>
-    <h2 class="text-xl font-bold mb-4">Search & Filter</h2>
+  <h2 class="text-2xl font-semibold text-gray-800 mb-4">Search & Filter</h2>
 
-    <form @submit.prevent="applyFilters">
-      <div class="mb-4">
-        <label for="searchTerm" class="block mb-1 text-sm font-medium"
+  <form @submit.prevent="applyFilters">
+    <div class="space-y-4">
+      <div>
+        <label
+          for="searchTerm"
+          class="block text-sm font-medium text-gray-700 mb-1"
           >Search</label
         >
         <input
           id="searchTerm"
           v-model="filters.searchTerm"
           type="text"
-          class="w-full px-3 py-2 border rounded-md"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Search anime titles..."
         />
       </div>
 
-      <div class="mb-4">
-        <label for="genre" class="block mb-1 text-sm font-medium">Genre</label>
+      <div>
+        <label for="genre" class="block text-sm font-medium text-gray-700 mb-1"
+          >Genre</label
+        >
         <select
           id="genre"
           v-model="filters.genre"
-          class="w-full px-3 py-2 border rounded-md"
+          class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
           <option value="">All Genres</option>
           <option v-for="genre in genres" :key="genre" :value="genre">
@@ -30,14 +34,16 @@
         </select>
       </div>
 
-      <button
-        type="submit"
-        class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-      >
-        Apply Filters
-      </button>
-    </form>
-  </div>
+      <div>
+        <button
+          type="submit"
+          class="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        >
+          Apply Filters
+        </button>
+      </div>
+    </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +79,9 @@ const applyFilters = () => {
   }
 
   if (filters.genre) {
-    activeFilters.genres = filters.genre;
+    activeFilters.genres = Array.isArray(filters.genre)
+      ? filters.genre
+      : [filters.genre];
   }
 
   emit("filter-changed", activeFilters);

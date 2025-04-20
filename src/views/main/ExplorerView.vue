@@ -15,7 +15,7 @@
 
         <div class="bg-white border border-gray-200 rounded-xl p-6">
           <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-            Newest Uploads
+            {{ resultsTitle }}
           </h2>
           <AnimeList :animes="newestAnimes" />
         </div>
@@ -33,33 +33,34 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from "vue";
 import AnimeList from "@/components/main/explorer/components/AnimeList.vue";
 import DatabaseStats from "@/components/main/explorer/components/DatabaseStats.vue";
 import SearchFilter from "@/components/main/explorer/components/SearchFilter.vue";
-import { AnimeService } from "@/services";
+import { AnimeService, StatsService } from "@/services";
 
 const newestAnimes = ref([]);
-const stats = ref({
-  Animes: 62,
-  Characters: 0,
-  Media: 72,
-});
+const stats = ref({});
+
+const resultsTitle = ref("Newest Uploads");
 
 const searchParams = ref({
   page: 1,
-  limit: 5,
-  sortBy: "createdAt",
+  limit: 20,
+  sortBy: "releaseDate",
   sortOrder: "DESC",
 });
 
 const handleFilterChange = async (filters) => {
+  if (Object.keys(filters).length === 0) {
+    resultsTitle.value = "Newest Uploads";
+  } else {
+    resultsTitle.value = "Search Results";
+  }
+
   try {
-    const results = await AnimeService.searchAnimes(
-      filters,
-      searchParams.value,
-    );
+    const results = await AnimeService.searchAnimes(filters, searchParams.value);
     newestAnimes.value = results.data;
   } catch (error) {
     console.error("Error fetching filtered animes:", error);
@@ -68,13 +69,20 @@ const handleFilterChange = async (filters) => {
 
 onMounted(async () => {
   try {
-    const newestResults = await AnimeService.searchAnimes(
-      {},
-      searchParams.value,
-    );
+    const newestResults = await AnimeService.searchAnimes({}, {
+      ...searchParams.value,
+      page: 1,
+      limit: 20,
+    });
     newestAnimes.value = newestResults.data;
+
+    const fetchedStats = await StatsService.getStats();
+    stats.value = {
+      Animes :fetchedStats.totalAnimes,
+      Media :fetchedStats.totalMedia,
+    };
   } catch (error) {
-    console.error("Error fetching animes:", error);
+    console.error("Error during onMounted operations:", error);
   }
 });
 </script>

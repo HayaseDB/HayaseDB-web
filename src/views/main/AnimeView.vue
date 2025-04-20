@@ -7,16 +7,26 @@
     {{ error }}
   </div>
 
-  <div
-    v-else
-    class="w-full max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-5"
-  >
-    <div class="md:col-span-1">
-      <AnimeSidebar :anime="anime" />
-    </div>
+  <div v-else class="w-full max-w-7xl mx-auto px-4 py-10">
+    <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="md:col-span-1">
+        <AnimeSidebar :anime="anime" />
+      </div>
 
-    <div class="md:col-span-3">
-      <AnimeBody :anime="anime" />
+      <div class="md:col-span-3">
+        <AnimeBody :anime="anime" />
+      </div>
+    </div>
+    <div
+      v-if="!loading && anime?.value?.id?.value && !error"
+      class="text-right mt-5"
+    >
+      <router-link
+        :to="`/dashboard/submit/${anime?.value?.id?.value}`"
+        class="underline text-md"
+      >
+        Something incorrect? Change That!
+      </router-link>
     </div>
   </div>
 </template>

@@ -6,6 +6,12 @@ import routers from "@/routers";
 import { useAuthStore } from "./stores/auth.store.ts";
 import Vue3Toastify, { type ToastContainerOptions } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import "swiper/css";
+
+import "swiper/css/pagination";
+
+import { register } from "swiper/element/bundle";
+register();
 
 const pinia = createPinia();
 
