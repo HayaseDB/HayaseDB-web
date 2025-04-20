@@ -108,22 +108,25 @@ const isAdmin = computed(
 const filteredFields = computed(() => {
   if (!contribution.value) return {};
 
-  return Object.keys(contribution.value.data).reduce((acc: Record<string, any>, key: string) => {
-    const dataValue = contribution?.value?.data[key];
-    const anime = contribution?.value?.anime;
-    const animeValue = anime ? lodash.get(anime, key) : undefined;
+  return Object.keys(contribution.value.data).reduce(
+    (acc: Record<string, any>, key: string) => {
+      const dataValue = contribution?.value?.data[key];
+      const anime = contribution?.value?.anime;
+      const animeValue = anime ? lodash.get(anime, key) : undefined;
 
-    const dataHasValue = dataValue?.value !== null;
-    const animeHasValue =
-      animeValue !== undefined && animeValue?.value !== null;
+      const dataHasValue = dataValue?.value !== null;
+      const animeHasValue =
+        animeValue !== undefined && animeValue?.value !== null;
 
-    if (dataHasValue || animeHasValue) {
-      acc[key] = dataValue;
-    }
-    fieldStatus.value[key] = getFieldStatus(dataValue, animeValue);
+      if (dataHasValue || animeHasValue) {
+        acc[key] = dataValue;
+      }
+      fieldStatus.value[key] = getFieldStatus(dataValue, animeValue);
 
-    return acc;
-  }, {});
+      return acc;
+    },
+    {},
+  );
 });
 
 const formatDate = (date: string): string =>
