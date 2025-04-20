@@ -4,18 +4,24 @@
   >
     <div>
       <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-        {{
-          contribution?.anime?.title?.value ||
-          contribution?.data?.title?.value ||
-          "Untitled Contribution"
-        }}
-        <span
-          v-if="!contribution.anime"
-          class="ml-2 bg-green-100 text-green-800 text-xs font-semibold py-1 px-2 rounded-md"
-        >
-          New
-        </span>
+        <template v-if="contribution?.anime">
+          <router-link
+            :to="`/explorer/anime/${contribution.anime.id.value}`"
+            class="hover:underline text-blue-600"
+          >
+            {{ contribution.anime.title.value }}
+          </router-link>
+        </template>
+        <template v-else>
+          {{ contribution?.data?.title?.value || "Untitled Contribution" }}
+          <span
+            class="ml-2 bg-green-100 text-green-800 text-xs font-semibold py-1 px-2 rounded-md"
+          >
+            New
+          </span>
+        </template>
       </h2>
+
       <p class="text-gray-500 text-sm mt-1">
         Submitted on {{ formatDate(contribution?.createdAt) }}
       </p>
