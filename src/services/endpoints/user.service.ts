@@ -11,13 +11,11 @@ export const UserService = {
   async verifyUser(userId: string): Promise<any> {
     const res = await api.patch(`/users/${userId}/verify`);
     return res.data;
-
   },
 
   async unverifyUser(userId: string): Promise<any> {
     const res = await api.patch(`/users/${userId}/unverify`);
     return res.data;
-
   },
 
   async banUser(userId: string): Promise<any> {
@@ -28,9 +26,7 @@ export const UserService = {
   async unbanUser(userId: string): Promise<any> {
     const res = await api.patch(`/users/${userId}/unban`);
     return res.data;
-
   },
-
 
   async updateUserProfile(
     updateUserDto: userTypes.UpdateUserDto,

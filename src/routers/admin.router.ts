@@ -29,7 +29,7 @@ const adminRoutes: RouteRecordRaw[] = [
             path: ":id",
             name: "UsersDetail",
             component: () =>
-                import("@/views/dashboard/admin/users/UsersDetailsView.vue"),
+              import("@/views/dashboard/admin/users/UsersDetailsView.vue"),
             props: true,
           },
         ],

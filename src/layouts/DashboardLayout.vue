@@ -141,7 +141,6 @@
       <header
         class="flex border-b h-16 border-gray-200 items-center justify-between bg-white p-4"
       >
-
         <div class="flex items-center space-x-4">
           <button
             v-if="isMobile"
@@ -166,11 +165,11 @@
         <div class="flex items-center space-x-4">
           <nav class="hidden md:flex items-center space-x-3">
             <RouterLink
-                v-for="item in navigationItemsHeader"
-                :key="item.path"
-                :to="item.path"
-                class="px-4 py-2 border border-transparent text-sm font-medium text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors"
-                :class="{
+              v-for="item in navigationItemsHeader"
+              :key="item.path"
+              :to="item.path"
+              class="px-4 py-2 border border-transparent text-sm font-medium text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors"
+              :class="{
                 'bg-blue-50 text-blue-700 border-blue-200': isActiveRoute(
                   item.path,
                 ),
@@ -209,7 +208,7 @@ import {
   List,
   Users,
 } from "lucide-vue-next";
-import {RouterLink, useRouter, useRoute} from "vue-router";
+import { RouterLink, useRouter, useRoute } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
 import { useAuthStore } from "@/stores/auth.js";
 const router = useRouter();

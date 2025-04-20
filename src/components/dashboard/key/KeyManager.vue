@@ -2,8 +2,6 @@
   <div
     class="max-w-3xl mt-12 w-full relative p-8 bg-white rounded-2xl overflow-hidden border border-gray-200"
   >
-    <LoadingOverlay :is-loading="isLoading" />
-
     <h2 class="text-4xl font-semibold text-gray-800 mb-6">API Key Manager</h2>
 
     <div class="mb-6">
@@ -34,53 +32,55 @@
       </div>
     </div>
 
-    <div v-if="isLoading" class="text-center text-gray-400">
-      Loading keys...
-    </div>
-
-    <div v-else-if="apiKeys.length === 0" class="text-center text-gray-500">
-      <p class="mb-2">No API keys found.</p>
-    </div>
-
-    <div v-else>
+    <div class="overflow-x-auto min-h-40 rounded-xl relative">
+      <LoadingOverlay :is-loading="isLoading" />
       <div
-        v-for="key in apiKeys"
-        :key="key.id"
-        class="flex justify-between items-center p-4 mt-4 border border-gray-200 rounded-md"
+        v-if="!isLoading && apiKeys.length === 0"
+        class="text-center text-gray-500"
       >
-        <div>
-          <p class="text-lg font-semibold text-gray-800">{{ key.name }}</p>
-          <p class="text-sm text-gray-600">{{ key.id }}</p>
-        </div>
+        <p class="mb-2">No API keys found.</p>
+      </div>
 
-        <div class="flex gap-2">
-          <button
-            :disabled="loadingKeyId === key.id && isProcessing"
-            aria-label="Regenerate API Key"
-            class="flex hover:cursor-pointer justify-center items-center h-10 w-10 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
-            @click="showRegenerateModal(key.id)"
-          >
-            <span v-if="loadingKeyId === key.id && isProcessing">
-              <span>Working...</span>
-            </span>
-            <span v-else>
-              <RefreshCcw class="h-4 w-4" />
-            </span>
-          </button>
+      <div v-else>
+        <div
+          v-for="key in apiKeys"
+          :key="key.id"
+          class="flex justify-between items-center p-4 mt-4 border border-gray-200 rounded-md"
+        >
+          <div>
+            <p class="text-lg font-semibold text-gray-800">{{ key.name }}</p>
+            <p class="text-sm text-gray-600">{{ key.id }}</p>
+          </div>
 
-          <button
-            :disabled="loadingKeyId === key.id && isProcessing"
-            aria-label="Delete API Key"
-            class="flex justify-center items-center hover:cursor-pointer h-10 w-10 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
-            @click="showDeleteModal(key.id)"
-          >
-            <span v-if="loadingKeyId === key.id && isProcessing">
-              <span>Deleting...</span>
-            </span>
-            <span v-else>
-              <Trash2 class="h-4 w-4" />
-            </span>
-          </button>
+          <div class="flex gap-2">
+            <button
+              :disabled="loadingKeyId === key.id && isProcessing"
+              aria-label="Regenerate API Key"
+              class="flex hover:cursor-pointer justify-center items-center h-10 w-10 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 disabled:opacity-50"
+              @click="showRegenerateModal(key.id)"
+            >
+              <span v-if="loadingKeyId === key.id && isProcessing">
+                <span>Working...</span>
+              </span>
+              <span v-else>
+                <RefreshCcw class="h-4 w-4" />
+              </span>
+            </button>
+
+            <button
+              :disabled="loadingKeyId === key.id && isProcessing"
+              aria-label="Delete API Key"
+              class="flex justify-center items-center hover:cursor-pointer h-10 w-10 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50"
+              @click="showDeleteModal(key.id)"
+            >
+              <span v-if="loadingKeyId === key.id && isProcessing">
+                <span>Deleting...</span>
+              </span>
+              <span v-else>
+                <Trash2 class="h-4 w-4" />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

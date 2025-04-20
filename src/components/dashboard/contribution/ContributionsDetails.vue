@@ -76,12 +76,12 @@ import lodash from "lodash";
 import { ContributionService } from "@/services/endpoints/contribution.service.ts";
 import { useAuthStore } from "@/stores/auth.store.ts";
 
-import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 import StatusUpdateModal from "@/components/dashboard/contribution/modals/StatusUpdateModal.vue";
 import DeleteConfirmationModal from "@/components/dashboard/contribution/modals/DeleteConfirmationModal.vue";
 import ContributionHeader from "@/components/dashboard/contribution/components/ContributionsHeader.vue";
 import ContributionField from "@/components/dashboard/contribution/components/ContributionField.vue";
 import ContributionFooter from "@/components/dashboard/contribution/components/ContributionsFooter.vue";
+import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -100,12 +100,15 @@ const fieldStatus = ref<{
   [key: string]: "created" | "changed" | "deleted" | "default";
 }>({});
 
-const isAdmin = computed(() => authStore.user?.role === "admin" || authStore.user?.role === "moderator");
+const isAdmin = computed(
+  () =>
+    authStore.user?.role === "admin" || authStore.user?.role === "moderator",
+);
 
 const filteredFields = computed(() => {
   if (!contribution.value) return {};
 
-  return Object.keys(contribution.value.data).reduce((acc, key) => {
+  return Object.keys(contribution.value.data).reduce((acc: Record<string, any>, key: string) => {
     const dataValue = contribution?.value?.data[key];
     const anime = contribution?.value?.anime;
     const animeValue = anime ? lodash.get(anime, key) : undefined;

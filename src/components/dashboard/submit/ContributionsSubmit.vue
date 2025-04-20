@@ -2,21 +2,21 @@
   <div
     class="bg-white mt-12 relative rounded-2xl border border-gray-200 overflow-hidden"
   >
-    <LoadingOverlay :is-loading="loading" />
 
     <div class="p-4 sm:p-8">
       <h2 class="text-2xl sm:text-4xl font-semibold text-gray-800 mb-6">
         Submit Form
       </h2>
-
-      <form
-        class="grid grid-cols-1 md:grid-cols-2 gap-6"
-        @submit.prevent="submitForm"
-      >
-        <template v-for="field in formSchema" :key="field.name">
-          <component
-            :is="getComponent(field.type)"
-            v-if="
+<div>
+  <LoadingOverlay :is-loading="loading" />
+  <form
+      class="grid grid-cols-1 md:grid-cols-2 gap-6"
+      @submit.prevent="submitForm"
+  >
+    <template v-for="field in formSchema" :key="field.name">
+      <component
+          :is="getComponent(field.type)"
+          v-if="
               [
                 'Text',
                 'String',
@@ -27,61 +27,63 @@
                 'Url',
               ].includes(field.type)
             "
-            v-model="form[field.name]"
-            :label="field.label"
-            :options="field.options"
-            :is-changed="id && modifiedFields.has(field.name)"
-            :error="errors[field.name]"
-            :type="field.type"
-            :class="{
+          v-model="form[field.name]"
+          :label="field.label"
+          :options="field.options"
+          :is-changed="id && modifiedFields.has(field.name)"
+          :error="errors[field.name]"
+          :type="field.type"
+          :class="{
               'col-span-full': field.fullWidth || field.type === 'Text',
             }"
-            :required="field.required"
-            @update:model-value="
+          :required="field.required"
+          @update:model-value="
               (val) => {
                 form[field.name] = val;
                 trackFieldChange(field.name);
               }
             "
-          />
-        </template>
+      />
+    </template>
 
-        <div v-if="id" class="col-span-full mt-4 text-sm">
-          <div
-            v-if="modifiedFields.size > 0"
-            class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md"
-          >
-            <p class="flex items-center text-blue-700">
-              <InfoIcon class="w-4 h-4 mr-2" />
-              <span
-                >Fields with
+    <div v-if="id" class="col-span-full mt-4 text-sm">
+      <div
+          v-if="modifiedFields.size > 0"
+          class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-md"
+      >
+        <p class="flex items-center text-blue-700">
+          <InfoIcon class="w-4 h-4 mr-2" />
+          <span
+          >Fields with
                 <span class="font-semibold">blue highlight</span> have been
                 modified</span
-              >
-            </p>
-          </div>
-        </div>
-
-        <div class="col-span-full flex justify-between mt-4">
-          <button
-            type="reset"
-            class="flex space-x-2 items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md"
-            @click="resetForm"
           >
-            <RotateCcw class="h-4.5 w-4.5" />
-            <span>Reset</span>
-          </button>
+        </p>
+      </div>
+    </div>
 
-          <button
-            type="submit"
-            :disabled="loading || (id && modifiedFields.size === 0)"
-            class="flex space-x-2 items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
-          >
-            <Send class="h-4.5 w-4.5" />
-            <span>{{ id ? "Update" : "Submit" }}</span>
-          </button>
-        </div>
-      </form>
+    <div class="col-span-full flex justify-between mt-4">
+      <button
+          type="reset"
+          class="flex space-x-2 items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md"
+          @click="resetForm"
+      >
+        <RotateCcw class="h-4.5 w-4.5" />
+        <span>Reset</span>
+      </button>
+
+      <button
+          type="submit"
+          :disabled="loading || (id && modifiedFields.size === 0)"
+          class="flex space-x-2 items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md disabled:bg-gray-400 disabled:cursor-not-allowed"
+      >
+        <Send class="h-4.5 w-4.5" />
+        <span>{{ id ? "Update" : "Submit" }}</span>
+      </button>
+    </div>
+  </form>
+
+</div>
     </div>
   </div>
 </template>

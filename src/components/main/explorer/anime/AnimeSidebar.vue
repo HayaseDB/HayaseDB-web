@@ -1,19 +1,18 @@
 <template>
   <div class="bg-white border border-gray-200 rounded-xl p-6 space-y-6">
-      <CoverField :field="anime.coverImage" />
+    <CoverField :field="anime.coverImage" />
 
+    <GenericFieldCard :field="anime.status" />
 
-      <GenericFieldCard :field="anime.status" />
+    <GenericFieldCard :field="anime.type" />
 
-      <GenericFieldCard :field="anime.type" />
+    <GenericFieldCard :field="anime.studio" />
 
-      <GenericFieldCard :field="anime.studio" />
+    <GenericFieldCard :field="anime.mainDirector" />
 
-      <GenericFieldCard :field="anime.mainDirector" />
+    <GenericFieldCard :field="anime.musicComposer" />
 
-      <GenericFieldCard :field="anime.musicComposer" />
-
-      <GenericFieldCard :field="anime.officialWebsiteUrl" />
+    <GenericFieldCard :field="anime.officialWebsiteUrl" />
   </div>
 </template>
 

@@ -1,5 +1,8 @@
 <template>
-  <div v-if="field && field.value !== null" :class="card ? 'bg-white border border-gray-200 rounded-xl p-6' : ''">
+  <div
+    v-if="field && field.value !== null"
+    :class="card ? 'bg-white border border-gray-200 rounded-xl p-6' : ''"
+  >
     <component :is="getComponent(resolvedType)" :field="field" />
   </div>
 </template>

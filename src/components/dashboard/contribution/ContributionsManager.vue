@@ -1,9 +1,7 @@
 <template>
   <div
-    class="max-w-6xl overflow-hidden mx-auto mt-12 p-4 sm:p-8 relative bg-white rounded-2xl border border-gray-200"
+    class="max-w-7xl mx-auto mt-12 p-4 sm:p-8 bg-white rounded-2xl border border-gray-200 relative"
   >
-    <LoadingOverlay :is-loading="loading" />
-
     <h2 class="text-2xl sm:text-4xl font-semibold text-gray-800 mb-6">
       Contributions
     </h2>
@@ -15,7 +13,8 @@
       You haven't made any contributions yet.
     </div>
 
-    <div v-else class="overflow-x-auto">
+    <div v-else class="overflow-x-auto rounded-xl relative">
+      <LoadingOverlay :is-loading="loading" />
       <table class="w-full table-auto border-collapse">
         <thead class="bg-gray-50">
           <tr>

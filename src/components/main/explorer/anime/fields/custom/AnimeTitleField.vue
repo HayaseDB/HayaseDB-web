@@ -2,9 +2,9 @@
   <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
     <div v-if="bannerImage?.value?.url" class="h-48 w-full overflow-hidden">
       <img
-          :src="bannerImage?.value?.url"
-          alt="Banner Image"
-          class="w-full h-full object-cover"
+        :src="bannerImage?.value?.url"
+        alt="Banner Image"
+        class="w-full h-full object-cover"
       />
     </div>
     <div class="p-6">
