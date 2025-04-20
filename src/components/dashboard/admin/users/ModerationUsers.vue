@@ -176,10 +176,11 @@
               {{ user.username || "Untitled" }}
             </td>
             <td class="px-4 py-4 text-sm text-gray-600">{{ user.email }}</td>
-            <td :class="roleTagClasses(user.role)" class="px-4 py-4">
-              {{ user.role }}
-            </td>
             <td class="px-4 py-4 text-sm text-gray-600">
+  <span :class="roleTagClasses(user.role)">
+    {{ user.role }}
+  </span>
+            </td>            <td class="px-4 py-4 text-sm text-gray-600">
               <span
                 :class="[
                   'text-xs font-medium px-2 py-1 rounded-md inline-block',
@@ -284,17 +285,6 @@ const fetchUsers = async () => {
     loading.value = false;
   }
 };
-
-const totalPages = computed(() => Math.max(1, Math.ceil(total.value / limit)));
-
-const nextPage = () => {
-  if (page.value < totalPages.value) page.value++;
-};
-
-const prevPage = () => {
-  if (page.value > 1) page.value--;
-};
-
 const roleTagClasses = (role: any) => {
   const roleClasses: { [key: string]: string } = {
     admin:
@@ -305,6 +295,15 @@ const roleTagClasses = (role: any) => {
   };
 
   return roleClasses[role.toLowerCase()] || "bg-gray-500 text-white";
+};
+const totalPages = computed(() => Math.max(1, Math.ceil(total.value / limit)));
+
+const nextPage = () => {
+  if (page.value < totalPages.value) page.value++;
+};
+
+const prevPage = () => {
+  if (page.value > 1) page.value--;
 };
 
 const formatDate = (date: string) =>
