@@ -207,7 +207,7 @@ import {
   SquarePen,
   List,
   Users,
-  Database
+  Database,
 } from "lucide-vue-next";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";

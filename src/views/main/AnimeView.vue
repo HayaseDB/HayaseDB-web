@@ -17,10 +17,7 @@
         <AnimeBody :anime="anime" />
       </div>
     </div>
-    <div
-      v-if="!loading && anime.id.value"
-      class="text-right mt-5"
-    >
+    <div v-if="!loading && anime.id.value" class="text-right mt-5">
       <router-link
         :to="`/dashboard/submit/${anime?.id?.value}`"
         class="underline text-md"

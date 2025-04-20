@@ -60,7 +60,10 @@ const handleFilterChange = async (filters) => {
   }
 
   try {
-    const results = await AnimeService.searchAnimes(filters, searchParams.value);
+    const results = await AnimeService.searchAnimes(
+      filters,
+      searchParams.value,
+    );
     newestAnimes.value = results.data;
   } catch (error) {
     console.error("Error fetching filtered animes:", error);
@@ -69,17 +72,20 @@ const handleFilterChange = async (filters) => {
 
 onMounted(async () => {
   try {
-    const newestResults = await AnimeService.searchAnimes({}, {
-      ...searchParams.value,
-      page: 1,
-      limit: 20,
-    });
+    const newestResults = await AnimeService.searchAnimes(
+      {},
+      {
+        ...searchParams.value,
+        page: 1,
+        limit: 20,
+      },
+    );
     newestAnimes.value = newestResults.data;
 
     const fetchedStats = await StatsService.getStats();
     stats.value = {
-      Animes :fetchedStats.totalAnimes,
-      Media :fetchedStats.totalMedia,
+      Animes: fetchedStats.totalAnimes,
+      Media: fetchedStats.totalMedia,
     };
   } catch (error) {
     console.error("Error during onMounted operations:", error);

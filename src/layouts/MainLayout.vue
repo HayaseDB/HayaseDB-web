@@ -118,7 +118,9 @@
           <a href="/terms" class="text-sm text-gray-500 hover:text-gray-700"
             >Terms</a
           >
-          <a href="/privacy-policy" class="text-sm text-gray-500 hover:text-gray-700"
+          <a
+            href="/privacy-policy"
+            class="text-sm text-gray-500 hover:text-gray-700"
             >Privacy</a
           >
           <a href="/imprint" class="text-sm text-gray-500 hover:text-gray-700"

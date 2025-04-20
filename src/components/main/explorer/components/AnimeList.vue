@@ -2,45 +2,45 @@
   <div class="w-full flex flex-col items-center">
     <div v-if="animes.length > 0" class="my-4 w-full relative">
       <button
-          v-if="showNavigation && !isFirstSlide && !atEnd"
-          @click="swiperInstance?.slidePrev()"
-          class="absolute hover:cursor-pointer -left-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
-          aria-label="Previous slide"
+        v-if="showNavigation && !isFirstSlide && !atEnd"
+        @click="swiperInstance?.slidePrev()"
+        class="absolute hover:cursor-pointer -left-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
+        aria-label="Previous slide"
       >
         <ChevronLeft class="w-8 h-8 text-gray-500" />
       </button>
 
       <Swiper
-          :modules="[SwiperNavigation]"
-          :loop="false"
-          slidesPerView="auto"
-          :space-between="5"
-          @swiper="setSwiperInstance"
-          @reachEnd="onReachEnd"
-          @fromEdge="onFromEdge"
+        :modules="[SwiperNavigation]"
+        :loop="false"
+        slidesPerView="auto"
+        :space-between="5"
+        @swiper="setSwiperInstance"
+        @reachEnd="onReachEnd"
+        @fromEdge="onFromEdge"
       >
         <SwiperSlide
-            v-for="anime in animes"
-            :key="anime.id"
-            class="p-2 !w-auto"
+          v-for="anime in animes"
+          :key="anime.id"
+          class="p-2 !w-auto"
         >
           <AnimeCard :anime="anime" />
         </SwiperSlide>
       </Swiper>
 
       <button
-          v-if="showNavigation && !atEnd"
-          @click="swiperInstance?.slideNext()"
-          class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
-          aria-label="Next slide"
+        v-if="showNavigation && !atEnd"
+        @click="swiperInstance?.slideNext()"
+        class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
+        aria-label="Next slide"
       >
         <ChevronRight class="w-8 h-8 text-gray-500" />
       </button>
 
       <router-link
-          v-else-if="showNavigation && atEnd"
-          to="/animes"
-          class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg px-3 py-1 -translate-y-1/2 z-10 text-sm font-lg text-gray-700"
+        v-else-if="showNavigation && atEnd"
+        to="/animes"
+        class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg px-3 py-1 -translate-y-1/2 z-10 text-sm font-lg text-gray-700"
       >
         Show More
       </router-link>
@@ -90,24 +90,24 @@ const onFromEdge = () => {
 };
 
 watch(
-    () => props.animes,
-    () => {
-      nextTick(() => {
-        if (swiperInstance.value) {
-          const swiper = swiperInstance.value;
-          swiper.slideTo(0);
-          if (!swiper.isEnd) {
-            atEnd.value = false;
-          }
+  () => props.animes,
+  () => {
+    nextTick(() => {
+      if (swiperInstance.value) {
+        const swiper = swiperInstance.value;
+        swiper.slideTo(0);
+        if (!swiper.isEnd) {
+          atEnd.value = false;
         }
-      });
-    },
+      }
+    });
+  },
 );
 
 watch(
-    () => swiperInstance.value?.realIndex,
-    (newIndex) => {
-      isFirstSlide.value = newIndex === 0;
-    }
+  () => swiperInstance.value?.realIndex,
+  (newIndex) => {
+    isFirstSlide.value = newIndex === 0;
+  },
 );
 </script>

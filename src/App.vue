@@ -1,9 +1,8 @@
 <template>
   <router-view />
-  <CookieBanner/>
+  <CookieBanner />
 </template>
 
 <script setup>
-import CookieBanner from './components/common/CookieBanner.vue';
-
+import CookieBanner from "./components/common/CookieBanner.vue";
 </script>
