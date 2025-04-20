@@ -2,10 +2,10 @@
   <div class="w-full flex flex-col items-center">
     <div v-if="animes.length > 0" class="my-4 w-full relative">
       <button
-        v-if="animes.length > 1"
-        @click="swiperInstance?.slidePrev()"
-        class="absolute hover:cursor-pointer -left-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
-        aria-label="Previous slide"
+          v-if="showNavigation"
+          @click="swiperInstance?.slidePrev()"
+          class="absolute hover:cursor-pointer -left-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
+          aria-label="Previous slide"
       >
         <ChevronLeft class="w-8 h-8 text-gray-500" />
       </button>
@@ -29,18 +29,18 @@
       </Swiper>
 
       <button
-        v-if="animes.length > 1 && !atEnd"
-        @click="swiperInstance?.slideNext()"
-        class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
-        aria-label="Next slide"
+          v-if="showNavigation && !atEnd"
+          @click="swiperInstance?.slideNext()"
+          class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
+          aria-label="Next slide"
       >
         <ChevronRight class="w-8 h-8 text-gray-500" />
       </button>
 
       <router-link
-        v-else-if="animes.length > 1 && atEnd"
-        to="/animes"
-        class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg px-3 py-1 -translate-y-1/2 z-10 text-sm font-lg text-gray-700"
+          v-else-if="showNavigation && atEnd"
+          to="/animes"
+          class="absolute hover:cursor-pointer -right-4 top-1/2 bg-white border border-gray-200 rounded-lg px-3 py-1 -translate-y-1/2 z-10 text-sm font-lg text-gray-700"
       >
         Show More
       </router-link>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { nextTick, ref, watch } from "vue";
+import {computed, nextTick, ref, watch} from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation as SwiperNavigation } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
@@ -79,6 +79,10 @@ const setSwiperInstance = (swiper) => {
 const onReachEnd = () => {
   atEnd.value = true;
 };
+
+const showNavigation = computed(() => {
+  return props.animes.length > 1;
+});
 
 const onFromEdge = () => {
   atEnd.value = false;
