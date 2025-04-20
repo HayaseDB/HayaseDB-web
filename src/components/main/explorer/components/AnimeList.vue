@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col items-center">
     <div v-if="animes.length > 0" class="my-4 w-full relative">
       <button
-          v-if="showNavigation"
+          v-if="showNavigation && !isFirstSlide && !atEnd"
           @click="swiperInstance?.slidePrev()"
           class="absolute hover:cursor-pointer -left-4 top-1/2 bg-white border border-gray-200 rounded-lg p-1 -translate-y-1/2 z-10"
           aria-label="Previous slide"
@@ -11,18 +11,18 @@
       </button>
 
       <Swiper
-        :modules="[SwiperNavigation]"
-        :loop="false"
-        slidesPerView="auto"
-        :space-between="5"
-        @swiper="setSwiperInstance"
-        @reachEnd="onReachEnd"
-        @fromEdge="onFromEdge"
+          :modules="[SwiperNavigation]"
+          :loop="false"
+          slidesPerView="auto"
+          :space-between="5"
+          @swiper="setSwiperInstance"
+          @reachEnd="onReachEnd"
+          @fromEdge="onFromEdge"
       >
         <SwiperSlide
-          v-for="anime in animes"
-          :key="anime.id"
-          class="p-2 !w-auto"
+            v-for="anime in animes"
+            :key="anime.id"
+            class="p-2 !w-auto"
         >
           <AnimeCard :anime="anime" />
         </SwiperSlide>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import {computed, nextTick, ref, watch} from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation as SwiperNavigation } from "swiper/modules";
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
@@ -71,6 +71,7 @@ const props = defineProps({
 
 const swiperInstance = ref(null);
 const atEnd = ref(false);
+const isFirstSlide = ref(false);
 
 const setSwiperInstance = (swiper) => {
   swiperInstance.value = swiper;
@@ -89,17 +90,24 @@ const onFromEdge = () => {
 };
 
 watch(
-  () => props.animes,
-  () => {
-    nextTick(() => {
-      if (swiperInstance.value) {
-        const swiper = swiperInstance.value;
-        swiper.slideTo(0);
-        if (!swiper.isEnd) {
-          atEnd.value = false;
+    () => props.animes,
+    () => {
+      nextTick(() => {
+        if (swiperInstance.value) {
+          const swiper = swiperInstance.value;
+          swiper.slideTo(0);
+          if (!swiper.isEnd) {
+            atEnd.value = false;
+          }
         }
-      }
-    });
-  },
+      });
+    },
+);
+
+watch(
+    () => swiperInstance.value?.realIndex,
+    (newIndex) => {
+      isFirstSlide.value = newIndex === 0;
+    }
 );
 </script>
