@@ -245,7 +245,7 @@ const filters = useLocalStorage("user-filters", {
 });
 
 const sortColumn = ref("createdAt");
-const sortDirection = ref<"ASC" | "DESC">("ASC");
+const sortDirection = ref<"ASC" | "DESC">("DESC");
 
 const sort = (column: string) => {
   if (sortColumn.value === column) {
