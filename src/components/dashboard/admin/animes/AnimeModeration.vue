@@ -191,7 +191,7 @@ const sortByColumn = (column: string) => {
 };
 
 const goToAnimeDetail = (id: string) => {
-  router.push(`/explorer/anime/${id}`);
+  router.push(`/explorer/animes/${id}`);
 };
 
 const fetchAnimes = async () => {

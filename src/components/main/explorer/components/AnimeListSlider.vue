@@ -22,7 +22,7 @@
         <SwiperSlide
           v-for="anime in animes"
           :key="anime.id"
-          class="p-2 !w-auto"
+          class="p-2 !h-87 !w-50"
         >
           <AnimeCard :anime="anime" />
         </SwiperSlide>
@@ -39,7 +39,7 @@
 
       <router-link
         v-else-if="showNavigation && !isFirstSlide"
-        to="/animes"
+        to="/explorer/animes"
         class="absolute -right-4 top-1/2 px-3 py-1 bg-white border border-gray-200 rounded-lg -translate-y-1/2 z-10 text-sm font-medium text-gray-700 hover:cursor-pointer"
       >
         Show More

@@ -35,7 +35,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import AnimeList from "@/components/main/explorer/components/AnimeList.vue";
+import AnimeList from "@/components/main/explorer/components/AnimeListSlider.vue";
 import DatabaseStats from "@/components/main/explorer/components/DatabaseStats.vue";
 import SearchFilter from "@/components/main/explorer/components/SearchFilter.vue";
 import { AnimeService, StatsService } from "@/services";

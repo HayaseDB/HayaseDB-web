@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import GenericFieldCard from "./components/GenericFieldCard.vue";
-import CoverField from "@/components/main/explorer/anime/fields/custom/CoverField.vue";
+import CoverField from "@/components/main/explorer/animes/fields/custom/CoverField.vue";
 
 defineProps<{ anime: any }>();
 </script>

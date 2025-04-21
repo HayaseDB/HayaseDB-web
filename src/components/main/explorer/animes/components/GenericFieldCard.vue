@@ -17,7 +17,7 @@ import ArrayField from "../fields/ArrayField.vue";
 import EnumField from "../fields/EnumField.vue";
 import UrlField from "../fields/UrlField.vue";
 import ImageField from "../fields/ImageField.vue";
-import EmbedField from "@/components/main/explorer/anime/fields/EmbedField.vue";
+import EmbedField from "@/components/main/explorer/animes/fields/EmbedField.vue";
 
 const props = defineProps({
   field: {

@@ -6,7 +6,7 @@
       <h2 class="text-xl font-semibold text-gray-800 flex items-center">
         <template v-if="contribution?.anime">
           <router-link
-            :to="`/explorer/anime/${contribution.anime.id.value}`"
+            :to="`/explorer/animes/${contribution.anime.id.value}`"
             class="hover:underline text-blue-600"
           >
             {{ contribution.anime.title.value }}

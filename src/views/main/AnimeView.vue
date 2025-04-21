@@ -32,8 +32,8 @@
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { AnimeService } from "@/services";
-import AnimeSidebar from "@/components/main/explorer/anime/AnimeSidebar.vue";
-import AnimeBody from "@/components/main/explorer/anime/AnimeBody.vue";
+import AnimeSidebar from "@/components/main/explorer/animes/AnimeSidebar.vue";
+import AnimeBody from "@/components/main/explorer/animes/AnimeBody.vue";
 
 const route = useRoute();
 const anime = ref<Record<string, any>>({});

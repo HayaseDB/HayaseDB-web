@@ -8,6 +8,7 @@ import AnimeView from "@/views/main/AnimeView.vue";
 import Imprint from "@/views/ImprintView.vue";
 import PrivacyPolicy from "@/views/PrivacyPolicyView.vue";
 import Terms from "@/views/TermsView.vue";
+import AnimeListView from "@/views/main/AnimeListView.vue";
 
 const mainRoutes: RouteRecordRaw[] = [
   {
@@ -35,10 +36,16 @@ const mainRoutes: RouteRecordRaw[] = [
             props: true,
           },
           {
-            path: "/explorer/anime/:id",
+            path: "/explorer/animes/:id",
             component: AnimeView,
             props: true,
           },
+          {
+            path: "/explorer/animes",
+            component: AnimeListView,
+            props: false,
+          },
+
         ],
       },
       {
