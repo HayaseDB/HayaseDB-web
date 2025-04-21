@@ -2,12 +2,14 @@
   <div class="space-y-5">
     <AnimeTitleField :title="anime.title" :bannerImage="anime.bannerImage" />
 
-    <GenericFieldCard card :field="anime.description" />
 
     <div class="flex flex-row w-full gap-5">
       <GenericFieldCard card class="flex-1" :field="anime.releaseDate" />
       <GenericFieldCard card class="flex-1" :field="anime.genres" />
     </div>
+    
+    <GenericFieldCard card :field="anime.description" />
+
 
     <GenericFieldCard card :field="anime.trailer" type="Embed" />
   </div>
