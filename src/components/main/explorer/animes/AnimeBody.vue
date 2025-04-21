@@ -2,7 +2,7 @@
   <div class="space-y-5">
     <AnimeTitleField :title="anime.title" :bannerImage="anime.bannerImage" />
 
-    <div v-if="anime.releaseDate.value || anime.genres.value" class="flex flex-row w-full gap-5">
+    <div v-if="anime.releaseDate.value || anime.genres.value" class="flex md:flex-row flex-col w-full gap-5">
       <GenericFieldCard card class="flex-1" :field="anime.releaseDate" />
       <GenericFieldCard card class="flex-1" :field="anime.genres" />
     </div>
