@@ -17,7 +17,6 @@ const pinia = createPinia();
 
 const app = createApp(App);
 app.use(pinia);
-app.use(routers);
 
 app.use(Vue3Toastify, {
   autoClose: 3000,
@@ -33,4 +32,7 @@ routers.beforeEach(async (to, from, next) => {
 
   next();
 });
+app.use(routers);
+
+
 app.mount("#app");
