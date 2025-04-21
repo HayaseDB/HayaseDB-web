@@ -49,7 +49,7 @@ const searchParams = ref({
   page: 1,
   limit: 20,
   sortBy: "createdAt",
-  sortOrder: "ASC",
+  sortOrder: "DESC",
 });
 
 const handleFilterChange = async (filters) => {
