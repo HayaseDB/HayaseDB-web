@@ -8,11 +8,9 @@
 
     <GenericFieldCard :field="anime.studio" />
 
-    <GenericFieldCard :field="anime.mainDirector" />
+    <GenericFieldCard :field="anime.author" />
 
-    <GenericFieldCard :field="anime.musicComposer" />
-
-    <GenericFieldCard :field="anime.officialWebsiteUrl" />
+    <GenericFieldCard :field="anime.website" />
   </div>
 </template>
 
