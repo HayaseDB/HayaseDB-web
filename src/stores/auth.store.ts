@@ -27,6 +27,8 @@ export const useAuthStore = defineStore("auth", {
         const cachedUser = localStorage.getItem("user");
         if (cachedUser) {
           this.user = JSON.parse(cachedUser);
+        } else {
+          await this.refreshUser();
         }
       }
     },
