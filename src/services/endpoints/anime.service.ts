@@ -31,7 +31,7 @@ export const AnimeService = {
     const {
       page = 1,
       limit = 10,
-      sortBy = "releaseDate",
+      sortBy = "createdAt",
       sortOrder = "DESC",
       caseSensitive = false,
     } = queryParams;

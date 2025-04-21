@@ -44,7 +44,7 @@ export const UserService = {
     verified,
     search,
     sortColumn = "createdAt",
-    sortDirection = "ASC",
+    sortDirection = "DESC",
   }: {
     page?: number;
     limit?: number;
