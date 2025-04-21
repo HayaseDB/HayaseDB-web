@@ -34,6 +34,10 @@ export const useAuthStore = defineStore("auth", {
     },
 
     refreshUserInBackground() {
+      const token = Cookies.get("token");
+      if (!token) {
+        return;
+      }
       const now = Date.now();
       if (!this.isRefreshing && (now - this.lastRefreshTime > 30000)) {
         this.isRefreshing = true;
