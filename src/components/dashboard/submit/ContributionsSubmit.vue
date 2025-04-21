@@ -181,13 +181,13 @@ onMounted(async () => {
 });
 
 watch(
-  form,
-  (newForm) => {
-    if (newForm) {
-      localStorage.setItem("formData", JSON.stringify(newForm));
-    }
-  },
-  { deep: true },
+    form,
+    (newForm) => {
+      if (!id.value && newForm) {
+        localStorage.setItem("formData", JSON.stringify(newForm));
+      }
+    },
+    { deep: true },
 );
 
 function trackFieldChange(fieldName) {
