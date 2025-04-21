@@ -23,22 +23,6 @@ const handleError = (error: any, fallbackMessage: string) => {
   throw new Error(message || fallbackMessage);
 };
 
-api.interceptors.response.use(
-    (response) => response,
-    async (error) => {
-        if (error.response?.status === 401) {
-            handleUnauthorized();
-        }
-
-        handleError(error, "API Error");
-        return Promise.reject(error);
-    },
-);
-const handleUnauthorized = () => {
-    const authStore = useAuthStore();
-    authStore.logout();
-    toast.error("You are not authorized. Please log in again.");
-};
 api.interceptors.request.use(
   (config) => {
     const token = Cookies.get("token");
