@@ -28,10 +28,10 @@ const mainRoutes: RouteRecordRaw[] = [
       },
       {
         path: "explorer",
-        name: "Explorer",
         children: [
           {
             path: "",
+            name: "Explorer",
             component: ExplorerView,
             props: true,
           },
