@@ -151,7 +151,7 @@
             <Menu class="h-6 w-6" />
           </button>
           <RouterLink to="/">
-            <div class="flex items-center ml-4 space-x-3">
+            <div class="flex items-center space-x-3">
               <img
                 src="@/assets/hayasedb.svg"
                 class="h-8"
