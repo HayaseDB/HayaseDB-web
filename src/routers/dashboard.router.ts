@@ -55,12 +55,12 @@ const dashboardRoutes: RouteRecordRaw[] = [
         children: [
           {
             path: "",
-            name: "Submit",
+            name: "NewContribution",
             component: ContributionsSubmitView,
           },
           {
             path: ":id",
-            name: "Submit Changes",
+            name: "Contribution",
             component: ContributionsSubmitView,
             props: true,
           },

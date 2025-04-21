@@ -88,7 +88,7 @@
 
 <script setup>
 import { ref, reactive, watch, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { toast } from "vue3-toastify";
 import { RotateCcw, Send, Info as InfoIcon } from "lucide-vue-next";
 import LoadingOverlay from "@/components/common/LoadingOverlay.vue";
@@ -100,6 +100,7 @@ import ArrayField from "@/components/dashboard/submit/components/fields/ArrayFie
 import TextareaField from "@/components/dashboard/submit/components/fields/TextareaField.vue";
 import UrlField from "@/components/dashboard/submit/components/fields/UrlField.vue";
 import { ContributionService, MediaService } from "@/services";
+const route = useRoute();
 
 const props = defineProps({
   initialValues: {
@@ -183,12 +184,13 @@ onMounted(async () => {
 watch(
     form,
     (newForm) => {
-      if (!id.value && newForm) {
+      if (route.name === "NewContribution" && newForm) {
         localStorage.setItem("formData", JSON.stringify(newForm));
       }
     },
     { deep: true },
 );
+
 
 function trackFieldChange(fieldName) {
   if (id.value) {
@@ -341,7 +343,27 @@ async function submitForm() {
 }
 
 const formSchema = ref([]);
+watch(
+    () => route.name,
+    async (newRouteName) => {
+      if (newRouteName === "NewContribution") {
+        const savedFormData = localStorage.getItem("formData");
+        if (savedFormData) {
+          const parsedFormData = JSON.parse(savedFormData);
+          Object.assign(form, parsedFormData);
+        } else {
+          Object.keys(form).forEach((key) => delete form[key]);
+        }
+        id.value = null;
+        modifiedFields.clear();
+      }
 
+      if (newRouteName === "Contribution" && props.initialValues) {
+        processInitialValues(props.initialValues);
+      }
+    },
+    { immediate: true },
+);
 onMounted(async () => {
   try {
     loading.value = true;
