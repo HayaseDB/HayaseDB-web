@@ -13,10 +13,10 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }
-  },
+  routes
 });
-
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  next();
+});
 export default router;
