@@ -18,7 +18,7 @@
           v-else
           :src="user?.pfp.url"
           alt="User profile picture"
-          class="h-8 w-8 rounded-md object-cover bg-indigo-600"
+          class="h-8 w-8 rounded-md border-gray-200 border-1 object-cover bg-indigo-600"
         />
         <ChevronDown
           class="h-4 w-4 ml-1"
