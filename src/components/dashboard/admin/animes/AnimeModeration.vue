@@ -31,7 +31,7 @@
       No anime found.
     </div>
 
-    <div class="overflow-x-auto rounded-xl relative">
+    <div class="overflow-x-auto overflow-y-visible rounded-xl relative">
       <LoadingOverlay :is-loading="loading" />
 
       <table
