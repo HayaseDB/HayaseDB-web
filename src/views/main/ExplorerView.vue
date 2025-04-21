@@ -48,8 +48,8 @@ const resultsTitle = ref("Newest Uploads");
 const searchParams = ref({
   page: 1,
   limit: 20,
-  sortBy: "releaseDate",
-  sortOrder: "DESC",
+  sortBy: "createdAt",
+  sortOrder: "ASC",
 });
 
 const handleFilterChange = async (filters) => {
