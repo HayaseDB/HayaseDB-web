@@ -26,7 +26,11 @@ app.use(Vue3Toastify, {
 
 routers.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
-  await authStore.hydrateUser();
+
+  await authStore.ensureInitialUserData();
+
+  authStore.refreshUserInBackground();
+
   next();
 });
 app.mount("#app");
