@@ -1,7 +1,7 @@
 <template>
-  <div class="field-container">
+  <div v-if="field.value" class="field-container">
     <h3 class="text-lg font-medium text-gray-800 mb-1">{{ field.label }}</h3>
-    <div v-if="field.value" class="flex items-center">
+    <div class="flex items-center">
       <span
         :class="[
           'px-3 py-1 text-sm rounded-lg border',
@@ -11,7 +11,6 @@
         {{ field.value }}
       </span>
     </div>
-    <p v-else class="text-gray-400 italic">Not specified</p>
   </div>
 </template>
 
