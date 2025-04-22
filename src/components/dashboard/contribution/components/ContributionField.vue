@@ -121,7 +121,7 @@ const statusClasses = computed(() => {
   }
 
   if (isDifferentFromOriginal.value) {
-    classes.push("border-dotted");
+    classes.push("border-dotted border-3");
   } else {
     classes.push("border-solid");
   }
