@@ -155,7 +155,7 @@ const fetchAnimes = async () => {
       page: page.value,
       limit: pageSize,
       sortBy: "createdAt",
-      sortOrder: "ASC",
+      sortOrder: "DESC",
     });
 
     const newAnimes = response?.data || [];
