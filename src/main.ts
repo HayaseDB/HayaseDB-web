@@ -34,5 +34,4 @@ routers.beforeEach(async (to, from, next) => {
 });
 app.use(routers);
 
-
 app.mount("#app");

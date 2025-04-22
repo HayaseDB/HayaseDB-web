@@ -1,4 +1,3 @@
-
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/endpoints/auth.service.ts";
 import Cookies from "js-cookie";
@@ -39,14 +38,13 @@ export const useAuthStore = defineStore("auth", {
         return;
       }
       const now = Date.now();
-      if (!this.isRefreshing && (now - this.lastRefreshTime > 30000)) {
+      if (!this.isRefreshing && now - this.lastRefreshTime > 30000) {
         this.isRefreshing = true;
 
-        this.refreshUser()
-            .finally(() => {
-              this.isRefreshing = false;
-              this.lastRefreshTime = Date.now();
-            });
+        this.refreshUser().finally(() => {
+          this.isRefreshing = false;
+          this.lastRefreshTime = Date.now();
+        });
       }
     },
 
