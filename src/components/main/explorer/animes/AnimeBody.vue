@@ -4,7 +4,7 @@
 
     <div
       v-if="anime.releaseDate.value || anime.genres.value"
-      class="flex md:flex-row flex-col w-full gap-5"
+      class="flex lg:flex-row flex-col w-full gap-5"
     >
       <GenericFieldCard card class="flex-1" :field="anime.releaseDate" />
       <GenericFieldCard card class="flex-1" :field="anime.genres" />
