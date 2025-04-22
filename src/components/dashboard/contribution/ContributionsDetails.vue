@@ -111,7 +111,7 @@ const filteredFields = computed(() => {
   return Object.keys(contribution.value.data).reduce(
     (acc: Record<string, any>, key: string) => {
       const dataValue = contribution?.value?.data[key];
-      const anime = contribution?.value?.anime;
+      const anime = contribution?.value?.originalAnime;
       const animeValue = anime ? lodash.get(anime, key) : undefined;
 
       const dataHasValue = dataValue?.value !== null;
