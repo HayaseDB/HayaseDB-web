@@ -102,7 +102,6 @@ const isDifferentFromOriginal = computed(() => {
 
   return !lodash.isEqual(originalValue, currentValue);
 });
-
 const statusClasses = computed(() => {
   const classes = [];
 
@@ -121,11 +120,16 @@ const statusClasses = computed(() => {
   }
 
   if (isDifferentFromOriginal.value) {
-    classes.push("border-dotted border-3");
+    classes.push(
+        "border-dashed",
+        "border-2",
+        "border-gray-400"
+    );
   } else {
     classes.push("border-solid");
   }
 
   return classes;
 });
+
 </script>
