@@ -31,7 +31,7 @@
       <button
         v-if="showNavigation && !atEnd"
         @click="swiperInstance?.slideNext()"
-        class="absolute hidden sm:block  -right-4 top-1/2 p-1 bg-white border border-gray-200 rounded-lg -translate-y-1/2 z-10 hover:cursor-pointer"
+        class="absolute hidden sm:block -right-4 top-1/2 p-1 bg-white border border-gray-200 rounded-lg -translate-y-1/2 z-10 hover:cursor-pointer"
         aria-label="Next slide"
       >
         <ChevronRight class="w-8 h-8 text-gray-500" />

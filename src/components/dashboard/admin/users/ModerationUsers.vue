@@ -294,14 +294,13 @@ const prevPage = () => {
 };
 
 const formatDate = (date: string) =>
-    new Date(date).toLocaleString(undefined, {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-    });
-
+  new Date(date).toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
 
 const verifiedClass = (verified: boolean) => {
   return verified ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";

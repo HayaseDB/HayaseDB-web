@@ -211,7 +211,7 @@ import {
 } from "lucide-vue-next";
 import { RouterLink, useRouter, useRoute } from "vue-router";
 import ProfileMenu from "@/components/common/ProfileMenu.vue";
-import { useAuthStore } from "@/stores/auth.js";
+import { useAuthStore } from "@/stores/auth.store";
 const router = useRouter();
 const route = useRoute();
 const sidebarStore = useSidebarStore();

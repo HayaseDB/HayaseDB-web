@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-screen w-full flex-col bg-gray-50 overflow-hidden">
+  <div class="flex min-h-screen w-full flex-col bg-gray-50">
     <header
       class="flex border-b h-16 border-gray-200 items-center justify-center bg-white px-4"
     >
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <main class="flex-1 overflow-auto">
+    <main class="flex-1 overflow-y-auto">
       <div>
         <router-view />
       </div>

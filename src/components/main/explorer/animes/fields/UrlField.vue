@@ -1,6 +1,8 @@
 <template>
   <div class="field-container">
-    <h3 v-if="title" class="text-lg font-medium text-gray-800 mb-1">{{ field.label }}</h3>
+    <h3 v-if="title" class="text-lg font-medium text-gray-800 mb-1">
+      {{ field.label }}
+    </h3>
     <div v-if="field.value">
       <a
         :href="field.value"
@@ -15,27 +17,15 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-
-const props = defineProps({
+defineProps({
   field: {
     type: Object,
     required: true,
   },
-  title:{
+  title: {
     type: Boolean,
     required: false,
     default: false,
-  }
-});
-
-const displayUrl = computed(() => {
-  if (!props.field.value) return "";
-  try {
-    const url = new URL(props.field.value);
-    return url.hostname;
-  } catch {
-    return props.field.value;
-  }
+  },
 });
 </script>

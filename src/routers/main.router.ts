@@ -45,7 +45,6 @@ const mainRoutes: RouteRecordRaw[] = [
             component: AnimeListView,
             props: false,
           },
-
         ],
       },
       {

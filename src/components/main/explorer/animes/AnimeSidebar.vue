@@ -12,14 +12,16 @@
 
     <GenericFieldCard :field="anime.author" />
 
-    <div v-if="anime.website.value || anime.crunchyroll.value" class="flex flex-col gap-1/2">
+    <div
+      v-if="anime.website.value || anime.crunchyroll.value"
+      class="flex flex-col gap-1/2"
+    >
       <h3 class="text-lg font-medium text-gray-800 mb-1">Links</h3>
 
       <GenericFieldCard :field="anime.website" />
 
       <GenericFieldCard :field="anime.crunchyroll" />
     </div>
-
   </div>
 </template>
 
