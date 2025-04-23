@@ -14,12 +14,13 @@
       <div class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <ContributionField
-            v-for="(value, key) in filteredFields"
-            :key="key"
-            :field-key="key"
-            :field-value="contribution?.data[key]"
-            :field-status="fieldStatus[key]"
-            :get-field-size-class="getFieldSizeClass"
+              v-for="(value, key) in filteredFields"
+              :key="key"
+              :field-key="key"
+              :field-value="contribution?.data[key]"
+              :field-status="fieldStatus[key]"
+              :get-field-size-class="getFieldSizeClass"
+              :contribution="contribution"
           />
         </div>
       </div>
