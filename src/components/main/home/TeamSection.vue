@@ -77,7 +77,7 @@ const teamMembers = [
   {
     name: 'AIO',
     role: 'Developer',
-    image: 'src/assets/team/AIO.gif',
+    image: '@/assets/team/AIO.gif',
     socials: {
       github: 'https://github.com/aiomayo',
       website: 'https://aio-web.xyz',
@@ -87,7 +87,7 @@ const teamMembers = [
   {
     name: 'Garfield',
     role: 'Moderator',
-    image: 'src/assets/team/GarfieldTV.gif',
+    image: '@/assets/team/GarfieldTV.gif',
     socials: {
       github: 'https://github.com/GarfieldTV',
     },
@@ -95,7 +95,7 @@ const teamMembers = [
   {
     name: 'SirRezi',
     role: 'Moderator',
-    image: 'src/assets/team/SirRezi.webp',
+    image: '@/assets/team/SirRezi.webp',
     socials: {
       github: 'https://github.com/GarfieldTV',
       twitch: 'https://www.twitch.tv/bobbycardealer'
@@ -104,7 +104,7 @@ const teamMembers = [
   {
     name: 'Lukas',
     role: 'Moderator',
-    image: 'src/assets/team/Lukas.webp',
+    image: '@/assets/team/Lukas.webp',
     socials: {
       github: 'https://github.com/Brainlesslukas',
       website: 'https://brainlesslukas.xyz/',
