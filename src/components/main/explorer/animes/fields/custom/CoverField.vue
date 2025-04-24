@@ -4,7 +4,7 @@
   </div>
   <div
     v-else
-    class="w-full h-90 bg-gray-200 flex items-center justify-center rounded-lg"
+    class="w-full h-90 border-1 border-gray-200 bg-gray-200 flex items-center justify-center rounded-lg"
   >
     <p class="text-gray-400 italic">No Image</p>
   </div>

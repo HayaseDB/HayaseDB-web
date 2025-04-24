@@ -1,7 +1,8 @@
 <template>
   <div class="space-y-5">
-    <AnimeTitleField :title="anime.title" :bannerImage="anime.bannerImage" />
-
+    <div class="hidden md:block w-full">
+      <AnimeTitleField :title="anime.title" :bannerImage="anime.bannerImage" />
+    </div>
     <div
       v-if="anime.releaseDate.value || anime.genres.value"
       class="flex lg:flex-row flex-col w-full gap-5"
