@@ -11,8 +11,8 @@
         <p><strong>Owner & Responsible Person:</strong> Sebastian Stepper</p>
         <p>
           <strong>Address:</strong><br />
-          Rudertshofen 52<br />
-          92334 Berching<br />
+          Holzgartenstraße 8<br />
+          92318 Neumarkt i.d.OPf.<br />
           Bavaria, Germany
         </p>
         <p>
