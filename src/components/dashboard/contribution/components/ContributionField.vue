@@ -92,16 +92,26 @@ const isId = computed(() => props.fieldValue.label === "Id");
 const isUrl = computed(() => props.fieldValue.type === "Url");
 
 const isDifferentFromOriginal = computed(() => {
-  if (!props.contribution?.originalAnime) return false;
+  if (!props.contribution?.original) {
+    const fieldDataValue = lodash.get(props.contribution?.data, props.fieldKey);
+    console.log(props.fieldKey, fieldDataValue);
+    return fieldDataValue.value !== null && fieldDataValue.value !== undefined;
+  }
 
-  const originalValue = lodash.get(props.contribution.originalAnime, props.fieldKey);
+  const originalValue = lodash.get(props.contribution.original, props.fieldKey);
   const currentValue = props.fieldValue;
 
   if (!originalValue && currentValue) return true;
   if (originalValue && !currentValue) return true;
 
+  if (lodash.isObject(originalValue) && lodash.isObject(currentValue)) {
+    return !lodash.isEqual(originalValue, currentValue);
+  }
+
   return !lodash.isEqual(originalValue, currentValue);
 });
+
+
 const statusClasses = computed(() => {
   const classes = [];
 
