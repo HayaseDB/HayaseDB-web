@@ -77,7 +77,7 @@ const teamMembers = [
   {
     name: 'AIO',
     role: 'Developer',
-    image: '/assets/team/AIO.gif',
+    image: new URL('@/assets/team/AIO.gif', import.meta.url).href,
     socials: {
       github: 'https://github.com/aiomayo',
       website: 'https://aio-web.xyz',
@@ -87,7 +87,7 @@ const teamMembers = [
   {
     name: 'Garfield',
     role: 'Moderator',
-    image: '/assets/team/GarfieldTV.gif',
+    image: new URL('@/assets/team/GarfieldTV.gif', import.meta.url).href,
     socials: {
       github: 'https://github.com/GarfieldTV',
     },
@@ -95,7 +95,7 @@ const teamMembers = [
   {
     name: 'SirRezi',
     role: 'Moderator',
-    image: '/assets/team/SirRezi.webp',
+    image: new URL('@/assets/team/SirRezi.webp', import.meta.url).href,
     socials: {
       github: 'https://github.com/GarfieldTV',
       twitch: 'https://www.twitch.tv/bobbycardealer'
@@ -104,7 +104,7 @@ const teamMembers = [
   {
     name: 'Lukas',
     role: 'Moderator',
-    image: '/assets/team/Lukas.webp',
+    image: new URL('@/assets/team/Lukas.webp', import.meta.url).href,
     socials: {
       github: 'https://github.com/Brainlesslukas',
       website: 'https://brainlesslukas.xyz/',
