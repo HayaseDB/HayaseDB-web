@@ -37,6 +37,8 @@
     "src/**/*.ts",
     "src/**/*.d.ts",
     "src/**/*.tsx",
+    "src/**/*.js",
+    "src/**/*.css",
     "src/**/*.vue",
     "vite.config.ts"
   ],
