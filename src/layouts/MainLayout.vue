@@ -194,6 +194,7 @@ const checkAuth = async () => {
 
 const navigationItems = [
   { title: "Home", path: "/" },
+  { title: "Docs", path: "/docs" },
   { title: "Explorer", path: "/explorer" },
   { title: "Dashboard", path: "/dashboard" },
 ];
