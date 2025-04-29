@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>API Documentation</title>
+    <script src="./web-components.min.js"></script>
+    <link rel="stylesheet" href="./styles.min.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    window.addEventListener('message', (event) => {
+        const elementsApi = document.createElement('elements-api');
+        elementsApi.id = 'elements-api';
+        elementsApi.setAttribute('router', 'hash');
+        elementsApi.setAttribute('layout', 'responsive');
+        elementsApi.setAttribute('hideSchemas', 'true');
+        elementsApi.setAttribute('apiDescriptionUrl', event.data);
+
+        document.body.appendChild(elementsApi);
+    });
+</script>
+
+</body>
+</html>

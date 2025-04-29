@@ -94,10 +94,8 @@
       </div>
     </div>
 
-    <main class="flex-1 overflow-y-auto">
-      <div>
-        <router-view />
-      </div>
+    <main class="flex-1 flex flex-col overflow-y-auto">
+        <router-view/>
     </main>
 
     <footer class="bg-white border-t border-gray-200 py-6 px-4 sm:px-6 lg:px-8">
@@ -196,6 +194,7 @@ const checkAuth = async () => {
 
 const navigationItems = [
   { title: "Home", path: "/" },
+  { title: "Docs", path: "/docs" },
   { title: "Explorer", path: "/explorer" },
   { title: "Dashboard", path: "/dashboard" },
 ];
