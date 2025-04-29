@@ -33,7 +33,7 @@
   </div>
 
   <div
-    class="fixed left-5 bottom-0 w-40 h-40 pointer-events-none overflow-hidden"
+    class="fixed z-999 left-5 bottom-0 w-40 h-40 pointer-events-none overflow-hidden"
   >
     <img
       v-if="showMascot"
