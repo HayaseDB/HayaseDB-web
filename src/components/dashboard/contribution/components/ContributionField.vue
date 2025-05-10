@@ -90,26 +90,34 @@ const isArray = computed(() => Array.isArray(props.fieldValue?.value));
 const isId = computed(() => props.fieldValue.label === "Id");
 
 const isUrl = computed(() => props.fieldValue.type === "Url");
-
 const isDifferentFromOriginal = computed(() => {
   if (!props.contribution?.original) {
     const fieldDataValue = lodash.get(props.contribution?.data, props.fieldKey);
     console.log(props.fieldKey, fieldDataValue);
-    return fieldDataValue.value !== null && fieldDataValue.value !== undefined;
+    return fieldDataValue?.value !== null && fieldDataValue?.value !== undefined;
   }
 
-  const originalValue = lodash.get(props.contribution.original, props.fieldKey);
+  const originalValue: any = lodash.get(
+    props.contribution.original,
+    props.fieldKey,
+  );
   const currentValue = props.fieldValue;
 
   if (!originalValue && currentValue) return true;
   if (originalValue && !currentValue) return true;
 
   if (lodash.isObject(originalValue) && lodash.isObject(currentValue)) {
+    if (isImage.value) {
+      const originalId = (originalValue as { value?: { id?: string } })?.value?.id;
+      const currentId = (currentValue as { value?: { id?: string } })?.value?.id;
+      return originalId !== currentId;
+    }
     return !lodash.isEqual(originalValue, currentValue);
   }
 
   return !lodash.isEqual(originalValue, currentValue);
 });
+
 
 
 const statusClasses = computed(() => {
