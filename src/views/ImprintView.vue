@@ -10,10 +10,7 @@
         <p><strong>Platform Name:</strong> HayaseDB</p>
         <p><strong>Owner & Responsible Person:</strong> Sebastian Stepper</p>
         <p>
-          <strong>Address:</strong><br />
-          Holzgartenstraße 8<br />
-          92318 Neumarkt i.d.OPf.<br />
-          Bavaria, Germany
+          <strong>Address on mail requst</strong><br />
         </p>
         <p>
           <strong>Contact Information:</strong><br />
